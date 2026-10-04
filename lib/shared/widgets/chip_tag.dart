@@ -26,7 +26,7 @@ class ChipTag extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isSelected ? AppColors.primary : AppColors.border,
-          width: isSelected ? 1.5 : 1.0,
+          width: 1.0,
         ),
       ),
       child: Row(
@@ -35,17 +35,18 @@ class ChipTag extends StatelessWidget {
           if (icon != null) ...[
             Icon(
               icon,
-              size: 16,
-              color: isSelected ? AppColors.primaryDark : AppColors.textSecondary,
+              size: 15,
+              color: isSelected ? AppColors.primary : AppColors.textSecondary,
             ),
             const SizedBox(width: 6),
           ],
           Text(
             label,
             style: TextStyle(
+              fontFamily: 'Poppins',
               fontSize: 13,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? AppColors.primaryDark : AppColors.textPrimary,
+              color: isSelected ? AppColors.primary : AppColors.textPrimary,
             ),
           ),
         ],

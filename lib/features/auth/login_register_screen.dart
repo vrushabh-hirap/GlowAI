@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import '../../core/theme/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../shared/widgets/app_text_field.dart';
 import '../../shared/widgets/glow_button.dart';
+import '../../shared/widgets/tappable.dart';
 
 class LoginRegisterScreen extends ConsumerStatefulWidget {
   const LoginRegisterScreen({super.key});
@@ -37,14 +39,7 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
           _selectedRole,
         );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Logged in as ${_selectedRole == UserRole.doctor ? "Doctor" : "Patient"}'),
-        backgroundColor: AppColors.primaryDark,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-
+    // Navigate directly without annoying snackbar
     if (_selectedRole == UserRole.doctor) {
       context.go('/doctor/dashboard');
     } else {
@@ -56,22 +51,34 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Center(
                 child: Container(
                   width: 72,
                   height: 72,
                   decoration: BoxDecoration(
-                    color: AppColors.primarySoft,
+                    color: AppColors.surface,
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppColors.border),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x0A000000),
+                        blurRadius: 12,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(19),
+                    child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -79,6 +86,7 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                 child: Text(
                   _isLogin ? 'Welcome Back to GlowAI' : 'Create Your Account',
                   style: const TextStyle(
+                    fontFamily: 'Poppins',
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -93,47 +101,68 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                       : 'Join GlowAI for smart skin analysis and dermatological care',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                    fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 28),
 
-              // Role Selector Tabs
+              // Segmented Role Selector Control
               const Text(
-                'Select Role',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                'Account Role',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
               ),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: AppColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.border),
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => _selectedRole = UserRole.patient),
+                        onTap: () {
+                          setState(() {
+                            _selectedRole = UserRole.patient;
+                            _emailController.text = 'sophia.m@example.com';
+                          });
+                        },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: _selectedRole == UserRole.patient
-                                ? AppColors.primarySoft
+                                ? AppColors.surface
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(12),
+                            boxShadow: _selectedRole == UserRole.patient
+                                ? const [
+                                    BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ]
+                                : null,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             'Patient',
                             style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 13,
                               fontWeight: FontWeight.w600,
                               color: _selectedRole == UserRole.patient
-                                  ? AppColors.primaryDark
+                                  ? AppColors.primary
                                   : AppColors.textSecondary,
                             ),
                           ),
@@ -150,20 +179,31 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: _selectedRole == UserRole.doctor
-                                ? AppColors.primarySoft
+                                ? AppColors.surface
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(12),
+                            boxShadow: _selectedRole == UserRole.doctor
+                                ? const [
+                                    BoxShadow(
+                                      color: Color(0x0A000000),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ]
+                                : null,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             'Doctor',
                             style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 13,
                               fontWeight: FontWeight.w600,
                               color: _selectedRole == UserRole.doctor
-                                  ? AppColors.primaryDark
+                                  ? AppColors.primary
                                   : AppColors.textSecondary,
                             ),
                           ),
@@ -173,14 +213,14 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
               if (!_isLogin) ...[
                 AppTextField(
                   label: 'Full Name',
                   hintText: 'Enter your name',
                   controller: _nameController,
-                  prefixIcon: const Icon(Icons.person_outline_rounded),
+                  prefixIcon: const Icon(CupertinoIcons.person, color: AppColors.textSecondary, size: 20),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -190,7 +230,7 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                 hintText: 'Enter email address',
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                prefixIcon: const Icon(Icons.email_outlined),
+                prefixIcon: const Icon(CupertinoIcons.mail, color: AppColors.textSecondary, size: 20),
               ),
               const SizedBox(height: 16),
 
@@ -199,13 +239,32 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                 hintText: 'Enter password',
                 controller: _passwordController,
                 obscureText: true,
-                prefixIcon: const Icon(Icons.lock_outline_rounded),
+                prefixIcon: const Icon(CupertinoIcons.lock, color: AppColors.textSecondary, size: 20),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 10),
+
+              if (_isLogin)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Tappable(
+                    onTap: () {},
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 24),
 
               GlowButton(
                 label: _isLogin ? 'Sign In' : 'Register Now',
                 width: double.infinity,
+                style: GlowButtonStyle.primary,
                 onPressed: _submit,
               ),
               const SizedBox(height: 20),
@@ -215,15 +274,21 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
                 children: [
                   Text(
                     _isLogin ? "Don't have an account? " : "Already have an account? ",
-                    style: const TextStyle(color: AppColors.textSecondary),
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 13,
+                      color: AppColors.textSecondary,
+                    ),
                   ),
-                  GestureDetector(
+                  Tappable(
                     onTap: () => setState(() => _isLogin = !_isLogin),
                     child: Text(
                       _isLogin ? 'Sign Up' : 'Sign In',
                       style: const TextStyle(
-                        color: AppColors.primaryDark,
+                        fontFamily: 'Poppins',
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),

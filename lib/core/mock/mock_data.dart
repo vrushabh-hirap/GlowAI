@@ -5,7 +5,6 @@ import '../../models/medicine_model.dart';
 import '../../models/prescription_model.dart';
 import '../../models/product_model.dart';
 import '../../models/reminder_model.dart';
-import '../../models/scan_result_model.dart';
 import '../../models/store_model.dart';
 import '../../models/user_model.dart';
 
@@ -89,28 +88,8 @@ class MockData {
     ),
   ];
 
-  static final ScanResultModel sampleScanResult = ScanResultModel(
-    id: 'scan_101',
-    userId: 'usr_patient_1',
-    timestamp: DateTime.now().subtract(const Duration(hours: 3)),
-    imagePath: 'assets/icon/icon.png',
-    skinType: 'Combination',
-    skinToneLevel: 'Level 3 - Medium',
-    undertone: 'Warm',
-    toneHex: '#C68E6B',
-    scores: const ConditionScores(
-      acne: 38,
-      pimples: 32,
-      darkSpots: 24,
-      pigmentation: 28,
-      redness: 45,
-    ),
-    severity: 'Moderate',
-    risk: 'Medium',
-    overallScore: 76,
-    recommendedSpecialty: 'Dermatologist & Clinical Aesthetician',
-    seeDoctor: true,
-  );
+  // NOTE: sampleScanResult was removed. Scan data now comes from the real
+  // GlowAI backend (glowai_backend/). See lib/core/services/scan_repository.dart.
 
   static final List<MedicineModel> medicines = [
     const MedicineModel(

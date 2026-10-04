@@ -1,12 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/mock/mock_data.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/doctor_model.dart';
-import '../../shared/widgets/app_scaffold.dart';
+import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/chip_tag.dart';
+import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
-import '../../shared/widgets/soft_button.dart';
+import '../../shared/widgets/tappable.dart';
 
 class DoctorListScreen extends StatefulWidget {
   const DoctorListScreen({super.key});
@@ -34,20 +36,36 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
             .where((d) => d.specialty.toLowerCase().contains(_selectedSpecialty.toLowerCase()))
             .toList();
 
-    return AppScaffold(
-      title: 'Consult Dermatologists',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.history_rounded),
-          onPressed: () => context.push('/my-appointments'),
-        ),
-      ],
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppHeader(
+        title: 'Consult Doctors',
+        subtitle: 'Verified skin & beauty specialists',
+        actions: [
+          Tappable(
+            onTap: () => context.push('/my-appointments'),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: AppColors.surfaceMuted,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                CupertinoIcons.calendar,
+                color: AppColors.textPrimary,
+                size: 20,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          // Filter Chips
+          // Filter Chips (20px horizontal start/end padding)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: _specialties.map((spec) {
                 return Padding(
@@ -65,12 +83,12 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
           // Doctor List
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 4, bottom: 32),
               itemCount: filteredDoctors.length,
               itemBuilder: (context, index) {
                 final doc = filteredDoctors[index];
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 14),
                   child: _DoctorCard(doctor: doc),
                 );
               },
@@ -87,26 +105,64 @@ class _DoctorCard extends StatelessWidget {
 
   const _DoctorCard({required this.doctor});
 
+  String _getInitials(String name) {
+    final clean = name.replaceAll('Dr.', '').trim();
+    final parts = clean.split(' ');
+    if (parts.length >= 2) {
+      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    } else if (parts.isNotEmpty && parts[0].isNotEmpty) {
+      return parts[0][0].toUpperCase();
+    }
+    return 'DR';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final initials = _getInitials(doctor.name);
+
     return GlowCard(
       onTap: () => context.push('/doctor-profile/${doctor.id}'),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: AssetImage('assets/icon/icon.png'),
-                fit: BoxFit.cover,
+          // Doctor Initial Avatar with Green Online Dot
+          Stack(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceMuted,
+                  shape: BoxShape.circle,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  initials,
+                  style: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
               ),
-            ),
+              if (doctor.slots.isNotEmpty)
+                Positioned(
+                  right: 2,
+                  bottom: 2,
+                  child: Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      color: AppColors.success,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+            ],
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,17 +170,18 @@ class _DoctorCard extends StatelessWidget {
                 Text(
                   doctor.name,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   doctor.specialty,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
+                    fontFamily: 'Poppins',
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -132,16 +189,33 @@ class _DoctorCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    const Icon(Icons.star_rounded, color: AppColors.warning, size: 16),
+                    const Icon(CupertinoIcons.star_fill, color: AppColors.warning, size: 14),
                     const SizedBox(width: 4),
                     Text(
-                      '${doctor.rating} (${doctor.reviewCount})',
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      '${doctor.rating}',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                    const SizedBox(width: 12),
                     Text(
-                      doctor.experience,
-                      style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                      ' (${doctor.reviewCount})',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      '·  ${doctor.experience}',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
                 ),
@@ -152,14 +226,16 @@ class _DoctorCard extends StatelessWidget {
                     Text(
                       '₹${doctor.fee.toInt()} / session',
                       style: const TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primaryDark,
+                        color: AppColors.textPrimary, // NOT pink!
                       ),
                     ),
-                    SoftButton(
+                    GlowButton(
                       label: 'Book Slot',
                       height: 36,
+                      style: GlowButtonStyle.primary,
                       onPressed: () => context.push('/book-appointment/${doctor.id}'),
                     ),
                   ],

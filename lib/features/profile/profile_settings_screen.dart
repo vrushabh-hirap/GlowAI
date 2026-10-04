@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,11 +6,12 @@ import '../../core/constants/api_config.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/user_model.dart';
-import '../../shared/widgets/app_scaffold.dart';
+import '../../shared/utils/toast_helper.dart';
+import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/app_text_field.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
-import '../../shared/widgets/soft_button.dart';
+import '../../shared/widgets/tappable.dart';
 
 class ProfileSettingsScreen extends ConsumerStatefulWidget {
   const ProfileSettingsScreen({super.key});
@@ -40,23 +42,42 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.logout_rounded, size: 48, color: AppColors.danger),
-              const SizedBox(height: 12),
+              Container(
+                width: 54,
+                height: 54,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFDE8E8),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(CupertinoIcons.square_arrow_right_fill, size: 26, color: AppColors.danger),
+              ),
+              const SizedBox(height: 14),
               const Text(
                 'Confirm Logout',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               const Text(
                 'Are you sure you want to log out of GlowAI?',
-                style: TextStyle(color: AppColors.textSecondary),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 24),
               Row(
                 children: [
                   Expanded(
-                    child: SoftButton(
+                    child: GlowButton(
                       label: 'Cancel',
+                      style: GlowButtonStyle.secondary,
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ),
@@ -64,6 +85,7 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
                   Expanded(
                     child: GlowButton(
                       label: 'Logout',
+                      style: GlowButtonStyle.primary,
                       onPressed: () {
                         Navigator.of(context).pop();
                         ref.read(authProvider.notifier).logout();
@@ -81,28 +103,72 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
   }
 
   void _confirmDeleteData() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text('Delete All My Data?'),
-          content: const Text('This action will permanently erase your local face scan history, appointments, and prescriptions.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('All local data cleared (mock reset)')),
-                );
-              },
-              child: const Text('Delete', style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.bold)),
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 54,
+                height: 54,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFDE8E8),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(CupertinoIcons.trash_fill, size: 26, color: AppColors.danger),
+              ),
+              const SizedBox(height: 14),
+              const Text(
+                'Delete All Data?',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'This will permanently erase your local face scan history, appointments, and prescriptions.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: GlowButton(
+                      label: 'Cancel',
+                      style: GlowButtonStyle.secondary,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: GlowButton(
+                      label: 'Delete Data',
+                      style: GlowButtonStyle.primary,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        showAppToast(context, 'All local data cleared');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
@@ -112,29 +178,36 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
   Widget build(BuildContext context) {
     final user = ref.watch(authProvider);
 
-    return AppScaffold(
-      title: 'Profile & Settings',
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: const AppHeader(
+        title: 'Profile & Settings',
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 36),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // User Banner
+            // User Banner Card
             GlowCard(
-              hasGlow: true,
               child: Row(
                 children: [
                   Container(
-                    width: 64,
-                    height: 64,
+                    width: 56,
+                    height: 56,
                     decoration: const BoxDecoration(
-                      color: AppColors.primarySoft,
+                      color: AppColors.surfaceMuted,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      user.role == UserRole.doctor ? Icons.medical_services_rounded : Icons.person_rounded,
-                      size: 32,
-                      color: AppColors.primaryDark,
+                    alignment: Alignment.center,
+                    child: Text(
+                      user.name.isNotEmpty ? user.name.substring(0, 2).toUpperCase() : 'SM',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -144,20 +217,36 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
                       children: [
                         Text(
                           user.name,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
-                        const SizedBox(height: 2),
-                        Text(user.email, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                        Text(
+                          user.email,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 12,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
                         const SizedBox(height: 6),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryDark,
-                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.primarySoft,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             user.role == UserRole.doctor ? 'DOCTOR MODE' : 'PATIENT MODE',
-                            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
                       ],
@@ -168,27 +257,51 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Role Switcher Tile
-            const Text('Switch Account Role', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            // Developer Preview: Role Switcher
+            const Text(
+              'Developer Preview',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
             const SizedBox(height: 8),
             GlowCard(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user.role == UserRole.doctor ? 'Currently: Doctor Account' : 'Currently: Patient Account',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                      const SizedBox(height: 2),
-                      const Text('Toggle to preview both app experiences', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user.role == UserRole.doctor ? 'Doctor Mode Active' : 'Patient Mode Active',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        const Text(
+                          'Switch role to test both UI shells (Dev only)',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 11,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Switch(
                     value: user.role == UserRole.doctor,
-                    activeThumbColor: AppColors.primaryDark,
+                    activeThumbColor: Colors.white,
+                    activeTrackColor: AppColors.primary,
+                    inactiveTrackColor: AppColors.surfaceMuted,
                     onChanged: (val) {
                       final newRole = val ? UserRole.doctor : UserRole.patient;
                       ref.read(authProvider.notifier).switchRole(newRole);
@@ -204,26 +317,33 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
             ),
             const SizedBox(height: 24),
 
-            // FastAPI Server URL Configuration
-            const Text('Python Backend API Settings', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            // Analysis Server URL Settings
+            const Text(
+              'API Server Configuration',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
             const SizedBox(height: 8),
             GlowCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppTextField(
-                    label: 'FastAPI Server Base URL',
+                    label: 'Analysis server URL',
                     hintText: 'http://10.0.2.2:8000',
                     controller: _serverController,
                   ),
-                  const SizedBox(height: 12),
-                  SoftButton(
+                  const SizedBox(height: 14),
+                  GlowButton(
                     label: 'Save Server Endpoint',
-                    height: 38,
+                    height: 42,
+                    style: GlowButtonStyle.primary,
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Saved API endpoint: ${_serverController.text}')),
-                      );
+                      showAppToast(context, 'Saved endpoint: ${_serverController.text}');
                     },
                   ),
                 ],
@@ -236,26 +356,26 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
               child: Column(
                 children: [
                   _SettingsListTile(
-                    icon: Icons.notifications_none_rounded,
+                    icon: CupertinoIcons.bell,
                     title: 'Notification Settings',
                     onTap: () => context.push('/notifications'),
                   ),
                   const Divider(height: 16),
                   _SettingsListTile(
-                    icon: Icons.workspace_premium_rounded,
+                    icon: CupertinoIcons.star,
                     title: 'GlowAI Premium',
                     onTap: () => context.push('/premium'),
                   ),
                   const Divider(height: 16),
                   _SettingsListTile(
-                    icon: Icons.delete_outline_rounded,
+                    icon: CupertinoIcons.trash,
                     title: 'Delete My Data',
                     textColor: AppColors.danger,
                     onTap: _confirmDeleteData,
                   ),
                   const Divider(height: 16),
                   _SettingsListTile(
-                    icon: Icons.logout_rounded,
+                    icon: CupertinoIcons.square_arrow_right,
                     title: 'Logout',
                     textColor: AppColors.danger,
                     onTap: _confirmLogout,
@@ -263,15 +383,18 @@ class _ProfileSettingsScreenState extends ConsumerState<ProfileSettingsScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
 
             const Center(
               child: Text(
-                'GlowAI Prototype v1.0.0 (UI Shell)',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                'GlowAI Prototype v1.0.0',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12,
+                  color: AppColors.textHint,
+                ),
               ),
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -294,16 +417,27 @@ class _SettingsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Tappable(
       onTap: onTap,
-      child: Row(
-        children: [
-          Icon(icon, color: textColor, size: 20),
-          const SizedBox(width: 14),
-          Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
-          const Spacer(),
-          const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.textSecondary),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, color: textColor, size: 18),
+            const SizedBox(width: 14),
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: textColor,
+              ),
+            ),
+            const Spacer(),
+            const Icon(CupertinoIcons.chevron_right, size: 14, color: AppColors.textHint),
+          ],
+        ),
       ),
     );
   }

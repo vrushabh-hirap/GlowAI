@@ -1,0 +1,123 @@
+{
+  "version": "1.0.0",
+  "shade_mappings": {
+    "Fair": {
+      "Warm": { "foundation_depth": "Fair Warm", "concealer_shade": "Fair Light Yellow/Golden", "lip_colors": ["Warm Nude", "Peach", "Coral", "Soft Warm Red"], "blush_colors": ["Peach", "Warm Pink", "Coral"], "avoid_colors": ["Deep Plum", "Ashey Grey", "Cool Magenta"] },
+      "Neutral": { "foundation_depth": "Fair Neutral", "concealer_shade": "Fair Neutral", "lip_colors": ["Rose Nude", "Soft Pink", "Classic Red"], "blush_colors": ["Soft Rose", "Baby Pink"], "avoid_colors": ["Dark Orange", "Brown Nude"] },
+      "Cool": { "foundation_depth": "Fair Cool", "concealer_shade": "Fair Pink/Rose", "lip_colors": ["Berry Nude", "Cool Pink", "Ruby Red"], "blush_colors": ["Cool Rose", "Soft Mauve"], "avoid_colors": ["Orange", "Golden Yellow Brown"] }
+    },
+    "Light": {
+      "Warm": { "foundation_depth": "Light Warm", "concealer_shade": "Light Golden", "lip_colors": ["Peachy Nude", "Warm Coral", "Terracotta"], "blush_colors": ["Apricot", "Peachy Pink"], "avoid_colors": ["Cool Lavender", "Frosty Mauve"] },
+      "Neutral": { "foundation_depth": "Light Neutral", "concealer_shade": "Light Neutral", "lip_colors": ["Dusty Rose", "Mauve Nude", "Medium Red"], "blush_colors": ["Dusty Pink", "Rose"], "avoid_colors": ["Neon Orange", "Yellow Nude"] },
+      "Cool": { "foundation_depth": "Light Cool", "concealer_shade": "Light Pink", "lip_colors": ["Soft Plum", "Raspberry", "Rose Pink"], "blush_colors": ["Mauve", "Soft Berry"], "avoid_colors": ["Warm Pumpkin", "Mustard Brown"] }
+    },
+    "Light-Medium": {
+      "Warm": { "foundation_depth": "Light-Medium Warm", "concealer_shade": "Warm Sand", "lip_colors": ["Honey Nude", "Warm Brick", "Spiced Peach"], "blush_colors": ["Warm Peach", "Terracotta"], "avoid_colors": ["Pale Baby Pink", "Ash Beige"] },
+      "Neutral": { "foundation_depth": "Light-Medium Neutral", "concealer_shade": "Neutral Beige", "lip_colors": ["Berry Nude", "Warm Rose", "Wine Red"], "blush_colors": ["Rose Gold", "Warm Pink"], "avoid_colors": ["Frosty White", "Neon Coral"] },
+      "Cool": { "foundation_depth": "Light-Medium Cool", "concealer_shade": "Cool Beige", "lip_colors": ["Cool Berry", "Deep Rose", "Crimson"], "blush_colors": ["Cool Berry", "Deep Pink"], "avoid_colors": ["Warm Orange-Red", "Golden Nude"] }
+    },
+    "Medium": {
+      "Warm": { "foundation_depth": "Medium Warm", "concealer_shade": "Medium Golden", "lip_colors": ["Caramel Nude", "Warm Terracotta", "Chili Red"], "blush_colors": ["Warm Amber", "Burnt Orange", "Deep Coral"], "avoid_colors": ["Pale Pink Nude", "Cool Silver Grey"] },
+      "Neutral": { "foundation_depth": "Medium Neutral", "concealer_shade": "Medium Tan", "lip_colors": ["Cinnamon Nude", "Berry Red", "Plum"], "blush_colors": ["Warm Rose", "Bronze Pink"], "avoid_colors": ["Ashy Pink", "Pale Yellow"] },
+      "Cool": { "foundation_depth": "Medium Cool", "concealer_shade": "Medium Rose", "lip_colors": ["Deep Plum", "Magenta", "True Ruby Red"], "blush_colors": ["Deep Berry", "Cool Plum"], "avoid_colors": ["Warm Yellow Mustard", "Peach Beige"] }
+    },
+    "Tan": {
+      "Warm": { "foundation_depth": "Tan Warm", "concealer_shade": "Tan Golden / Honey", "lip_colors": ["Chocolate Nude", "Warm Bronze Red", "Burnt Siena"], "blush_colors": ["Rich Bronze", "Terracotta", "Deep Orange"], "avoid_colors": ["Pale Lilac", "Pastel Pink"] },
+      "Neutral": { "foundation_depth": "Tan Neutral", "concealer_shade": "Tan Neutral", "lip_colors": ["Deep Berry", "Warm Mocha", "Wine"], "blush_colors": ["Deep Rose Gold", "Rich Berry"], "avoid_colors": ["Ashy Grey Nude", "White Pearl"] },
+      "Cool": { "foundation_depth": "Tan Cool", "concealer_shade": "Tan Olive / Cool", "lip_colors": ["Dark Crimson", "Plum Wine", "Deep Raspberry"], "blush_colors": ["Deep Magenta", "Plum Rose"], "avoid_colors": ["Bright Yellow Gold", "Orange"] }
+    },
+    "Deep": {
+      "Warm": { "foundation_depth": "Deep Warm", "concealer_shade": "Deep Golden Espresso", "lip_colors": ["Rich Mahogany", "Warm Dark Chocolate", "Deep Crimson"], "blush_colors": ["Burnt Orange", "Rich Terracotta", "Bronze Red"], "avoid_colors": ["Pastel Nudes", "Chalky Pink"] },
+      "Neutral": { "foundation_depth": "Deep Neutral", "concealer_shade": "Deep Neutral Chestnut", "lip_colors": ["Espresso Nude", "Deep Wine", "Dark Plum"], "blush_colors": ["Deep Berry", "Rich Coral Red"], "avoid_colors": ["Ashy Nudes", "Frosty Pastels"] },
+      "Cool": { "foundation_depth": "Deep Cool", "concealer_shade": "Deep Cool Ebony", "lip_colors": ["Blackened Berry", "Deep Violet", "Rich Burgundy"], "blush_colors": ["Rich Purple Plum", "Deep Crimson"], "avoid_colors": ["Yellow Brown", "Pale Peach"] }
+    }
+  },
+  "occasions": {
+    "Casual": {
+      "finish": "Dewy / Natural Skin-like",
+      "coverage": "Light / Tinted Moisturizer",
+      "eye_look": "Groomed brows, coat of mascara, soft neutral wash",
+      "longevity_tips": "Hydrating setting mist, blotted lip tint",
+      "application_steps": [
+        "1. Skin Prep: Hydrating moisturizer + SPF",
+        "2. Concealer: Spot-conceal under eyes and blemishes",
+        "3. Tinted Moisturizer / BB Cream: Blend outwards with fingers",
+        "4. Cream Blush: Dab on apple of cheeks",
+        "5. Brows & Lash: Brush brows with spoolie, 1 coat mascara",
+        "6. Lip Tint: Blot tinted balm onto lips"
+      ]
+    },
+    "Office": {
+      "finish": "Satin / Soft Matte",
+      "coverage": "Medium Buildable",
+      "eye_look": "Neutral brown shadow, thin brown eyeliner, defined mascara",
+      "longevity_tips": "Light dusting of translucent powder on T-zone",
+      "application_steps": [
+        "1. Skin Prep: Lightweight moisturizer + Mattifying Primer on T-zone",
+        "2. Foundation: Medium coverage satin foundation blended with sponge",
+        "3. Concealer: Brighten under-eye area and blend",
+        "4. Powder: Set T-zone with translucent powder",
+        "5. Eyes: Sweep neutral taupe/brown shadow, line upper lash line",
+        "6. Blush: Soft rose or peach blush on cheekbones",
+        "7. Lips: Long-wear satin lipstick in nude or rose"
+      ]
+    },
+    "Party": {
+      "finish": "Radiant / Glam Matte",
+      "coverage": "Medium to Full",
+      "eye_look": "Smokey eye or metallic shimmer shadow, winged gel eyeliner",
+      "longevity_tips": "Pore-filling primer + setting spray before and after",
+      "application_steps": [
+        "1. Skin Prep: Hydrating sheet mask + Illuminating primer",
+        "2. Foundation: Full coverage long-wear foundation",
+        "3. Concealer: Highlight center of face and conceal spots",
+        "4. Contour & Blush: Sculpt cheekbones with contour, sweep vibrant blush",
+        "5. Eyes: Layer eyeshadow base, shimmer lid, winged eyeliner, volumizing mascara",
+        "6. Highlighter: Dab on cheekbones, Cupid's bow, inner corners",
+        "7. Lips: Bold lip liner + long-lasting liquid lipstick",
+        "8. Setting Spray: Lock look with 3-4 sprays"
+      ]
+    },
+    "Wedding": {
+      "finish": "HD Luminous Satin",
+      "coverage": "Full Photo-Ready Coverage",
+      "eye_look": "Gold/Bronze metallic shimmer, false lashes or heavy mascara, smoked liner",
+      "longevity_tips": "Waterproof formulas + dual setting spray locking",
+      "application_steps": [
+        "1. Skin Prep: Deep hydrating serum + Long-wear grip primer",
+        "2. Color Correction: Neutralize dark circles with peach/orange corrector",
+        "3. Foundation: Flashback-free HD foundation blended smoothly",
+        "4. Conceal & Bake: Conceal under eyes and lightly bake T-zone",
+        "5. Bronzer & Blush: Rich bronzer for warm glow, blush on high points",
+        "6. Eyes: Gold/rose gold eyeshadow, waterproof eyeliner, curled lashes",
+        "7. Lips: Hydrating lip liner + festive red or berry lipstick",
+        "8. Setting Spray: Matte long-wear setting mist"
+      ]
+    },
+    "College": {
+      "finish": "Fresh Dewy",
+      "coverage": "Sheer / Spot Conceal",
+      "eye_look": "Clear brow gel, mascara, subtle nude liner",
+      "longevity_tips": "Blotting paper for afternoon shine",
+      "application_steps": [
+        "1. Skin Prep: Moisturizer + SPF 50",
+        "2. Concealer: Dab on blemishes and under eyes",
+        "3. Tinted Lip Balm: Use on both lips and cheeks as cream blush",
+        "4. Mascara: 1 light coat"
+      ]
+    },
+    "Festival": {
+      "finish": "Glowy & Vibrant",
+      "coverage": "Medium Dewy",
+      "eye_look": "Pop of color or bronze shimmer, graphic eyeliner",
+      "longevity_tips": "Sweat-resistant setting mist",
+      "application_steps": [
+        "1. Skin Prep: Hydrating primer with SPF",
+        "2. Foundation: Dewy cushion or fluid foundation",
+        "3. Blush: Bright coral or berry blush",
+        "4. Eye Sparkle: Shimmer shadow or colorful eyeliner",
+        "5. Glossy Lips: Vibrant lip gloss or stain"
+      ]
+    }
+  }
+}

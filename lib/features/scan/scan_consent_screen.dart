@@ -1,84 +1,137 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
-import '../../shared/widgets/app_scaffold.dart';
+import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
+import '../../shared/widgets/tappable.dart';
 
 class ScanConsentScreen extends StatelessWidget {
-  const ScanConsentScreen({super.key});
+  final bool prepared;
+  const ScanConsentScreen({super.key, this.prepared = true});
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      title: 'Scan Consent & Privacy',
-      body: Padding(
-        padding: const EdgeInsets.all(24),
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppHeader(
+        title: 'Consent & Privacy',
+        leading: Tappable(
+          onTap: () => context.pop(),
+          child: const Icon(
+            CupertinoIcons.arrow_left,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ),
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primarySoft,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.shield_fill,
+                        size: 28,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Your Privacy Belongs to You',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Before starting your AI face scan, please review how GlowAI processes your facial image data.',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 13,
+                        color: AppColors.textSecondary,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    GlowCard(
+                      child: Column(
+                        children: const [
+                          _ConsentPoint(
+                            icon: CupertinoIcons.lock_shield_fill,
+                            title: 'On-Device & Secure Processing',
+                            description: 'Your photo stays on your device and is only transmitted to your authorized analysis server.',
+                          ),
+                          Divider(height: 24),
+                          _ConsentPoint(
+                            icon: CupertinoIcons.trash_fill,
+                            title: 'Auto-Deletion After Analysis',
+                            description: 'Images are erased from memory immediately after feature extraction.',
+                          ),
+                          Divider(height: 24),
+                          _ConsentPoint(
+                            icon: CupertinoIcons.doc_text_fill,
+                            title: 'Informational Screening Only',
+                            description: 'Results provide non-diagnostic insights and should be confirmed by a medical professional.',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Sticky Bottom Bar
             Container(
-              width: 64,
-              height: 64,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: const BoxDecoration(
-                color: AppColors.primarySoft,
-                shape: BoxShape.circle,
+                color: AppColors.surface,
+                border: Border(
+                  top: BorderSide(color: AppColors.border, width: 1),
+                ),
               ),
-              child: const Icon(
-                Icons.privacy_tip_rounded,
-                size: 32,
-                color: AppColors.primaryDark,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Your Privacy Belongs to You',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Before starting your AI face scan, please review how GlowAI processes your facial image data.',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 24),
-            GlowCard(
               child: Column(
-                children: const [
-                  _ConsentPoint(
-                    icon: Icons.shield_rounded,
-                    title: 'On-Device & Secure Local Processing',
-                    description: 'Your photo stays on your device and is only transmitted to your authorized local analysis server.',
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GlowButton(
+                    label: 'I Agree & Continue',
+                    width: double.infinity,
+                    onPressed: () => context.push('/scan/camera', extra: {'prepared': prepared}),
                   ),
-                  Divider(height: 24),
-                  _ConsentPoint(
-                    icon: Icons.cleaning_services_rounded,
-                    title: 'Auto-Deletion After Analysis',
-                    description: 'Images are erased from memory immediately after feature extraction.',
-                  ),
-                  Divider(height: 24),
-                  _ConsentPoint(
-                    icon: Icons.medical_information_rounded,
-                    title: 'Informational Screening Only',
-                    description: 'Results provide non-diagnostic insights and should be confirmed by a licensed doctor.',
+                  const SizedBox(height: 8),
+                  Tappable(
+                    onTap: () => context.pop(),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        'Not now',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            const Spacer(),
-            GlowButton(
-              label: 'I Agree & Start Scan',
-              width: double.infinity,
-              onPressed: () => context.push('/scan/camera'),
-            ),
-            const SizedBox(height: 12),
           ],
         ),
       ),
@@ -102,7 +155,7 @@ class _ConsentPoint extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: AppColors.primaryDark, size: 22),
+        Icon(icon, color: AppColors.primary, size: 22),
         const SizedBox(width: 14),
         Expanded(
           child: Column(
@@ -111,15 +164,17 @@ class _ConsentPoint extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 description,
                 style: const TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 12,
                   color: AppColors.textSecondary,
                   height: 1.4,

@@ -20,7 +20,7 @@ import '../../features/doctor_mode/doctor_shell_screen.dart';
 import '../../features/home/patient_home_screen.dart';
 import '../../features/home/patient_shell_screen.dart';
 import '../../features/makeup/makeup_recommendations_screen.dart';
-import '../../features/notifications/notification_settings_screen.dart';
+import '../../features/reminders/reminders_screen.dart';
 import '../../features/premium/premium_plans_screen.dart';
 import '../../features/prescription/prescription_detail_screen.dart';
 import '../../features/prescription/prescriptions_list_screen.dart';
@@ -30,10 +30,13 @@ import '../../features/report/skin_health_report_screen.dart';
 import '../../features/scan/scan_analyzing_screen.dart';
 import '../../features/scan/scan_camera_screen.dart';
 import '../../features/scan/scan_consent_screen.dart';
+import '../../features/scan/scan_landing_screen.dart';
 import '../../features/scan/scan_result_screen.dart';
+import '../../features/scan/scan_server_settings_screen.dart';
 import '../../features/shop/shop_screen.dart';
 import '../../features/skincare/skincare_routine_screen.dart';
 import '../../features/stores/nearby_stores_screen.dart';
+import '../../models/scan_result_model.dart';
 import 'page_transitions.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -50,17 +53,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/onboarding',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const OnboardingScreen(),
+        context: context, state: state, child: const OnboardingScreen(),
       ),
     ),
     GoRoute(
       path: '/login',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const LoginRegisterScreen(),
+        context: context, state: state, child: const LoginRegisterScreen(),
       ),
     ),
 
@@ -70,46 +69,21 @@ final GoRouter appRouter = GoRouter(
         return PatientShellScreen(navigationShell: navigationShell);
       },
       branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/patient/home',
-              builder: (context, state) => const PatientHomeScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/patient/scan',
-              builder: (context, state) => const ScanConsentScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/patient/consult',
-              builder: (context, state) => const DoctorListScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/patient/care',
-              builder: (context, state) => const CareHubScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/patient/profile',
-              builder: (context, state) => const ProfileSettingsScreen(),
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/patient/home', builder: (_, __) => const PatientHomeScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/patient/scan', builder: (_, __) => const ScanPrepScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/patient/consult', builder: (_, __) => const DoctorListScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/patient/care', builder: (_, __) => const CareHubScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/patient/profile', builder: (_, __) => const ProfileSettingsScreen()),
+        ]),
       ],
     ),
 
@@ -119,224 +93,205 @@ final GoRouter appRouter = GoRouter(
         return DoctorShellScreen(navigationShell: navigationShell);
       },
       branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/doctor/dashboard',
-              builder: (context, state) => const DoctorDashboardScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/doctor/appointments',
-              builder: (context, state) => const MyAppointmentsScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/doctor/patients',
-              builder: (context, state) => const DoctorDashboardScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/doctor/profile',
-              builder: (context, state) => const ProfileSettingsScreen(),
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/doctor/dashboard', builder: (_, __) => const DoctorDashboardScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/doctor/appointments', builder: (_, __) => const MyAppointmentsScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/doctor/patients', builder: (_, __) => const DoctorDashboardScreen()),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/doctor/profile', builder: (_, __) => const ProfileSettingsScreen()),
+        ]),
       ],
     ),
 
-    // Standalone Fullscreen Feature Routes
+    // ── Scan Flow (fullscreen, no bottom nav) ──────────────────────────────
+
     GoRoute(
       path: '/scan/consent',
-      pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ScanConsentScreen(),
-      ),
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final prepared = extra?['prepared'] as bool? ?? true;
+        return buildFadeSlideTransition(
+          context: context, state: state,
+          child: ScanConsentScreen(prepared: prepared),
+        );
+      },
     ),
     GoRoute(
       path: '/scan/camera',
-      pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ScanCameraScreen(),
-      ),
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        return buildFadeSlideTransition(
+          context: context, state: state,
+          child: ScanCameraScreen(
+            prepared: extra?['prepared'] as bool? ?? true,
+            minutesSinceWash: extra?['minutesSinceWash'] as int?,
+          ),
+        );
+      },
     ),
     GoRoute(
       path: '/scan/analyzing',
-      pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ScanAnalyzingScreen(),
-      ),
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        return buildFadeSlideTransition(
+          context: context, state: state,
+          child: ScanAnalyzingScreen(
+            imagePath: extra?['imagePath'] as String? ?? '',
+            prepared: extra?['prepared'] as bool? ?? true,
+            minutesSinceWash: extra?['minutesSinceWash'] as int?,
+          ),
+        );
+      },
     ),
     GoRoute(
       path: '/scan/result',
-      pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ScanResultScreen(),
-      ),
+      pageBuilder: (context, state) {
+        final result = state.extra as ScanResult;
+        return buildFadeSlideTransition(
+          context: context, state: state,
+          child: ScanResultScreen(result: result),
+        );
+      },
     ),
     GoRoute(
-      path: '/report',
+      path: '/settings',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const SkinHealthReportScreen(),
+        context: context, state: state, child: const ScanServerSettingsScreen(),
       ),
     ),
+
+    // ── Report (receives optional ScanResult extra) ────────────────────────
+    GoRoute(
+      path: '/report',
+      pageBuilder: (context, state) {
+        final result = state.extra as ScanResult?;
+        return buildFadeSlideTransition(
+          context: context, state: state,
+          child: SkinHealthReportScreen(result: result),
+        );
+      },
+    ),
+
+    // ── Other Feature Routes ───────────────────────────────────────────────
     GoRoute(
       path: '/doctor-profile/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: DoctorProfileScreen(doctorId: state.pathParameters['id'] ?? 'doc_1'),
       ),
     ),
     GoRoute(
       path: '/book-appointment/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: BookAppointmentScreen(doctorId: state.pathParameters['id'] ?? 'doc_1'),
       ),
     ),
     GoRoute(
       path: '/my-appointments',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const MyAppointmentsScreen(),
+        context: context, state: state, child: const MyAppointmentsScreen(),
       ),
     ),
     GoRoute(
       path: '/chat/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: ChatScreen(appointmentId: state.pathParameters['id'] ?? 'app_1'),
       ),
     ),
     GoRoute(
       path: '/call/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: CallPlaceholderScreen(appointmentId: state.pathParameters['id'] ?? 'app_1'),
       ),
     ),
     GoRoute(
       path: '/prescriptions',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const PrescriptionsListScreen(),
+        context: context, state: state, child: const PrescriptionsListScreen(),
       ),
     ),
     GoRoute(
       path: '/prescription/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: PrescriptionDetailScreen(prescriptionId: state.pathParameters['id'] ?? 'rx_501'),
       ),
     ),
     GoRoute(
       path: '/stores',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const NearbyStoresScreen(),
+        context: context, state: state, child: const NearbyStoresScreen(),
       ),
     ),
     GoRoute(
       path: '/routine',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const SkincareRoutineScreen(),
+        context: context, state: state, child: const SkincareRoutineScreen(),
       ),
     ),
     GoRoute(
       path: '/makeup',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const MakeupRecommendationsScreen(),
+        context: context, state: state, child: const MakeupRecommendationsScreen(),
       ),
     ),
     GoRoute(
       path: '/shop',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ShopScreen(),
+        context: context, state: state, child: const ShopScreen(),
       ),
     ),
     GoRoute(
       path: '/progress',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const ProgressTrackerScreen(),
+        context: context, state: state, child: const ProgressTrackerScreen(),
       ),
     ),
     GoRoute(
       path: '/notifications',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const NotificationSettingsScreen(),
+        context: context, state: state, child: const RemindersScreen(),
       ),
     ),
     GoRoute(
       path: '/premium',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const PremiumPlansScreen(),
+        context: context, state: state, child: const PremiumPlansScreen(),
       ),
     ),
     GoRoute(
       path: '/doctor/appointment/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: DoctorAppointmentDetailScreen(appointmentId: state.pathParameters['id'] ?? 'app_1'),
       ),
     ),
     GoRoute(
       path: '/doctor/patient-report/:scanId',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: DoctorPatientReportScreen(scanId: state.pathParameters['scanId'] ?? 'scan_101'),
       ),
     ),
     GoRoute(
       path: '/doctor/prescription-form/:id',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
+        context: context, state: state,
         child: DoctorPrescriptionFormScreen(appointmentId: state.pathParameters['id'] ?? 'app_1'),
       ),
     ),
     GoRoute(
       path: '/doctor/prescription-preview',
       pageBuilder: (context, state) => buildFadeSlideTransition(
-        context: context,
-        state: state,
-        child: const DoctorPrescriptionPreviewScreen(),
+        context: context, state: state, child: const DoctorPrescriptionPreviewScreen(),
       ),
     ),
   ],

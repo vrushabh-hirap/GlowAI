@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import 'tappable.dart';
 
 class AppScaffold extends StatelessWidget {
   final String? title;
@@ -33,13 +35,20 @@ class AppScaffold extends StatelessWidget {
       appBar: (title != null || titleWidget != null || shouldShowBack)
           ? AppBar(
               backgroundColor: AppColors.background,
+              surfaceTintColor: Colors.transparent,
               elevation: 0,
               scrolledUnderElevation: 0,
               centerTitle: false,
               leading: shouldShowBack
-                  ? IconButton(
-                      icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-                      onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+                  ? Tappable(
+                      onTap: onBack ?? () => Navigator.of(context).maybePop(),
+                      child: const Center(
+                        child: Icon(
+                          CupertinoIcons.arrow_left,
+                          size: 20,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
                     )
                   : null,
               title: titleWidget ??
@@ -47,6 +56,7 @@ class AppScaffold extends StatelessWidget {
                       ? Text(
                           title!,
                           style: const TextStyle(
+                            fontFamily: 'Poppins',
                             color: AppColors.textPrimary,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

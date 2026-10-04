@@ -1,0 +1,665 @@
+{
+  "version": "1.0.0",
+  "disclaimer": "General skincare guidance. Not medical advice. Review with a dermatologist before public distribution.",
+  "base_steps": {
+    "Oily": {
+      "AM": [
+        {
+          "id": "step_cleanser_am",
+          "title": "Salicylic Acid / Gentle Gel Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "AM",
+          "texture": "Lightweight foaming gel",
+          "keyIngredients": ["Salicylic Acid 0.5-2%", "Niacinamide", "Tea Tree Water"],
+          "howToApply": [
+            "Dispense a coin-size amount into wet palms",
+            "Lather and gently massage over face for 30-60 seconds",
+            "Rinse thoroughly with lukewarm water and pat dry with a clean towel"
+          ],
+          "whyItHelps": "Unclogs pores, removes excess sebum accumulated overnight, and prevents morning shine.",
+          "avoidNotes": "Avoid harsh scrubbing or hot water which triggers rebound oil production.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_am",
+          "title": "Pore-Refining Balancing Toner",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "AM",
+          "texture": "Watery essence",
+          "keyIngredients": ["Niacinamide 2%", "Witch Hazel (Alcohol-Free)", "Zinc PCA"],
+          "howToApply": [
+            "Pour 3-4 drops directly onto clean palms or a cotton pad",
+            "Gently press into face and neck until absorbed",
+            "Do not rub aggressively"
+          ],
+          "whyItHelps": "Balances skin pH after cleansing and regulates sebum production.",
+          "avoidNotes": "Avoid alcohol-based toners that sting or dry out skin.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_am",
+          "title": "Niacinamide & Zinc Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "AM",
+          "texture": "Lightweight water gel",
+          "keyIngredients": ["Niacinamide 5-10%", "Zinc PCA 1%", "Hyaluronic Acid"],
+          "howToApply": [
+            "Apply 2-3 drops to slightly damp skin",
+            "Spread evenly across T-zone and cheeks",
+            "Allow 1 minute to absorb before moisturizer"
+          ],
+          "whyItHelps": "Minimizes pore appearance, reduces excess oil, and strengthens barrier.",
+          "avoidNotes": "If using Vitamin C, separate to alternating mornings.",
+          "waitTimeMinutes": 1,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_am",
+          "title": "Oil-Free Hydrating Gel Moisturizer",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "AM",
+          "texture": "Cooling gel cream",
+          "keyIngredients": ["Hyaluronic Acid", "Ceramides", "Aloe Vera Extract"],
+          "howToApply": [
+            "Dot a pea-sized amount on forehead, cheeks, nose, and chin",
+            "Smooth outward in upward circular motions",
+            "Don't forget your neck"
+          ],
+          "whyItHelps": "Provides non-greasy hydration so skin doesn't overproduce oil.",
+          "avoidNotes": "Avoid heavy comedogenic oils (coconut oil, mineral oil).",
+          "waitTimeMinutes": 2,
+          "productCategory": "moisturizer"
+        },
+        {
+          "id": "step_sunscreen_am",
+          "title": "Matte Finish Fluid Sunscreen SPF 50",
+          "category": "Sunscreen",
+          "stepNumber": 5,
+          "session": "AM",
+          "texture": "Non-greasy fluid or gel",
+          "keyIngredients": ["Broad Spectrum SPF 50", "PA++++", "Silica / Matte Complex"],
+          "howToApply": [
+            "Apply 2 full finger-lengths (approx. 1/4 teaspoon) to face and neck",
+            "Apply 15 minutes before sun exposure",
+            "Reapply every 2 hours if outdoors or after sweating"
+          ],
+          "whyItHelps": "Protects against UV damage, dark spot darkening, and premature aging without clogging pores.",
+          "avoidNotes": "Do not skip sunscreen even on cloudy or indoor days.",
+          "waitTimeMinutes": 0,
+          "productCategory": "sunscreen"
+        }
+      ],
+      "PM": [
+        {
+          "id": "step_cleanser_pm",
+          "title": "Double Cleanse: Clarifying Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "PM",
+          "texture": "Gel or micellar water followed by gel cleanser",
+          "keyIngredients": ["Salicylic Acid", "Green Tea Extract"],
+          "howToApply": [
+            "If wearing sunscreen or makeup, use micellar water or oil cleanser first",
+            "Follow with gel cleanser for 60 seconds with lukewarm water",
+            "Pat dry with a soft clean towel"
+          ],
+          "whyItHelps": "Removes SPF, pollution, sunscreen residue, and deep-seated grime.",
+          "avoidNotes": "Don't wash with hot water.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_pm",
+          "title": "Exfoliating BHA Toner (2-3x / week)",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "PM",
+          "texture": "Clear liquid",
+          "keyIngredients": ["Salicylic Acid 2%", "Tea Tree Extract"],
+          "howToApply": [
+            "Saturate a cotton pad and sweep across oily areas",
+            "Focus on T-zone and chin",
+            "Use 2-3 nights per week initially"
+          ],
+          "whyItHelps": "Dissolves pore buildup and prevents blackheads/breakouts.",
+          "avoidNotes": "Do not use on the same night as Retinol or Vitamin C.",
+          "waitTimeMinutes": 2,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_pm",
+          "title": "Azelaic Acid or Gentle BHA Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "PM",
+          "texture": "Lightweight lotion or serum",
+          "keyIngredients": ["Azelaic Acid 10%", "Centella Asiatica"],
+          "howToApply": [
+            "Dispense pea-size amount onto clean dry skin",
+            "Smooth over areas with blemishes or redness",
+            "Let absorb for 2 minutes"
+          ],
+          "whyItHelps": "Calms inflammation, reduces blemish redness, and evens skin texture.",
+          "avoidNotes": "Patch test new active ingredients first.",
+          "waitTimeMinutes": 2,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_pm",
+          "title": "Lightweight Barrier Repair Lotion",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "PM",
+          "texture": "Silky gel lotion",
+          "keyIngredients": ["Ceramides NP/AP/EOP", "Panthenol (Vitamin B5)", "Squalan"],
+          "howToApply": [
+            "Gently massage generous layer over face and neck",
+            "Pat remaining product into skin"
+          ],
+          "whyItHelps": "Restores moisture barrier overnight while you sleep.",
+          "avoidNotes": "Avoid heavy thick ointments.",
+          "waitTimeMinutes": 0,
+          "productCategory": "moisturizer"
+        }
+      ]
+    },
+    "Dry": {
+      "AM": [
+        {
+          "id": "step_cleanser_am",
+          "title": "Hydrating Milk / Non-Foaming Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "AM",
+          "texture": "Creamy milk lotion",
+          "keyIngredients": ["Glycerin", "Ceramides", "Hyaluronic Acid"],
+          "howToApply": [
+            "Apply to damp face and massage gently for 30 seconds",
+            "Rinse with lukewarm water or wipe off gently with wet cloth",
+            "Or rinse with plain lukewarm water if skin feels very tight"
+          ],
+          "whyItHelps": "Cleanses without stripping essential natural oils or disrupting moisture barrier.",
+          "avoidNotes": "Avoid foaming or sulfate cleansers.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_am",
+          "title": "Rich Hydrating Essence / Milky Toner",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "AM",
+          "texture": "Milky essence liquid",
+          "keyIngredients": ["Panthenol 5%", "Glycerin", "Oat Extract"],
+          "howToApply": [
+            "Pat 4-5 drops onto face while skin is still slightly damp",
+            "Layer 2 times if skin feels extra dehydrated"
+          ],
+          "whyItHelps": "Provides deep hydration layer and instantly soothes tightness.",
+          "avoidNotes": "Avoid astringent or alcohol-containing toners.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_am",
+          "title": "Hyaluronic Acid & Polyglutamic Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "AM",
+          "texture": "Deeping hydrating gel",
+          "keyIngredients": ["Multi-Molecular Hyaluronic Acid", "Polyglutamic Acid", "Pro-Vitamin B5"],
+          "howToApply": [
+            "Apply 3-4 drops onto damp skin",
+            "Press gently into skin until absorbed"
+          ],
+          "whyItHelps": "Attracts and locks in moisture deep within skin layers.",
+          "avoidNotes": "Always apply on damp skin to avoid drawing moisture out.",
+          "waitTimeMinutes": 1,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_am",
+          "title": "Nourishing Ceramide Cream",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "AM",
+          "texture": "Rich emolient cream",
+          "keyIngredients": ["Ceramides 1, 3, 6-II", "Squalane", "Shea Butter"],
+          "howToApply": [
+            "Take almond-sized amount and warm between palms",
+            "Press into face and neck with gentle upward motions"
+          ],
+          "whyItHelps": "Seals in hydration and repairs dry flaky barrier.",
+          "avoidNotes": "Ensure even coverage over dry cheek patches.",
+          "waitTimeMinutes": 2,
+          "productCategory": "moisturizer"
+        },
+        {
+          "id": "step_sunscreen_am",
+          "title": "Moisturizing Cream Sunscreen SPF 50",
+          "category": "Sunscreen",
+          "stepNumber": 5,
+          "session": "AM",
+          "texture": "Dewy cream SPF",
+          "keyIngredients": ["SPF 50+", "PA++++", "Vitamin E", "Hyaluronic Acid"],
+          "howToApply": [
+            "Apply 2 finger lengths generously over face and neck",
+            "Allow 15 minutes before stepping out"
+          ],
+          "whyItHelps": "Sun protection with added moisturizing emollients for dewy comfort.",
+          "avoidNotes": "Avoid ultra-matte alcohol-heavy sunscreens.",
+          "waitTimeMinutes": 0,
+          "productCategory": "sunscreen"
+        }
+      ],
+      "PM": [
+        {
+          "id": "step_cleanser_pm",
+          "title": "Nourishing Cleansing Balm / Oil Cleanse",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "PM",
+          "texture": "Balm or oil to milk",
+          "keyIngredients": ["Jojoba Oil", "Sunflower Seed Oil", "Vitamin E"],
+          "howToApply": [
+            "Massage balm on dry skin for 60 seconds to melt makeup/sunscreen",
+            "Add warm water to emulsify into milky texture",
+            "Rinse thoroughly with lukewarm water"
+          ],
+          "whyItHelps": "Dissolves impurities while leaving skin soft and supple.",
+          "avoidNotes": "Avoid hot water which dries out skin further.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_pm",
+          "title": "Milky Hydrating Toner",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "PM",
+          "texture": "Milky liquid",
+          "keyIngredients": ["Ceramides", "Centella Asiatica", "Madecassoside"],
+          "howToApply": [
+            "Press 3-4 drops gently into face and neck"
+          ],
+          "whyItHelps": "Preps skin to absorb night treatment creams.",
+          "avoidNotes": "Avoid harsh acid toners unless prescribed.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_pm",
+          "title": "Barrier Strengthening Repair Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "PM",
+          "texture": "Velvety emulsion",
+          "keyIngredients": ["Peptides", "Ceramides", "Squalane"],
+          "howToApply": [
+            "Apply 3 drops across cheeks, forehead, and neck",
+            "Massage gently in upward strokes"
+          ],
+          "whyItHelps": "Rebuilds lipid matrix and smooths rough texture overnight.",
+          "avoidNotes": "Introduce new actives one at a time.",
+          "waitTimeMinutes": 2,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_pm",
+          "title": "Deep Recovery Night Balm / Cream",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "PM",
+          "texture": "Rich occlusive cream",
+          "keyIngredients": ["Ceramides", "Colloidal Oatmeal", "Shea Butter"],
+          "howToApply": [
+            "Apply generous layer as the final step of PM routine",
+            "Gently press into skin for maximum seal"
+          ],
+          "whyItHelps": "Locks in moisture overnight and prevents transepidermal water loss.",
+          "avoidNotes": "Don't rub harshly.",
+          "waitTimeMinutes": 0,
+          "productCategory": "moisturizer"
+        }
+      ]
+    },
+    "Combination": {
+      "AM": [
+        {
+          "id": "step_cleanser_am",
+          "title": "Gentle Balancing Gel Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "AM",
+          "texture": "pH-balanced gel",
+          "keyIngredients": ["Coco-Glucoside", "Green Tea", "Niacinamide"],
+          "howToApply": [
+            "Lather pea-size amount with water",
+            "Massage T-zone first, then sweep lightly over dry cheeks",
+            "Rinse thoroughly with lukewarm water"
+          ],
+          "whyItHelps": "Cleanses oilier T-zone without stripping dry cheek areas.",
+          "avoidNotes": "Avoid high-pH harsh soaps.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_am",
+          "title": "Hydrating Balancing Essence",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "AM",
+          "texture": "Light essence",
+          "keyIngredients": ["Niacinamide 2%", "Centella", "Glycerin"],
+          "howToApply": [
+            "Press into entire face with clean hands"
+          ],
+          "whyItHelps": "Balances moisture levels between dry and oily zones.",
+          "avoidNotes": "Avoid alcohol toners.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_am",
+          "title": "Niacinamide + Hyaluronic Acid Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "AM",
+          "texture": "Hydrating gel serum",
+          "keyIngredients": ["Niacinamide 5%", "Hyaluronic Acid", "Panthenol"],
+          "howToApply": [
+            "Apply 3 drops evenly over face"
+          ],
+          "whyItHelps": "Controls T-zone shine while hydrating dry cheek areas.",
+          "avoidNotes": "Don't over-apply.",
+          "waitTimeMinutes": 1,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_am",
+          "title": "Lightweight Gel-Cream Moisturizer",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "AM",
+          "texture": "Hybrid gel cream",
+          "keyIngredients": ["Ceramides", "Hyaluronic Acid", "Squalane"],
+          "howToApply": [
+            "Apply thin layer on T-zone and slightly richer layer on cheeks"
+          ],
+          "whyItHelps": "Customized moisture level for multi-zone skin needs.",
+          "avoidNotes": "Avoid heavy waxes on forehead and nose.",
+          "waitTimeMinutes": 2,
+          "productCategory": "moisturizer"
+        },
+        {
+          "id": "step_sunscreen_am",
+          "title": "Lightweight Fluid Sunscreen SPF 50",
+          "category": "Sunscreen",
+          "stepNumber": 5,
+          "session": "AM",
+          "texture": "Lightweight gel fluid",
+          "keyIngredients": ["SPF 50", "PA++++", "Invisible Finish"],
+          "howToApply": [
+            "Apply 2 finger lengths evenly over face and neck"
+          ],
+          "whyItHelps": "Protects against UV damage without heavy residue.",
+          "avoidNotes": "Reapply outdoors every 2 hours.",
+          "waitTimeMinutes": 0,
+          "productCategory": "sunscreen"
+        }
+      ],
+      "PM": [
+        {
+          "id": "step_cleanser_pm",
+          "title": "Gentle Double Cleanse",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "PM",
+          "texture": "Micellar / oil followed by balancing gel",
+          "keyIngredients": ["Green Tea", "Salicylic Acid 0.5%"],
+          "howToApply": [
+            "Use micellar water on eyes and face first",
+            "Follow with gentle gel cleanser for 60 seconds"
+          ],
+          "whyItHelps": "Completely removes daytime grime and sunscreen.",
+          "avoidNotes": "Avoid hot water.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_pm",
+          "title": "Targeted BHA Toner (T-Zone 2-3x/week)",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "PM",
+          "texture": "Clear fluid",
+          "keyIngredients": ["Salicylic Acid 1-2%", "Allantoin"],
+          "howToApply": [
+            "Apply with cotton pad specifically on T-zone (nose, forehead, chin)",
+            "Avoid dry outer cheeks"
+          ],
+          "whyItHelps": "Prevents blackheads in pore-prone T-zone.",
+          "avoidNotes": "Don't use on irritated skin.",
+          "waitTimeMinutes": 2,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_pm",
+          "title": "Centella & Barrier Repair Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "PM",
+          "texture": "Soothing gel",
+          "keyIngredients": ["Centella Asiatica", "Ceramides", "Peptides"],
+          "howToApply": [
+            "Apply 3 drops all over face and neck"
+          ],
+          "whyItHelps": "Calms skin and promotes overnight cell renewal.",
+          "avoidNotes": "Keep actives separated.",
+          "waitTimeMinutes": 2,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_pm",
+          "title": "Balancing Night Cream",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "PM",
+          "texture": "Medium weight cream",
+          "keyIngredients": ["Ceramides", "Niacinamide", "Squalane"],
+          "howToApply": [
+            "Massage into face and neck as final PM step"
+          ],
+          "whyItHelps": "Locks in hydration overnight.",
+          "avoidNotes": "Do not skip on cheeks.",
+          "waitTimeMinutes": 0,
+          "productCategory": "moisturizer"
+        }
+      ]
+    },
+    "Normal": {
+      "AM": [
+        {
+          "id": "step_cleanser_am",
+          "title": "pH-Balanced Hydrating Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "AM",
+          "texture": "Mild gel-cream",
+          "keyIngredients": ["Glycerin", "Aloe Vera"],
+          "howToApply": [
+            "Massage over wet skin for 30 seconds",
+            "Rinse with lukewarm water"
+          ],
+          "whyItHelps": "Maintains healthy natural barrier balance.",
+          "avoidNotes": "Avoid harsh sulfates.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_am",
+          "title": "Antioxidant Refreshing Toner",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "AM",
+          "texture": "Watery essence",
+          "keyIngredients": ["Green Tea Extract", "Rosewater"],
+          "howToApply": [
+            "Pat gently into face and neck"
+          ],
+          "whyItHelps": "Hydrates and boosts skin freshness.",
+          "avoidNotes": "Avoid drying alcohol.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_am",
+          "title": "Vitamin C Antioxidant Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "AM",
+          "texture": "Light fluid",
+          "keyIngredients": ["Vitamin C 10%", "Ferulic Acid", "Vitamin E"],
+          "howToApply": [
+            "Apply 3-4 drops every morning on clean dry skin"
+          ],
+          "whyItHelps": "Brightens tone and neutralizes free radicals from pollution.",
+          "avoidNotes": "Store in cool dark place to prevent oxidation.",
+          "waitTimeMinutes": 2,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_am",
+          "title": "Daily Hydrating Cream",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "AM",
+          "texture": "Lightweight lotion",
+          "keyIngredients": ["Ceramides", "Hyaluronic Acid"],
+          "howToApply": [
+            "Smooth evenly over face and neck"
+          ],
+          "whyItHelps": "Sustains smooth texture and elasticity.",
+          "avoidNotes": "Avoid heavy greasy formulas.",
+          "waitTimeMinutes": 1,
+          "productCategory": "moisturizer"
+        },
+        {
+          "id": "step_sunscreen_am",
+          "title": "Broad Spectrum Invisible Sunscreen SPF 50",
+          "category": "Sunscreen",
+          "stepNumber": 5,
+          "session": "AM",
+          "texture": "Light lotion",
+          "keyIngredients": ["SPF 50+", "PA++++"],
+          "howToApply": [
+            "Apply 2 finger lengths 15 minutes before stepping outside"
+          ],
+          "whyItHelps": "Essential protection against sun spots and aging.",
+          "avoidNotes": "Reapply every 2 hours when outdoors.",
+          "waitTimeMinutes": 0,
+          "productCategory": "sunscreen"
+        }
+      ],
+      "PM": [
+        {
+          "id": "step_cleanser_pm",
+          "title": "Gentle Cleanser",
+          "category": "Cleanser",
+          "stepNumber": 1,
+          "session": "PM",
+          "texture": "Gentle gel",
+          "keyIngredients": ["Glycerin", "Panthenol"],
+          "howToApply": [
+            "Massage for 60 seconds with lukewarm water",
+            "Pat dry"
+          ],
+          "whyItHelps": "Removes daily buildup.",
+          "avoidNotes": "Don't scrub roughly.",
+          "waitTimeMinutes": 1,
+          "productCategory": "cleanser"
+        },
+        {
+          "id": "step_toner_pm",
+          "title": "Hydrating Toner",
+          "category": "Toner",
+          "stepNumber": 2,
+          "session": "PM",
+          "texture": "Watery toner",
+          "keyIngredients": ["Hyaluronic Acid", "Panthenol"],
+          "howToApply": [
+            "Press into skin"
+          ],
+          "whyItHelps": "Restores hydration balance.",
+          "avoidNotes": "Avoid stinging ingredients.",
+          "waitTimeMinutes": 1,
+          "productCategory": "toner"
+        },
+        {
+          "id": "step_serum_pm",
+          "title": "Peptide / Niacinamide Renewal Serum",
+          "category": "Serum",
+          "stepNumber": 3,
+          "session": "PM",
+          "texture": "Silky serum",
+          "keyIngredients": ["Multi-Peptide Complex", "Niacinamide 5%"],
+          "howToApply": [
+            "Apply 3-4 drops before bedtime"
+          ],
+          "whyItHelps": "Supports cellular repair and collagen formation.",
+          "avoidNotes": "Avoid mixing incompatible acids.",
+          "waitTimeMinutes": 2,
+          "productCategory": "serum"
+        },
+        {
+          "id": "step_moisturizer_pm",
+          "title": "Nourishing Night Moisturizer",
+          "category": "Moisturizer",
+          "stepNumber": 4,
+          "session": "PM",
+          "texture": "Comfortable cream",
+          "keyIngredients": ["Ceramides", "Squalane"],
+          "howToApply": [
+            "Smooth over face and neck as final PM step"
+          ],
+          "whyItHelps": "Locks in hydration through the night.",
+          "avoidNotes": "Don't skip.",
+          "waitTimeMinutes": 0,
+          "productCategory": "moisturizer"
+        }
+      ]
+    }
+  },
+  "weekly_extras": {
+    "Oily": [
+      "BHA Exfoliating Treatment 2x / week (Salicylic acid 2%)",
+      "Clay / Charcoal Detox Mask 1x / week",
+      "Patch test new active ingredients for 24-48 hours",
+      "Introduce 1 new active product every 2 weeks"
+    ],
+    "Dry": [
+      "Lactic Acid Gentle AHA Exfoliator 1x / week",
+      "Overnight Hydrating Mask 1-2x / week",
+      "Patch test new products on inner arm first",
+      "Always apply hydrating serums onto damp skin"
+    ],
+    "Combination": [
+      "Gentle AHA/BHA Exfoliant 1-2x / week on T-zone",
+      "Multi-masking: Clay mask on T-zone, hydrating mask on cheeks",
+      "Patch test new actives for 24-48 hours",
+      "Introduce 1 new active product every 2 weeks"
+    ],
+    "Normal": [
+      "Gentle Exfoliating Scrub or AHA Gel 1x / week",
+      "Brightening Hydration Sheet Mask 1x / week",
+      "Patch test new active ingredients",
+      "Always wear SPF even on cloudy days"
+    ]
+  }
+}

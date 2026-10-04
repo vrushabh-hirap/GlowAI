@@ -1,63 +1,37 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/utils/haptics.dart';
-import 'tappable.dart';
+import 'glow_button.dart';
 
 class SoftButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
+  final bool isLoading;
+  final bool isDisabled;
   final double? width;
   final double height;
-  final Color backgroundColor;
-  final Color textColor;
 
   const SoftButton({
     super.key,
     required this.label,
     this.onPressed,
     this.icon,
+    this.isLoading = false,
+    this.isDisabled = false,
     this.width,
-    this.height = 48,
-    this.backgroundColor = AppColors.primarySoft,
-    this.textColor = AppColors.primaryDark,
+    this.height = 44,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Tappable(
-      onTap: () {
-        AppHaptics.selection();
-        onPressed?.call();
-      },
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: textColor, size: 18),
-              const SizedBox(width: 8),
-            ],
-            Text(
-              label,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return GlowButton(
+      label: label,
+      onPressed: onPressed,
+      icon: icon,
+      isLoading: isLoading,
+      isDisabled: isDisabled,
+      width: width,
+      height: height,
+      style: GlowButtonStyle.secondary,
     );
   }
 }

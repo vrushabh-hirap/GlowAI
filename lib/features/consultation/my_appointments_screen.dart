@@ -5,6 +5,7 @@ import '../../core/services/appointment_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/appointment_model.dart';
 import '../../shared/widgets/app_scaffold.dart';
+import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/glow_card.dart';
 import '../../shared/widgets/soft_button.dart';
@@ -125,12 +126,11 @@ class _AppointmentList extends ConsumerWidget {
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: SoftButton(
+                        child: GlowButton(
                           label: app.mode == ConsultationMode.video ? 'Join Video' : 'Join Call',
                           icon: app.mode == ConsultationMode.video ? Icons.videocam_rounded : Icons.call_rounded,
                           height: 38,
-                          backgroundColor: AppColors.primaryDark,
-                          textColor: Colors.white,
+                          style: GlowButtonStyle.primary,
                           onPressed: () => context.push('/call/${app.id}'),
                         ),
                       ),

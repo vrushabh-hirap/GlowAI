@@ -43,7 +43,7 @@ class FakeAppointmentService implements AppointmentService {
       timeSlot: timeSlot,
       mode: mode,
       status: AppointmentStatus.booked,
-      scanId: MockData.sampleScanResult.id,
+      scanId: '',
       jitsiRoom: 'https://meet.jit.si/GlowAI-app_${DateTime.now().millisecondsSinceEpoch}',
     );
     _appointments.insert(0, newApp);
