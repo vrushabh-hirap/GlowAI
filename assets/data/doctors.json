@@ -1,0 +1,54 @@
+[
+  {
+    "id": "doc_1",
+    "name": "Ananya Sharma",
+    "specialty": "Dermatologist & Clinical Aesthetician",
+    "experience": "12 years",
+    "rating": 4.9,
+    "reviewCount": 184,
+    "fee": 500,
+    "languages": ["English", "Hindi"],
+    "bio": "Specializes in inflammatory skin conditions, acne management, laser therapies, and anti-aging treatments.",
+    "avatarUrl": "",
+    "slots": ["09:00 AM", "10:30 AM", "02:00 PM", "04:30 PM"]
+  },
+  {
+    "id": "doc_2",
+    "name": "Rajesh Varma",
+    "specialty": "Cosmetic Dermatologist",
+    "experience": "15 years",
+    "rating": 4.8,
+    "reviewCount": 142,
+    "fee": 650,
+    "languages": ["English", "Marathi"],
+    "bio": "Expert in pigmentation reduction, chemical peels, and customized acne mark rehabilitation.",
+    "avatarUrl": "",
+    "slots": ["11:00 AM", "01:30 PM", "05:00 PM", "06:30 PM"]
+  },
+  {
+    "id": "doc_3",
+    "name": "Priya Nair",
+    "specialty": "Pediatric & General Dermatologist",
+    "experience": "9 years",
+    "rating": 4.95,
+    "reviewCount": 210,
+    "fee": 450,
+    "languages": ["English", "Malayalam", "Hindi"],
+    "bio": "Focuses on sensitive skin barrier repair, eczema, and holistic skin health.",
+    "avatarUrl": "",
+    "slots": ["10:00 AM", "12:00 PM", "03:00 PM", "05:30 PM"]
+  },
+  {
+    "id": "doc_4",
+    "name": "Vikram Sethi",
+    "specialty": "Trichologist & Skin Specialist",
+    "experience": "14 years",
+    "rating": 4.7,
+    "reviewCount": 98,
+    "fee": 600,
+    "languages": ["English", "Punjabi"],
+    "bio": "Specialist in scalp health, rosacea treatment, and modern facial resurfacing techniques.",
+    "avatarUrl": "",
+    "slots": ["09:30 AM", "11:30 AM", "02:30 PM", "04:00 PM"]
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "med_1",
+    "name": "Glycolic Acid 6% Cream",
+    "use": "Exfoliation & Dark Spot Lightening",
+    "dosage": "Apply thin layer at night",
+    "frequency": "Once daily (PM)",
+    "instructions": "Use sunscreen next morning. Avoid eyes.",
+    "imageAsset": "assets/images/medicines/med_glycolic.png"
+  },
+  {
+    "id": "med_2",
+    "name": "Clindamycin Phosphate Gel 1%",
+    "use": "Active Acne & Pimple Control",
+    "dosage": "Pea-sized spot application",
+    "frequency": "Twice daily (AM/PM)",
+    "instructions": "Apply directly on active breakouts after cleansing.",
+    "imageAsset": "assets/images/medicines/med_clindamycin.png"
+  },
+  {
+    "id": "med_3",
+    "name": "Niacinamide 10% + Zinc Serum",
+    "use": "Sebut Redux & Redness Relief",
+    "dosage": "3-4 drops face & neck",
+    "frequency": "Twice daily",
+    "instructions": "Gentle patting motion until absorbed.",
+    "imageAsset": "assets/images/medicines/med_niacinamide.png"
+  },
+  {
+    "id": "med_4",
+    "name": "Hyaluronic Acid Hydrating Lotion",
+    "use": "Moisture Barrier Repair",
+    "dosage": "Generous pump",
+    "frequency": "Twice daily",
+    "instructions": "Apply to damp skin for maximum hydration.",
+    "imageAsset": "assets/images/medicines/med_hyaluronic.png"
+  },
+  {
+    "id": "med_5",
+    "name": "Azelaic Acid 10% Suspension",
+    "use": "Rosacea & Hyperpigmentation",
+    "dosage": "Apply evenly",
+    "frequency": "Once daily",
+    "instructions": "Gradually increase usage over 2 weeks.",
+    "imageAsset": "assets/images/medicines/med_azelaic.png"
+  },
+  {
+    "id": "med_6",
+    "name": "Ceramide Barrier Repair Wash",
+    "use": "Gentle Non-stripping Cleanser",
+    "dosage": "1 pump with water",
+    "frequency": "Twice daily",
+    "instructions": "Rinse thoroughly with lukewarm water.",
+    "imageAsset": "assets/images/medicines/med_ceramide.png"
+  }
+]

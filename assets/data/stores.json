@@ -1,0 +1,46 @@
+[
+  {
+    "id": "store_1",
+    "name": "Apollo Pharmacy - Central Avenue",
+    "address": "102 Main Street, Central Plaza, City",
+    "phone": "+91 98765 43210",
+    "distanceKm": 0.8,
+    "isOpen247": true,
+    "rating": 4.8,
+    "lat": 19.0760,
+    "lng": 72.8777
+  },
+  {
+    "id": "store_2",
+    "name": "MedPlus Wellness Store",
+    "address": "45 Park Road, Near Rose Garden",
+    "phone": "+91 98765 12345",
+    "distanceKm": 1.4,
+    "isOpen247": false,
+    "rating": 4.6,
+    "lat": 19.0800,
+    "lng": 72.8820
+  },
+  {
+    "id": "store_3",
+    "name": "Wellness Forever Chemist & Superstore",
+    "address": "88 Horizon Tower, Station Square",
+    "phone": "+91 98765 88888",
+    "distanceKm": 2.1,
+    "isOpen247": true,
+    "rating": 4.9,
+    "lat": 19.0720,
+    "lng": 72.8700
+  },
+  {
+    "id": "store_4",
+    "name": "Guardian Skin Care & Pharmacy",
+    "address": "12 Metro Mall, Ground Floor",
+    "phone": "+91 98765 99999",
+    "distanceKm": 3.0,
+    "isOpen247": false,
+    "rating": 4.5,
+    "lat": 19.0850,
+    "lng": 72.8650
+  }
+]

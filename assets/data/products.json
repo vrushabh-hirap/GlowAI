@@ -1,0 +1,80 @@
+[
+  {
+    "id": "prod_1",
+    "name": "Glow Silk Foundation",
+    "category": "Makeup",
+    "subcategory": "Foundation",
+    "price": 34.99,
+    "rating": 4.8,
+    "shade": "Warm Sand #C68E6B",
+    "description": "Weightless liquid foundation with luminous satin finish and SPF 30 skin protection.",
+    "imageUrl": "assets/images/products/foundation.png",
+    "isWishlisted": false,
+    "buyUrl": "https://example.com/glow-foundation"
+  },
+  {
+    "id": "prod_2",
+    "name": "HydraDew Barrier Serum",
+    "category": "Skincare",
+    "subcategory": "Serum",
+    "price": 28.50,
+    "rating": 4.9,
+    "shade": "Universal",
+    "description": "Triple-hyaluronic complex with Centella Asiatica for deep hydration and soothing.",
+    "imageUrl": "assets/images/products/serum.png",
+    "isWishlisted": true,
+    "buyUrl": "https://example.com/hydradew-serum"
+  },
+  {
+    "id": "prod_3",
+    "name": "Velvet Rose Blush Tint",
+    "category": "Makeup",
+    "subcategory": "Blush",
+    "price": 19.00,
+    "rating": 4.7,
+    "shade": "Soft Peachy Rose",
+    "description": "Blendable cream-to-powder blush tint for natural flush.",
+    "imageUrl": "assets/images/products/blush.png",
+    "isWishlisted": false,
+    "buyUrl": "https://example.com/rose-blush"
+  },
+  {
+    "id": "prod_4",
+    "name": "Luxury Clip-In Hair Extensions (18\")",
+    "category": "Hair Extensions",
+    "subcategory": "Clip-in",
+    "price": 120.00,
+    "rating": 4.95,
+    "shade": "Chestnut Brown",
+    "description": "100% Remy human hair extensions for instant volume and length.",
+    "imageUrl": "assets/images/products/extensions.png",
+    "isWishlisted": true,
+    "buyUrl": "https://example.com/hair-extensions"
+  },
+  {
+    "id": "prod_5",
+    "name": "Clarifying Salicylic Cleanser",
+    "category": "Skincare",
+    "subcategory": "Cleanser",
+    "price": 22.00,
+    "rating": 4.6,
+    "shade": "Clear",
+    "description": "2% Salicylic Acid foaming wash to unclog pores and reduce redness.",
+    "imageUrl": "assets/images/products/cleanser.png",
+    "isWishlisted": false,
+    "buyUrl": "https://example.com/sa-cleanser"
+  },
+  {
+    "id": "prod_6",
+    "name": "Petal Soft Lipstick",
+    "category": "Makeup",
+    "subcategory": "Lipstick",
+    "price": 16.50,
+    "rating": 4.8,
+    "shade": "Muted Coral Nude",
+    "description": "Moisturizing matte lipstick enriched with jojoba oil and vitamin E.",
+    "imageUrl": "assets/images/products/lipstick.png",
+    "isWishlisted": false,
+    "buyUrl": "https://example.com/petal-lipstick"
+  }
+]

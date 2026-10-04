@@ -1,0 +1,62 @@
+{
+  "am_routine": [
+    {
+      "step": 1,
+      "title": "Gentle Cleansing Wash",
+      "description": "Remove overnight sebum using a pH-balanced gentle gel cleanser.",
+      "keyIngredient": "Ceramides & Glycerin",
+      "productSuggestion": "Ceramide Barrier Repair Wash"
+    },
+    {
+      "step": 2,
+      "title": "Soothing & Hydrating Toner",
+      "description": "Restore skin hydration and calm morning inflammation.",
+      "keyIngredient": "Centella Asiatica / Niacinamide 2%",
+      "productSuggestion": "HydraDew Soothing Mist"
+    },
+    {
+      "step": 3,
+      "title": "Targeted Treatment Serum",
+      "description": "Control oil production and strengthen skin barrier.",
+      "keyIngredient": "Niacinamide 10% + Zinc",
+      "productSuggestion": "Niacinamide 10% + Zinc Serum"
+    },
+    {
+      "step": 4,
+      "title": "Lightweight Gel Moisturizer",
+      "description": "Lock in moisture without clogging pores.",
+      "keyIngredient": "Hyaluronic Acid & Squalane",
+      "productSuggestion": "HydraDew Barrier Serum"
+    },
+    {
+      "step": 5,
+      "title": "Broad Spectrum Sunscreen SPF 50+",
+      "description": "Essential protection against UV-induced pigmentation and redness.",
+      "keyIngredient": "Zinc Oxide / Tinosorb",
+      "productSuggestion": "Glow Shield Fluid SPF 50"
+    }
+  ],
+  "pm_routine": [
+    {
+      "step": 1,
+      "title": "Double Cleanse (Oil + Foam)",
+      "description": "Melt away SPF, makeup, and urban micro-pollutants thoroughly.",
+      "keyIngredient": "Jojoba Oil + Salicylic Acid 2%",
+      "productSuggestion": "Clarifying Salicylic Cleanser"
+    },
+    {
+      "step": 2,
+      "title": "Exfoliating / Active Serum",
+      "description": "Promote cell turnover and unclog congested pores.",
+      "keyIngredient": "Glycolic Acid 6% / Azelaic Acid 10%",
+      "productSuggestion": "Glycolic Acid 6% Cream"
+    },
+    {
+      "step": 3,
+      "title": "Barrier Support Night Cream",
+      "description": "Deeply nourish and repair lipid barrier during nocturnal recovery.",
+      "keyIngredient": "Ceramide NP & Peptide Complex",
+      "productSuggestion": "Nourishing Night Elixir"
+    }
+  ]
+}
