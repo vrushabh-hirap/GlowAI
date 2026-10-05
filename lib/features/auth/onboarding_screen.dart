@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/theme/app_colors.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/tappable.dart';
+
+Future<void> _finishOnboarding() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('has_seen_onboarding', true);
+}
 
 class OnboardingSlide {
   final String title;
@@ -58,7 +64,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: Tappable(
-                  onTap: () => context.go('/login'),
+                  onTap: () async {
+                    await _finishOnboarding();
+                    if (context.mounted) context.go('/login');
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: Text(
@@ -149,7 +158,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       label: 'Get Started',
                       width: double.infinity,
                       style: GlowButtonStyle.primary,
-                      onPressed: () => context.go('/login'),
+                      onPressed: () async {
+                        await _finishOnboarding();
+                        if (context.mounted) context.go('/login');
+                      },
                     )
                   : GlowButton(
                       label: 'Next',
