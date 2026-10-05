@@ -28,7 +28,7 @@ class PatientHomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppHeader(
-        title: 'Home',
+        title: 'GlowAI',
         isHomeHeader: true,
         onNotificationTap: () => context.push('/notifications'),
       ),

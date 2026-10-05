@@ -10,6 +10,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool showBottomBorder;
   final bool isHomeHeader;
+  final bool showLogo;
   final VoidCallback? onNotificationTap;
   final bool hasUnreadNotification;
 
@@ -21,6 +22,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.showBottomBorder = false,
     this.isHomeHeader = false,
+    this.showLogo = false,
     this.onNotificationTap,
     this.hasUnreadNotification = true,
   });
@@ -49,18 +51,20 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   Container(
                     width: 42,
                     height: 42,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surfaceMuted,
-                      shape: BoxShape.circle,
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0A000000),
+                          blurRadius: 6,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'SM',
-                      style: GoogleFonts.poppins(
-                        color: AppColors.textPrimary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -134,6 +138,26 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   if (leading != null) ...[
                     leading!,
+                    const SizedBox(width: 12),
+                  ] else if (showLogo) ...[
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x14000000),
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
+                      ),
+                    ),
                     const SizedBox(width: 12),
                   ],
                   Expanded(
