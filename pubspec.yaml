@@ -100,6 +100,7 @@ flutter:
 
   assets:
     - assets/icon/
+    - assets/logo/
     - assets/data/
     - assets/images/medicines/
     - assets/images/products/
@@ -108,15 +109,21 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon/icon.png"
-  adaptive_icon_background: "#FFE4EF"
-  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  # iOS/legacy Android: full-bleed gradient square, no transparency
+  image_path: "assets/icon/icon_ios.png"
   remove_alpha_ios: true
+  # Android adaptive icon
+  adaptive_icon_background: "assets/icon/icon_background.png"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  # Android 13+ themed icon (single-color, transparent bg)
+  adaptive_icon_monochrome: "assets/icon/icon_monochrome.png"
 
 flutter_native_splash:
+  # White background, pink G symbol — no glow ring, no tile
   color: "#FFFFFF"
-  image: "assets/icon/icon.png"
+  image: "assets/icon/splash_logo.png"
   android_12:
-    image: "assets/icon/icon_foreground.png"
-    icon_background_color: "#FFE4EF"
+    # Android 12+ animated splash: symbol in center circle on white bg
+    image: "assets/icon/splash_logo.png"
+    icon_background_color: "#FFFFFF"
 

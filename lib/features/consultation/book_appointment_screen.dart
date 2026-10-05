@@ -50,9 +50,17 @@ class _BookAppointmentScreenState extends ConsumerState<BookAppointmentScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.primarySoft,
                       borderRadius: BorderRadius.circular(16),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/icon/icon.png'),
-                        fit: BoxFit.cover,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      doctor.name.split(' ').length >= 2
+                          ? '${doctor.name.split(' ')[0][0]}${doctor.name.split(' ')[1][0]}'.toUpperCase()
+                          : 'DR',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),

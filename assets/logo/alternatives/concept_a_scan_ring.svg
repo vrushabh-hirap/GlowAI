@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Concept A: Scan Ring — thick open circle with upper-right gap + small 4-point spark accent -->
+  <!-- Ring: large arc from ~315° to ~40° (gap at upper-right), stroke-width ~110 = ~10.7% of canvas -->
+  <!-- Center: 512,512  Radius: 320  Stroke: 110 -->
+  <circle cx="512" cy="512" r="320"
+    fill="none"
+    stroke="white"
+    stroke-width="108"
+    stroke-linecap="round"
+    stroke-dasharray="1762 400"
+    stroke-dashoffset="-95"
+    transform="rotate(-90 512 512)"
+  />
+  <!-- 4-point sparkle at upper-right gap position (~45° from top = x=738, y=286) -->
+  <!-- Sparkle: large arms ~52px, small arms ~18px, concave cubic -->
+  <path d="
+    M 742 270
+    C 742 270 730 304 742 318
+    C 754 304 742 270 742 270
+    Z
+    M 742 270
+    C 742 270 776 282 790 270
+    C 776 258 742 270 742 270
+    Z
+    M 742 270
+    C 742 270 754 236 742 222
+    C 730 236 742 270 742 270
+    Z
+    M 742 270
+    C 742 270 708 258 694 270
+    C 708 282 742 270 742 270
+    Z
+  " fill="white"/>
+</svg>

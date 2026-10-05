@@ -33,12 +33,20 @@ class DoctorProfileScreen extends StatelessWidget {
                   Container(
                     width: 90,
                     height: 90,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.primarySoft,
                       shape: BoxShape.circle,
-                      image: const DecorationImage(
-                        image: AssetImage('assets/icon/icon.png'),
-                        fit: BoxFit.cover,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      doctor.name.split(' ').length >= 2
+                          ? '${doctor.name.split(' ')[0][0]}${doctor.name.split(' ')[1][0]}'.toUpperCase()
+                          : 'DR',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),

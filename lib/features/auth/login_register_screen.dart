@@ -7,6 +7,7 @@ import '../../core/theme/app_colors.dart';
 import '../../models/user_model.dart';
 import '../../shared/widgets/app_text_field.dart';
 import '../../shared/widgets/glow_button.dart';
+import '../../shared/widgets/glow_logo.dart';
 import '../../shared/widgets/tappable.dart';
 
 class LoginRegisterScreen extends ConsumerStatefulWidget {
@@ -59,26 +60,10 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              Center(
-                child: Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: AppColors.border),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x0A000000),
-                        blurRadius: 12,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(19),
-                    child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
-                  ),
+              const Center(
+                child: GlowLogo(
+                  size: 72,
+                  variant: GlowLogoVariant.onGradient,
                 ),
               ),
               const SizedBox(height: 24),

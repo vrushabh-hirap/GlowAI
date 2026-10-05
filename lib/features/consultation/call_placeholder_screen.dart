@@ -39,10 +39,17 @@ class _CallPlaceholderScreenState extends State<CallPlaceholderScreen> {
                     height: 120,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      color: AppColors.surface,
                       border: Border.all(color: AppColors.primary, width: 3),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/icon/icon.png'),
-                        fit: BoxFit.cover,
+                    ),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'AS',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),

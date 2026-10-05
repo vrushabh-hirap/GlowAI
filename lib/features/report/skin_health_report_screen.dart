@@ -9,6 +9,7 @@ import '../../models/scan_result_model.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
+import '../../shared/widgets/glow_logo.dart';
 import '../../shared/widgets/score_ring.dart';
 import '../../shared/widgets/status_badge.dart';
 
@@ -87,17 +88,9 @@ class _ReportBody extends ConsumerWidget {
           GlowCard(
             child: Row(
               children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: AppColors.primarySoft,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
-                  ),
+                const GlowLogo(
+                  size: 56,
+                  variant: GlowLogoVariant.onGradient,
                 ),
                 const SizedBox(width: 16),
                 Expanded(

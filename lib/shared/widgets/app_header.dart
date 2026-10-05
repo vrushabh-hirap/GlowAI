@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
+import 'glow_logo.dart';
 import 'tappable.dart';
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -48,24 +49,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         child: isHomeHeader
             ? Row(
                 children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x0A000000),
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
-                    ),
+                  const GlowLogo(
+                    size: 42,
+                    variant: GlowLogoVariant.onGradient,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -140,23 +126,9 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                     leading!,
                     const SizedBox(width: 12),
                   ] else if (showLogo) ...[
-                    Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x14000000),
-                            blurRadius: 6,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset('assets/icon/icon.png', fit: BoxFit.cover),
-                      ),
+                    const GlowLogo(
+                      size: 36,
+                      variant: GlowLogoVariant.onGradient,
                     ),
                     const SizedBox(width: 12),
                   ],

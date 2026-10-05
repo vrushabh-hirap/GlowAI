@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    Concept B: Geometric G Monogram
+    Built as a single thick-stroke arc (the G body) + horizontal bar + small 4-pt spark accent.
+    All shapes white, transparent background.
+    G arc: center(502,510), radius=248, from 225° to 90° (going clockwise = gap at top-right)
+    Stroke-width=115 (~11.2% of canvas) for boldness.
+    Bar: horizontal pill from arc center-right to inner radius, at mid-height of G.
+    Spark: small, at the end of the G bar (right side, mid).
+  -->
+
+  <!-- G arc: large open arc, clockwise from ~225° to ~85° -->
+  <!-- Using path for precise control: start at bottom-left of G, sweep around counterclockwise leaving top-right open -->
+  <!-- Arc from ~215° to ~75° (leaves gap upper-right) via large arc sweep -->
+  <path
+    d="M 329 672
+       A 248 248 0 1 1 718 354"
+    fill="none"
+    stroke="white"
+    stroke-width="112"
+    stroke-linecap="round"
+  />
+
+  <!-- G crossbar: horizontal pill, from center-right inward toward center -->
+  <!-- Starts at ~x=502 (center of G) to ~x=670 (near inner edge of right arm) -->
+  <!-- y = 510 (vertical center of G) -->
+  <line
+    x1="508" y1="510"
+    x2="668" y2="510"
+    stroke="white"
+    stroke-width="100"
+    stroke-linecap="round"
+  />
+
+  <!-- 4-point sparkle accent at end of G bar (upper right, near the open end of G) -->
+  <!-- Position: ~(728, 354), scale: ~55px major arms, ~20px minor arms -->
+  <!-- Cubic bezier 4-pt star: arms along cardinal directions with concave waist -->
+  <path d="
+    M 728,297
+    C 728,297  720,330  728,354
+    C 736,330  728,297  728,297 Z
+    M 728,354
+    C 728,354  761,346  785,354
+    C 761,362  728,354  728,354 Z
+    M 728,354
+    C 728,354  736,378  728,411
+    C 720,378  728,354  728,354 Z
+    M 728,354
+    C 728,354  695,362  671,354
+    C 695,346  728,354  728,354 Z
+  " fill="white"/>
+</svg>

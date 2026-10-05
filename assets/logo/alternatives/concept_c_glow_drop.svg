@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    Concept C: Abstract Glow Drop
+    A solid teardrop/drop shape (no face) with a small 4-point spark cut out as negative space.
+    Drop: upright teardrop, tip at top (~y=195), widest at bottom (~y=720), rounded bottom.
+    Spark cutout: centered around (512, 430) — inside the drop, upper portion.
+  -->
+
+  <!-- Teardrop shape as filled path -->
+  <!-- Tip at top: (512, 200). Widens to circular base centered ~(512, 620) radius ~205 -->
+  <!-- Using cubic beziers for smooth shoulders -->
+  <path
+    d="M 512 200
+       C 512 200  640 340  640 580
+       A 160 160 0 1 1 384 580
+       C 384 340  512 200  512 200
+       Z"
+    fill="white"
+  />
+
+  <!-- 4-point spark negative space cutout (same shape but in pink — simulated by drawing pink star over white drop) -->
+  <!-- Spark at (512, 460), major arms 62px, minor arms 22px -->
+  <!-- We'll use a compound path or just layer a pink star on top -->
+  <!-- For SVG purity with transparent bg, use evenodd fill rule with compound path -->
+  <path
+    d="M 512 200
+       C 512 200  640 340  640 580
+       A 160 160 0 1 1 384 580
+       C 384 340  512 200  512 200
+       Z
+
+       M 512,396
+       C 512,396  504,428  512,460
+       C 520,428  512,396  512,396 Z
+       M 512,460
+       C 512,460  544,452  576,460
+       C 544,468  512,460  512,460 Z
+       M 512,460
+       C 512,460  520,492  512,524
+       C 504,492  512,460  512,460 Z
+       M 512,460
+       C 512,460  480,468  448,460
+       C 480,452  512,460  512,460 Z
+    "
+    fill="white"
+    fill-rule="evenodd"
+  />
+</svg>

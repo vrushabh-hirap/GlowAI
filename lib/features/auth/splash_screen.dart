@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_shadows.dart';
+import '../../shared/widgets/glow_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -58,25 +58,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Color(0xFFFFB3D1), Color(0xFFFF8FB8)],
-                    ),
-                    boxShadow: AppShadows.glow,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(32),
-                    child: Image.asset(
-                      'assets/icon/icon.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                const GlowLogo(
+                  size: 96,
+                  variant: GlowLogoVariant.onGradient,
                 ),
                 const SizedBox(height: 24),
                 const Text(
