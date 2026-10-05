@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/services/prep_timer_service.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
@@ -69,36 +69,37 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
   }
 
   Future<void> _cancelTimer() async {
+    final colors = context.appColors;
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (_) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 110),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: 40, height: 4,
               decoration: BoxDecoration(
-                color: AppColors.border,
+                color: colors.border,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Cancel Timer?',
               style: TextStyle(
                 fontFamily: 'Poppins', fontSize: 18, fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: colors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Your 30-minute timer will be reset. Scan results may be less accurate.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary),
+              style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: colors.textSecondary),
             ),
             const SizedBox(height: 24),
             Row(
@@ -112,7 +113,7 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
+                    style: ElevatedButton.styleFrom(backgroundColor: colors.danger),
                     onPressed: () => Navigator.pop(context, true),
                     child: const Text('Cancel', style: TextStyle(color: Colors.white)),
                   ),
@@ -134,38 +135,39 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
   }
 
   void _scanNowAnyway() {
+    final colors = context.appColors;
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (_) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 110),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: 40, height: 4,
               decoration: BoxDecoration(
-                color: AppColors.border, borderRadius: BorderRadius.circular(2),
+                color: colors.border, borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 20),
-            const Icon(CupertinoIcons.exclamationmark_triangle_fill,
-                color: AppColors.warning, size: 36),
+            Icon(CupertinoIcons.exclamationmark_triangle_fill,
+                color: colors.warning, size: 36),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Less Accurate Results',
               style: TextStyle(
                 fontFamily: 'Poppins', fontSize: 18, fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: colors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Skin type and oil readings are most accurate 30 minutes after washing, without any products. Scanning now may produce inaccurate oiliness and skin-type results.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary, height: 1.5),
+              style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: colors.textSecondary, height: 1.5),
             ),
             const SizedBox(height: 24),
             GlowButton(
@@ -202,8 +204,9 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: const AppHeader(
         title: 'Prepare Your Skin',
         subtitle: 'For an accurate scan',
@@ -221,19 +224,19 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
                   children: [
                     Container(
                       width: 52, height: 52,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primarySoft, shape: BoxShape.circle,
+                      decoration: BoxDecoration(
+                        color: colors.primarySoft, shape: BoxShape.circle,
                       ),
-                      child: const Icon(CupertinoIcons.sparkles,
-                          color: AppColors.primary, size: 28),
+                      child: Icon(CupertinoIcons.sparkles,
+                          color: colors.primary, size: 28),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Follow these steps for the most accurate skin analysis — especially for oil, skin type and tone readings.',
                         style: TextStyle(
                           fontFamily: 'Poppins', fontSize: 13,
-                          color: AppColors.textSecondary, height: 1.5,
+                          color: colors.textSecondary, height: 1.5,
                         ),
                       ),
                     ),
@@ -242,11 +245,11 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
               ),
               const SizedBox(height: 20),
 
-              const Text(
+              Text(
                 'Checklist',
                 style: TextStyle(
                   fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: colors.textPrimary,
                 ),
               ),
               const SizedBox(height: 12),
@@ -261,7 +264,7 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
 
               // Timer section
               if (_loading)
-                const Center(child: CircularProgressIndicator(color: AppColors.primary))
+                Center(child: CircularProgressIndicator(color: colors.primary))
               else if (_timerState == TimerState.ready)
                 _ReadyCard(onStartScan: () => context.push('/scan/consent', extra: {'prepared': true}))
               else if (_timerState == TimerState.running)
@@ -282,9 +285,9 @@ class _ScanPrepScreenState extends State<ScanPrepScreen> {
                 Center(
                   child: TextButton(
                     onPressed: _scanNowAnyway,
-                    child: const Text(
+                    child: Text(
                       'Scan now anyway',
-                      style: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary),
+                      style: TextStyle(fontFamily: 'Poppins', color: colors.textSecondary),
                     ),
                   ),
                 ),
@@ -324,6 +327,7 @@ class _PrepStepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GlowCard(
       padding: const EdgeInsets.all(14),
       child: Row(
@@ -332,11 +336,11 @@ class _PrepStepCard extends StatelessWidget {
           Container(
             width: 40, height: 40,
             decoration: BoxDecoration(
-              color: highlight ? AppColors.primarySoft : AppColors.surfaceMuted,
+              color: highlight ? colors.primarySoft : colors.surfaceMuted,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon,
-                color: highlight ? AppColors.primary : AppColors.textSecondary, size: 20),
+                color: highlight ? colors.primary : colors.textSecondary, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -346,13 +350,13 @@ class _PrepStepCard extends StatelessWidget {
                 Text(title,
                     style: TextStyle(
                       fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w600,
-                      color: highlight ? AppColors.primary : AppColors.textPrimary,
+                      color: highlight ? colors.primary : colors.textPrimary,
                     )),
                 const SizedBox(height: 2),
                 Text(subtitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Poppins', fontSize: 12,
-                      color: AppColors.textSecondary, height: 1.4,
+                      color: colors.textSecondary, height: 1.4,
                     )),
               ],
             ),
@@ -378,6 +382,7 @@ class _TimerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final progress = 1.0 - (remaining.inSeconds / (30 * 60)).clamp(0.0, 1.0);
 
     return GlowCard(
@@ -394,8 +399,8 @@ class _TimerCard extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: progress,
                     strokeWidth: 10,
-                    backgroundColor: AppColors.border,
-                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    backgroundColor: colors.border,
+                    valueColor: AlwaysStoppedAnimation<Color>(colors.primary),
                   ),
                 ),
                 Column(
@@ -403,14 +408,14 @@ class _TimerCard extends StatelessWidget {
                   children: [
                     Text(
                       format(remaining),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: colors.textPrimary,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'remaining',
-                      style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary),
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: colors.textSecondary),
                     ),
                   ],
                 ),
@@ -418,10 +423,10 @@ class _TimerCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Your skin is settling.\nWe\'ll notify you when ready.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary, height: 1.5),
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: colors.textSecondary, height: 1.5),
           ),
           const SizedBox(height: 20),
           TextButton.icon(
@@ -432,8 +437,8 @@ class _TimerCard extends StatelessWidget {
           const SizedBox(height: 4),
           TextButton(
             onPressed: onCancel,
-            child: const Text('Cancel timer',
-                style: TextStyle(color: AppColors.textSecondary)),
+            child: Text('Cancel timer',
+                style: TextStyle(color: colors.textSecondary)),
           ),
         ],
       ),
@@ -447,6 +452,7 @@ class _ReadyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GlowCard(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -458,18 +464,18 @@ class _ReadyCard extends StatelessWidget {
                 color: Color(0xFF34C38F), size: 40),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Ready to Scan! ✨',
             style: TextStyle(
               fontFamily: 'Poppins', fontSize: 20, fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+              color: colors.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Your skin has settled for 30 minutes. You\'re ready for an accurate GlowAI scan.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary, height: 1.5),
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: colors.textSecondary, height: 1.5),
           ),
           const SizedBox(height: 24),
           GlowButton(

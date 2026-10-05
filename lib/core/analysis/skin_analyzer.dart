@@ -210,6 +210,31 @@ class SkinAnalyzer {
       qualityScore: qualityResult.score,
     );
 
+    // Exclude eyes/eyebrows from lesion & dark-spot overlays (common false positives)
+    bool isInFeatureBox(List<Point2D> pts, Rect2D b, double pad) {
+      if (pts.isEmpty) return false;
+      double minX = pts.first.x, maxX = pts.first.x, minY = pts.first.y, maxY = pts.first.y;
+      for (final p in pts) {
+        if (p.x < minX) minX = p.x;
+        if (p.x > maxX) maxX = p.x;
+        if (p.y < minY) minY = p.y;
+        if (p.y > maxY) maxY = p.y;
+      }
+      final cx = b.left + b.width / 2;
+      final cy = b.top + b.height / 2;
+      return cx >= minX - pad && cx <= maxX + pad && cy >= minY - pad && cy <= maxY + pad;
+    }
+
+    bool isValidMarkerBox(Rect2D b) {
+      const pad = 12.0;
+      final inEyes = isInFeatureBox(face.leftEye, b, pad) || isInFeatureBox(face.rightEye, b, pad);
+      final inBrows = isInFeatureBox(face.leftEyebrowTop, b, pad) || isInFeatureBox(face.rightEyebrowTop, b, pad);
+      return !(inEyes || inBrows);
+    }
+
+    final filteredAcneBoxes = acneOutput.lesionBoxes.where(isValidMarkerBox).toList();
+    final filteredSpotBoxes = darkSpotsOutput.spotBoxes.where(isValidMarkerBox).toList();
+
     final pigmResult = PigmentationDetector.detect(
       lChannel: lChannel,
       bChannel: bChannel,
@@ -254,8 +279,8 @@ class SkinAnalyzer {
       width: width,
       height: height,
       regionMasks: regionMasks,
-      acneBoxes: acneOutput.lesionBoxes,
-      darkSpotBoxes: darkSpotsOutput.spotBoxes,
+      acneBoxes: filteredAcneBoxes,
+      darkSpotBoxes: filteredSpotBoxes,
       aChannel: aChannel,
       absoluteOutputDirectory: input.outputDirectoryPath,
       docsRootPath: input.docsRootPath,

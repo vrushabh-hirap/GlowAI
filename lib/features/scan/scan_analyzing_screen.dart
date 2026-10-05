@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/services/prep_timer_service.dart';
 import '../../core/services/scan_repository.dart';
 import '../../core/theme/app_colors.dart';
 
@@ -92,6 +93,9 @@ class _ScanAnalyzingScreenState extends ConsumerState<ScanAnalyzingScreen>
 
       // Save to Hive
       final saved = await repo.saveLocally(result, File(widget.imagePath));
+
+      // Reset the prep timer so the next scan starts fresh
+      await PrepTimerService.instance.cancelTimer();
 
       // Invalidate providers so Home/Report pick up new data
       ref.invalidate(latestScanProvider);

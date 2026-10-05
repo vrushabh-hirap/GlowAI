@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/services/auth_service.dart';
+import '../../core/theme/app_colors_extension.dart';
 import 'glow_logo.dart';
 import 'tappable.dart';
 
-class AppHeader extends StatelessWidget implements PreferredSizeWidget {
+class AppHeader extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final String? subtitle;
   final Widget? leading;
@@ -32,17 +34,20 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(isHomeHeader ? 74 : (subtitle != null ? 68 : 56));
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider);
+    final firstName = user.name.trim().isEmpty ? 'there' : user.name.trim().split(' ').first;
+    final colors = context.appColors;
     return SafeArea(
       bottom: false,
       child: Container(
         height: preferredSize.height,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: colors.background,
           border: showBottomBorder
-              ? const Border(
-                  bottom: BorderSide(color: AppColors.border, width: 1),
+              ? Border(
+                  bottom: BorderSide(color: colors.border, width: 1),
                 )
               : null,
         ),
@@ -60,11 +65,11 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Hello, Sophia 👋',
+                          'Hello, $firstName 👋',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
-                            color: AppColors.textPrimary,
+                            color: colors.textPrimary,
                             fontSize: 17,
                             fontWeight: FontWeight.w700,
                             height: 1.2,
@@ -76,7 +81,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
-                            color: AppColors.textSecondary,
+                            color: colors.textSecondary,
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
@@ -89,16 +94,16 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                     child: Container(
                       width: 42,
                       height: 42,
-                      decoration: const BoxDecoration(
-                        color: AppColors.surfaceMuted,
+                      decoration: BoxDecoration(
+                        color: colors.surfaceMuted,
                         shape: BoxShape.circle,
                       ),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.notifications_none_rounded,
-                            color: AppColors.textPrimary,
+                            color: colors.textPrimary,
                             size: 22,
                           ),
                           if (hasUnreadNotification)
@@ -108,8 +113,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                               child: Container(
                                 width: 8,
                                 height: 8,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.primary,
+                                decoration: BoxDecoration(
+                                  color: colors.primary,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -142,7 +147,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
-                            color: AppColors.textPrimary,
+                            color: colors.textPrimary,
                             fontSize: subtitle != null ? 18 : 20,
                             fontWeight: FontWeight.w600,
                           ),
@@ -154,7 +159,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.poppins(
-                              color: AppColors.textSecondary,
+                              color: colors.textSecondary,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),

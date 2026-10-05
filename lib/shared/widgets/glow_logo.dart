@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 /// Variant of the GlowAI logo to display.
 enum GlowLogoVariant {
@@ -60,17 +60,14 @@ class _GradientMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final r = borderRadius ?? size * 0.235;
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(r),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFFF8DBA), Color(0xFFE5488A)],
-        ),
+        gradient: colors.primaryGradient,
       ),
       child: Padding(
         // symbol occupies 66% of tile = 17% padding each side
@@ -91,12 +88,13 @@ class _PinkMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return SizedBox(
       width: size,
       height: size,
       child: SvgPicture.asset(
         'assets/logo/glowai_mark.svg',
-        colorFilter: const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
+        colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
         fit: BoxFit.contain,
       ),
     );
@@ -109,6 +107,7 @@ class _LockupMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final markSize = size;
     final fontSize = size * 0.38;
     return Column(
@@ -125,7 +124,7 @@ class _LockupMark extends StatelessWidget {
                   fontFamily: 'Poppins',
                   fontSize: fontSize,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: colors.textPrimary,
                   letterSpacing: -0.5,
                 ),
               ),
@@ -135,7 +134,7 @@ class _LockupMark extends StatelessWidget {
                   fontFamily: 'Poppins',
                   fontSize: fontSize,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
+                  color: colors.primary,
                   letterSpacing: -0.5,
                 ),
               ),

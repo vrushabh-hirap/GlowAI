@@ -28,6 +28,7 @@ class ShopScreen extends ConsumerStatefulWidget {
 class _ShopScreenState extends ConsumerState<ShopScreen> {
   String _selectedCategory = 'All';
   String _selectedTier = 'All'; // 'All', 'Budget', 'Mid', 'Premium'
+  String _selectedSkinType = 'All'; // 'All', 'Oily', 'Dry', 'Combination', 'Normal', 'Sensitive'
   String _searchQuery = '';
   Timer? _debounceTimer;
 
@@ -95,6 +96,13 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
       // Tier Filter
       if (_selectedTier != 'All') {
         if (p.tier.toLowerCase() != _selectedTier.toLowerCase()) return false;
+      }
+      // Skin Type Filter
+      if (_selectedSkinType != 'All') {
+        if (p.suitableSkinTypes.isNotEmpty &&
+            !p.suitableSkinTypes.map((s) => s.toLowerCase()).contains(_selectedSkinType.toLowerCase())) {
+          return false;
+        }
       }
       // Search Query
       if (_searchQuery.trim().isNotEmpty) {
@@ -267,6 +275,35 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                   ),
                 ),
 
+                // Skin Type Filter Chips
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                  child: Row(
+                    children: ['All', 'Oily', 'Dry', 'Combination', 'Normal', 'Sensitive'].map((st) {
+                      final isSel = _selectedSkinType == st;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: ChoiceChip(
+                          label: Text('Skin: $st'),
+                          selected: isSel,
+                          onSelected: (_) {
+                            setState(() => _selectedSkinType = st);
+                            _applyFilters();
+                          },
+                          selectedColor: AppColors.primary,
+                          backgroundColor: Colors.grey.shade100,
+                          labelStyle: TextStyle(
+                            fontSize: 11,
+                            color: isSel ? Colors.white : AppColors.textSecondary,
+                            fontWeight: isSel ? FontWeight.bold : FontWeight.normal,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
                 // Category Filter Chips
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -319,15 +356,26 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                                         Container(
                                           height: 100,
                                           width: double.infinity,
+                                          clipBehavior: Clip.antiAlias,
                                           decoration: BoxDecoration(
                                             color: AppColors.primarySoft.withValues(alpha: 0.4),
                                             borderRadius: BorderRadius.circular(12),
                                           ),
-                                          child: Icon(
-                                            _getCategoryIcon(item.category),
-                                            size: 40,
-                                            color: AppColors.primary,
-                                          ),
+                                          child: item.image != null && item.image!.isNotEmpty
+                                              ? Image.network(
+                                                  item.image!,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (_, __, ___) => Icon(
+                                                    _getCategoryIcon(item.category),
+                                                    size: 40,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                )
+                                              : Icon(
+                                                  _getCategoryIcon(item.category),
+                                                  size: 40,
+                                                  color: AppColors.primary,
+                                                ),
                                         ),
                                         Positioned(
                                           top: 6,

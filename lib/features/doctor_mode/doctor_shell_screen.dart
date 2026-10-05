@@ -46,18 +46,13 @@ class DoctorShellScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
+      body: Column(
         children: [
-          Positioned.fill(child: navigationShell),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: AppleTabBar(
-              currentIndex: navigationShell.currentIndex,
-              onTap: _onTap,
-              items: _doctorNavItems,
-            ),
+          Expanded(child: navigationShell),
+          AppleTabBar(
+            currentIndex: navigationShell.currentIndex,
+            onTap: _onTap,
+            items: _doctorNavItems,
           ),
         ],
       ),

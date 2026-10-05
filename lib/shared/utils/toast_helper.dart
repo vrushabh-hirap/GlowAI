@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 void showAppToast(BuildContext context, String message) {
+  final colors = context.appColors;
   final messenger = ScaffoldMessenger.of(context);
   messenger.hideCurrentSnackBar();
 
@@ -9,7 +10,7 @@ void showAppToast(BuildContext context, String message) {
     SnackBar(
       behavior: SnackBarBehavior.floating,
       elevation: 4,
-      backgroundColor: AppColors.textPrimary, // #241F2A
+      backgroundColor: colors.textPrimary,
       duration: const Duration(seconds: 2),
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 90),
       shape: RoundedRectangleBorder(

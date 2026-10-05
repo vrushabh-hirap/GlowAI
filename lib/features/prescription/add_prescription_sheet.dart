@@ -320,22 +320,22 @@ class _AddPrescriptionSheetState extends ConsumerState<AddPrescriptionSheet> {
 
                     // Attachments Section
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Paper Prescription Attachments', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.camera_alt_outlined, color: AppColors.primary),
-                              onPressed: _pickAttachment,
-                              tooltip: 'Attach Image',
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.picture_as_pdf_outlined, color: AppColors.primary),
-                              onPressed: _pickPdf,
-                              tooltip: 'Attach PDF',
-                            ),
-                          ],
+                        Expanded(
+                          child: const Text(
+                            'Paper Prescription Attachments',
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.camera_alt_outlined, color: AppColors.primary),
+                          onPressed: _pickAttachment,
+                          tooltip: 'Attach Image',
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.picture_as_pdf_outlined, color: AppColors.primary),
+                          onPressed: _pickPdf,
+                          tooltip: 'Attach PDF',
                         ),
                       ],
                     ),

@@ -10,3 +10,5 @@ mediapipe
 pydantic
 pytest
 httpx
+gspread
+python-dotenv

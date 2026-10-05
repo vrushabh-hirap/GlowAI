@@ -197,7 +197,8 @@ class RegionsBuilder {
     }
     _rasterizePolygon(chinPoly, chinMask, imageWidth, imageHeight);
 
-    // 6. Exclude eyes, lips, eyebrows
+    // 6. Exclude eyes, lips, eyebrows (also clear a padded box around them,
+    //    since ML Kit contours can be noisy or empty on some photos)
     final exclusionMask = Uint8List(count);
     if (face.leftEye.isNotEmpty) _rasterizePolygon(face.leftEye, exclusionMask, imageWidth, imageHeight);
     if (face.rightEye.isNotEmpty) _rasterizePolygon(face.rightEye, exclusionMask, imageWidth, imageHeight);
@@ -206,6 +207,32 @@ class RegionsBuilder {
     if (face.upperLipTop.isNotEmpty && face.lowerLipBottom.isNotEmpty) {
       _rasterizePolygon([...face.upperLipTop, ...face.lowerLipBottom.reversed], exclusionMask, imageWidth, imageHeight);
     }
+
+    void clearPaddedFeatureBox(List<Point2D> pts) {
+      if (pts.isEmpty) return;
+      double minX = pts.first.x, maxX = pts.first.x, minY = pts.first.y, maxY = pts.first.y;
+      for (final p in pts) {
+        if (p.x < minX) minX = p.x;
+        if (p.x > maxX) maxX = p.x;
+        if (p.y < minY) minY = p.y;
+        if (p.y > maxY) maxY = p.y;
+      }
+      const pad = 8.0;
+      final y0 = (minY - pad).round().clamp(0, imageHeight - 1);
+      final y1 = (maxY + pad).round().clamp(0, imageHeight - 1);
+      final x0 = (minX - pad).round().clamp(0, imageWidth - 1);
+      final x1 = (maxX + pad).round().clamp(0, imageWidth - 1);
+      for (int y = y0; y <= y1; y++) {
+        for (int x = x0; x <= x1; x++) {
+          exclusionMask[y * imageWidth + x] = 255;
+        }
+      }
+    }
+
+    clearPaddedFeatureBox(face.leftEye);
+    clearPaddedFeatureBox(face.rightEye);
+    clearPaddedFeatureBox(face.leftEyebrowTop);
+    clearPaddedFeatureBox(face.rightEyebrowTop);
 
     // Combine into Cheeks, T-Zone, and All Valid Skin
     for (int i = 0; i < count; i++) {

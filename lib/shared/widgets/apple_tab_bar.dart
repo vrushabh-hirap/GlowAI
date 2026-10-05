@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 class AppleTabItemData {
   final IconData activeIcon;
@@ -33,6 +33,7 @@ class AppleTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final bottomPadding = MediaQuery.paddingOf(context).bottom;
 
     return Padding(
@@ -48,15 +49,15 @@ class AppleTabBar extends StatelessWidget {
           child: Container(
             height: 64,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.88),
+              color: colors.surface.withValues(alpha: 0.88),
               borderRadius: BorderRadius.circular(32),
               border: Border.all(
-                color: AppColors.border.withValues(alpha: 0.7),
+                color: colors.border.withValues(alpha: 0.7),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.12),
+                  color: colors.primary.withValues(alpha: 0.12),
                   blurRadius: 24,
                   spreadRadius: 0,
                   offset: const Offset(0, 8),
@@ -126,8 +127,8 @@ class _TabItemState extends State<_TabItem>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic),
     );
     _colorAnim = ColorTween(
-      begin: AppColors.textSecondary,
-      end: AppColors.primary,
+      begin: Colors.grey,
+      end: Colors.pink,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     if (widget.isSelected) _controller.value = 1.0;
@@ -151,6 +152,7 @@ class _TabItemState extends State<_TabItem>
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Expanded(
       child: GestureDetector(
         onTap: widget.onTap,
@@ -158,7 +160,7 @@ class _TabItemState extends State<_TabItem>
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, _) {
-            final color = _colorAnim.value ?? AppColors.textSecondary;
+            final color = _colorAnim.value ?? colors.textSecondary;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -167,7 +169,7 @@ class _TabItemState extends State<_TabItem>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                   decoration: BoxDecoration(
-                    color: AppColors.primarySoft.withValues(alpha: _pillAnim.value),
+                    color: colors.primarySoft.withValues(alpha: _pillAnim.value),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: ScaleTransition(

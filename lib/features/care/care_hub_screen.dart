@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/repositories/care_repositories.dart';
 import '../../core/services/scan_repository.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/glow_card.dart';
 import 'skin_profile_sheet.dart';
@@ -26,13 +26,13 @@ class CareHubScreen extends ConsumerWidget {
     final entitlementRepo = ref.watch(entitlementRepositoryProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.appColors.background,
       appBar: AppHeader(
         title: 'Care & Beauty Hub',
         subtitle: 'Personalized Beauty & Health',
         actions: [
           IconButton(
-            icon: const Icon(CupertinoIcons.slider_horizontal_3, color: AppColors.primary),
+            icon: Icon(CupertinoIcons.slider_horizontal_3, color: context.appColors.primary),
             tooltip: 'Your Skin Profile',
             onPressed: () => SkinProfileSheet.show(context),
           ),
@@ -49,18 +49,18 @@ class CareHubScreen extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceMuted,
+                  color: context.appColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                  border: Border.all(color: context.appColors.primary.withValues(alpha: 0.3)),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(CupertinoIcons.info_circle_fill, color: AppColors.primary, size: 18),
-                    SizedBox(width: 10),
+                    Icon(CupertinoIcons.info_circle_fill, color: context.appColors.primary, size: 18),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         'Pregnancy safety filter active: Retinoids and high-dose acids filtered out.',
-                        style: TextStyle(fontFamily: 'Poppins', fontSize: 11, color: AppColors.textPrimary, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontFamily: 'Poppins', fontSize: 11, color: context.appColors.textPrimary, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -248,6 +248,7 @@ class _CareFeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GlowCard(
       onTap: onTap,
       padding: const EdgeInsets.all(14),
@@ -257,10 +258,10 @@ class _CareFeatureTile extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.surfaceMuted,
+              color: colors.surfaceMuted,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 20),
+            child: Icon(icon, color: colors.primary, size: 20),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -271,11 +272,11 @@ class _CareFeatureTile extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: colors.textPrimary,
                       ),
                     ),
                     if (badgeText != null) ...[
@@ -283,16 +284,16 @@ class _CareFeatureTile extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.12),
+                          color: colors.primary.withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           badgeText!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 9,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
+                            color: colors.primary,
                           ),
                         ),
                       ),
@@ -302,16 +303,16 @@ class _CareFeatureTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 11,
-                    color: AppColors.textSecondary,
+                    color: colors.textSecondary,
                   ),
                 ),
               ],
             ),
           ),
-          const Icon(CupertinoIcons.chevron_right, size: 14, color: AppColors.textHint),
+          Icon(CupertinoIcons.chevron_right, size: 14, color: colors.textHint),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 enum BadgeType { severity, risk, status }
 
@@ -13,21 +13,22 @@ class StatusBadge extends StatelessWidget {
     this.type = BadgeType.severity,
   });
 
-  Color get _color {
+  Color _color(BuildContext context) {
+    final colors = context.appColors;
     final l = label.toLowerCase();
     if (l.contains('mild') || l.contains('low') || l.contains('completed') || l.contains('booked')) {
-      return AppColors.success;
+      return colors.success;
     } else if (l.contains('moderate') || l.contains('medium')) {
-      return AppColors.warning;
+      return colors.warning;
     } else if (l.contains('severe') || l.contains('high') || l.contains('cancelled')) {
-      return AppColors.danger;
+      return colors.danger;
     }
-    return AppColors.primaryDark;
+    return colors.primaryDark;
   }
 
   @override
   Widget build(BuildContext context) {
-    final color = _color;
+    final color = _color(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(

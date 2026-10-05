@@ -61,6 +61,20 @@ class NotificationService {
     );
 
     _isInitialized = true;
+
+    // Create notification channels (Android 8+ requires them)
+    final androidPlugin = _notifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    final channels = [
+      AndroidNotificationChannel('glow_ai_general', 'General Alerts', description: 'General GlowAI alerts', importance: Importance.high),
+      AndroidNotificationChannel('glow_ai_routine', 'Skincare Routines', description: 'Skincare routine reminders', importance: Importance.high),
+      AndroidNotificationChannel('glow_ai_medicine', 'Medicine Doses', description: 'Medicine reminders', importance: Importance.max),
+      AndroidNotificationChannel('glow_ai_rescan', 'Rescan Reminders', description: 'Face rescan reminders', importance: Importance.high),
+      AndroidNotificationChannel('glow_ai_custom', 'Custom Reminders', description: 'Custom reminders', importance: Importance.high),
+    ];
+    for (final c in channels) {
+      await androidPlugin?.createNotificationChannel(c);
+    }
   }
 
   /// Request Notification Permissions (Android 13+ and iOS)
@@ -91,6 +105,7 @@ class NotificationService {
 
   /// Schedule an AppReminder entity
   Future<void> scheduleReminder(AppReminder reminder) async {
+    await init();
     if (!reminder.isEnabled) {
       await cancelReminder(reminder.id);
       return;
@@ -141,6 +156,7 @@ class NotificationService {
 
   /// Schedule a 5-second test notification
   Future<void> scheduleTestNotification() async {
+    await init();
     const androidDetails = AndroidNotificationDetails(
       'glow_ai_general',
       'General Alerts',
@@ -161,7 +177,7 @@ class NotificationService {
       'Your skincare & health alerts are working perfectly!',
       scheduledTime,
       notificationDetails,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );

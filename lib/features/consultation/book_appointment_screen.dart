@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../core/mock/mock_data.dart';
 import '../../core/services/appointment_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/appointment_model.dart';
+import '../../models/doctor_model.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/chip_tag.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
+import 'doctors_provider.dart';
 
 class BookAppointmentScreen extends ConsumerStatefulWidget {
   final String doctorId;
@@ -28,9 +29,19 @@ class _BookAppointmentScreenState extends ConsumerState<BookAppointmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final doctor = MockData.doctors.firstWhere(
+    final doctors = ref.watch(doctorsProvider).valueOrNull ?? const <DoctorModel>[];
+    final list = doctors;
+    if (list.isEmpty) {
+      return AppScaffold(
+        title: 'Book Appointment',
+        body: Center(
+          child: Text('Doctor not found.', style: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary)),
+        ),
+      );
+    }
+    final doctor = list.firstWhere(
       (d) => d.id == widget.doctorId,
-      orElse: () => MockData.doctors.first,
+      orElse: () => list.first,
     );
 
     return AppScaffold(

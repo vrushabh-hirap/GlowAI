@@ -9,18 +9,37 @@
     "price_max_inr": 399,
     "price_checked_at": "2026-10-01",
     "size": "125 ml",
-    "key_ingredients": ["Niacinamide", "Panthenol", "Glycerin"],
-    "suitable_skin_types": ["Dry", "Sensitive", "Normal", "Combination"],
-    "concerns": ["Redness", "Dryness", "Sensitivity"],
+    "key_ingredients": [
+      "Niacinamide",
+      "Panthenol",
+      "Glycerin"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Sensitive",
+      "Normal",
+      "Combination"
+    ],
+    "concerns": [
+      "Redness",
+      "Dryness",
+      "Sensitivity"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Dermatologist recommended for sensitive and dry skin."
+    "notes": "Dermatologist recommended for sensitive and dry skin.",
+    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80"
   },
   {
     "id": "prod_derma_co_salicylic_cleanser",
@@ -32,18 +51,34 @@
     "price_max_inr": 299,
     "price_checked_at": "2026-10-01",
     "size": "100 ml",
-    "key_ingredients": ["Salicylic Acid 1%", "Witch Hazel", "Niacinamide"],
-    "suitable_skin_types": ["Oily", "Combination"],
-    "concerns": ["Acne", "Dark Spots", "Texture"],
+    "key_ingredients": [
+      "Salicylic Acid 1%",
+      "Witch Hazel",
+      "Niacinamide"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination"
+    ],
+    "concerns": [
+      "Acne",
+      "Dark Spots",
+      "Texture"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Unclogs pores and prevents acne breakouts."
+    "notes": "Unclogs pores and prevents acne breakouts.",
+    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80"
   },
   {
     "id": "prod_minimalist_niacinamide_10",
@@ -55,18 +90,36 @@
     "price_max_inr": 599,
     "price_checked_at": "2026-10-01",
     "size": "30 ml",
-    "key_ingredients": ["Niacinamide 10%", "Zinc PCA 1%", "Matmarine"],
-    "suitable_skin_types": ["Oily", "Combination", "Normal"],
-    "concerns": ["Acne", "Redness", "Pigmentation"],
+    "key_ingredients": [
+      "Niacinamide 10%",
+      "Zinc PCA 1%",
+      "Matmarine"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal"
+    ],
+    "concerns": [
+      "Acne",
+      "Redness",
+      "Pigmentation"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Controls sebum production and improves texture."
+    "notes": "Controls sebum production and improves texture.",
+    "image": "https://images.unsplash.com/photo-1620916566398-405bb9b5beb7?w=600&q=80"
   },
   {
     "id": "prod_minimalist_ha_2",
@@ -78,18 +131,35 @@
     "price_max_inr": 599,
     "price_checked_at": "2026-10-01",
     "size": "30 ml",
-    "key_ingredients": ["Multi-Molecular Hyaluronic Acid 2%", "Polyglutamic Acid", "Aloe Vera"],
-    "suitable_skin_types": ["Dry", "Normal", "Combination", "Sensitive"],
-    "concerns": ["Dryness", "Texture"],
+    "key_ingredients": [
+      "Multi-Molecular Hyaluronic Acid 2%",
+      "Polyglutamic Acid",
+      "Aloe Vera"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Normal",
+      "Combination",
+      "Sensitive"
+    ],
+    "concerns": [
+      "Dryness",
+      "Texture"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Multi-depth hydration for plump, soft skin."
+    "notes": "Multi-depth hydration for plump, soft skin.",
+    "image": "https://images.unsplash.com/photo-1620916566398-405bb9b5beb7?w=600&q=80"
   },
   {
     "id": "prod_dot_key_cica_gel",
@@ -101,18 +171,36 @@
     "price_max_inr": 445,
     "price_checked_at": "2026-10-01",
     "size": "60 ml",
-    "key_ingredients": ["Cica (Centella Asiatica)", "Niacinamide", "Hyaluronic Acid"],
-    "suitable_skin_types": ["Oily", "Combination", "Sensitive"],
-    "concerns": ["Acne", "Redness", "Dryness"],
+    "key_ingredients": [
+      "Cica (Centella Asiatica)",
+      "Niacinamide",
+      "Hyaluronic Acid"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Sensitive"
+    ],
+    "concerns": [
+      "Acne",
+      "Redness",
+      "Dryness"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Ultra-light oil-free hydration that soothes acne inflammation."
+    "notes": "Ultra-light oil-free hydration that soothes acne inflammation.",
+    "image": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80"
   },
   {
     "id": "prod_cerave_moisturizing_cream",
@@ -124,18 +212,33 @@
     "price_max_inr": 799,
     "price_checked_at": "2026-10-01",
     "size": "177 ml",
-    "key_ingredients": ["Essential Ceramides 1, 3, 6-II", "Hyaluronic Acid"],
-    "suitable_skin_types": ["Dry", "Sensitive", "Normal"],
-    "concerns": ["Dryness", "Redness"],
+    "key_ingredients": [
+      "Essential Ceramides 1, 3, 6-II",
+      "Hyaluronic Acid"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Sensitive",
+      "Normal"
+    ],
+    "concerns": [
+      "Dryness",
+      "Redness"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Restores and protects the natural skin barrier."
+    "notes": "Restores and protects the natural skin barrier.",
+    "image": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80"
   },
   {
     "id": "prod_neutrogena_dry_touch_spf50",
@@ -147,19 +250,38 @@
     "price_max_inr": 750,
     "price_checked_at": "2026-10-01",
     "size": "88 ml",
-    "key_ingredients": ["Helioplex Technology", "Avobenzone", "Oxybenzone"],
-    "suitable_skin_types": ["Oily", "Combination", "Normal"],
-    "concerns": ["Pigmentation", "Dark Spots"],
-    "avoid_if": ["pregnancy"],
+    "key_ingredients": [
+      "Helioplex Technology",
+      "Avobenzone",
+      "Oxybenzone"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal"
+    ],
+    "concerns": [
+      "Pigmentation",
+      "Dark Spots"
+    ],
+    "avoid_if": [
+      "pregnancy"
+    ],
     "flags": {
       "fragrance_free": false,
       "non_comedogenic": true,
       "spf": true,
       "pa_rating": "PA++++"
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Matte finish broad spectrum sun protection."
+    "notes": "Matte finish broad spectrum sun protection.",
+    "image": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80"
   },
   {
     "id": "prod_requil_ultra_matte_spf50",
@@ -171,9 +293,21 @@
     "price_max_inr": 850,
     "price_checked_at": "2026-10-01",
     "size": "50 g",
-    "key_ingredients": ["Zinc Oxide", "Titanium Dioxide", "Silica"],
-    "suitable_skin_types": ["Oily", "Combination", "Sensitive"],
-    "concerns": ["Acne", "Redness", "Pigmentation"],
+    "key_ingredients": [
+      "Zinc Oxide",
+      "Titanium Dioxide",
+      "Silica"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Sensitive"
+    ],
+    "concerns": [
+      "Acne",
+      "Redness",
+      "Pigmentation"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
@@ -182,9 +316,14 @@
       "pa_rating": "PA++++",
       "mineral_filter": true
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Water resistant, non-greasy, velvety matte sunscreen."
+    "notes": "Water resistant, non-greasy, velvety matte sunscreen.",
+    "image": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80"
   },
   {
     "id": "prod_maybelline_fit_me_foundation",
@@ -196,67 +335,134 @@
     "price_max_inr": 599,
     "price_checked_at": "2026-10-01",
     "size": "30 ml",
-    "key_ingredients": ["Micro-powders", "Clay"],
-    "suitable_skin_types": ["Oily", "Combination", "Normal"],
-    "concerns": ["Texture", "Acne"],
+    "key_ingredients": [
+      "Micro-powders",
+      "Clay"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal"
+    ],
+    "concerns": [
+      "Texture",
+      "Acne"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "shade_families": ["Fair Warm", "Fair Neutral", "Light Warm", "Light Neutral", "Light-Medium Warm", "Medium Warm", "Medium Neutral", "Tan Warm", "Deep Warm"],
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "shade_families": [
+      "Fair Warm",
+      "Fair Neutral",
+      "Light Warm",
+      "Light Neutral",
+      "Light-Medium Warm",
+      "Medium Warm",
+      "Medium Neutral",
+      "Tan Warm",
+      "Deep Warm"
+    ],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Natural seamless coverage for everyday matte finish."
+    "notes": "Natural seamless coverage for everyday matte finish.",
+    "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80"
   },
   {
     "id": "prod_loreal_infallible_concealer",
     "name": "Infallible Full Wear More Than Concealer",
-    "brand": "L'Oréal Paris",
+    "brand": "L'Or\u00e9al Paris",
     "category": "Concealer",
     "tier": "Mid",
     "price_min_inr": 799,
     "price_max_inr": 899,
     "price_checked_at": "2026-10-01",
     "size": "10 ml",
-    "key_ingredients": ["Elastic stretch formula"],
-    "suitable_skin_types": ["Oily", "Combination", "Normal", "Dry"],
-    "concerns": ["Dark Spots", "Redness"],
+    "key_ingredients": [
+      "Elastic stretch formula"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal",
+      "Dry"
+    ],
+    "concerns": [
+      "Dark Spots",
+      "Redness"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "shade_families": ["Fair Cool", "Light Warm", "Light-Medium Neutral", "Medium Warm", "Tan Warm"],
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "shade_families": [
+      "Fair Cool",
+      "Light Warm",
+      "Light-Medium Neutral",
+      "Medium Warm",
+      "Tan Warm"
+    ],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Full coverage concealer that hides dark circles and blemishes."
+    "notes": "Full coverage concealer that hides dark circles and blemishes.",
+    "image": "https://images.unsplash.com/photo-1599305090598-fe179d501227?w=600&q=80"
   },
   {
     "id": "prod_lakme_9to5_primer",
     "name": "9 to 5 Primer + Matte Perfect Cover Foundation",
-    "brand": "Lakmé",
+    "brand": "Lakm\u00e9",
     "category": "Foundation",
     "tier": "Budget",
     "price_min_inr": 450,
     "price_max_inr": 500,
     "price_checked_at": "2026-10-01",
     "size": "25 ml",
-    "key_ingredients": ["Built-in primer", "SPF 20"],
-    "suitable_skin_types": ["Normal", "Combination", "Oily"],
-    "concerns": ["Texture"],
+    "key_ingredients": [
+      "Built-in primer",
+      "SPF 20"
+    ],
+    "suitable_skin_types": [
+      "Normal",
+      "Combination",
+      "Oily"
+    ],
+    "concerns": [
+      "Texture"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": false,
       "non_comedogenic": true,
       "spf": true
     },
-    "shade_families": ["Light Warm", "Light-Medium Warm", "Medium Warm", "Tan Warm"],
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "shade_families": [
+      "Light Warm",
+      "Light-Medium Warm",
+      "Medium Warm",
+      "Tan Warm"
+    ],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Built-in primer for long-lasting office wear."
+    "notes": "Built-in primer for long-lasting office wear.",
+    "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80"
   },
   {
     "id": "prod_clinique_moisture_surge",
@@ -268,18 +474,36 @@
     "price_max_inr": 2950,
     "price_checked_at": "2026-10-01",
     "size": "30 ml",
-    "key_ingredients": ["Aloe Bio-Ferment", "Hyaluronic Acid", "Activated Aloe Water"],
-    "suitable_skin_types": ["Dry", "Normal", "Combination", "Sensitive"],
-    "concerns": ["Dryness", "Redness", "Texture"],
+    "key_ingredients": [
+      "Aloe Bio-Ferment",
+      "Hyaluronic Acid",
+      "Activated Aloe Water"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Normal",
+      "Combination",
+      "Sensitive"
+    ],
+    "concerns": [
+      "Dryness",
+      "Redness",
+      "Texture"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
     "verified": true,
-    "notes": "Luxury oil-free gel-cream with 100-hour moisture lock."
+    "notes": "Luxury oil-free gel-cream with 100-hour moisture lock.",
+    "image": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80"
   },
   {
     "id": "prod_mac_studio_fix_foundation",
@@ -291,19 +515,54 @@
     "price_max_inr": 3600,
     "price_checked_at": "2026-10-01",
     "size": "30 ml",
-    "key_ingredients": ["Silica", "Sugar Kelp Extract"],
-    "suitable_skin_types": ["Oily", "Combination", "Normal", "Dry"],
-    "concerns": ["Acne", "Texture", "Pigmentation"],
+    "key_ingredients": [
+      "Silica",
+      "Sugar Kelp Extract"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal",
+      "Dry"
+    ],
+    "concerns": [
+      "Acne",
+      "Texture",
+      "Pigmentation"
+    ],
     "avoid_if": [],
     "flags": {
       "fragrance_free": true,
       "non_comedogenic": true,
       "spf": true
     },
-    "shade_families": ["Fair Warm", "Fair Neutral", "Fair Cool", "Light Warm", "Light Neutral", "Light Cool", "Light-Medium Warm", "Light-Medium Neutral", "Light-Medium Cool", "Medium Warm", "Medium Neutral", "Medium Cool", "Tan Warm", "Tan Neutral", "Tan Cool", "Deep Warm", "Deep Neutral", "Deep Cool"],
-    "retailers": ["Nykaa", "Amazon"],
+    "shade_families": [
+      "Fair Warm",
+      "Fair Neutral",
+      "Fair Cool",
+      "Light Warm",
+      "Light Neutral",
+      "Light Cool",
+      "Light-Medium Warm",
+      "Light-Medium Neutral",
+      "Light-Medium Cool",
+      "Medium Warm",
+      "Medium Neutral",
+      "Medium Cool",
+      "Tan Warm",
+      "Tan Neutral",
+      "Tan Cool",
+      "Deep Warm",
+      "Deep Neutral",
+      "Deep Cool"
+    ],
+    "retailers": [
+      "Nykaa",
+      "Amazon"
+    ],
     "verified": true,
-    "notes": "24-hour wear 67-shade professional foundation."
+    "notes": "24-hour wear 67-shade professional foundation.",
+    "image": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80"
   },
   {
     "id": "prod_sugar_blush",
@@ -315,8 +574,15 @@
     "price_max_inr": 399,
     "price_checked_at": "2026-10-01",
     "size": "4 g",
-    "key_ingredients": ["Micronized Pigments"],
-    "suitable_skin_types": ["Oily", "Dry", "Combination", "Normal"],
+    "key_ingredients": [
+      "Micronized Pigments"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Dry",
+      "Combination",
+      "Normal"
+    ],
     "concerns": [],
     "avoid_if": [],
     "flags": {
@@ -324,10 +590,22 @@
       "non_comedogenic": true,
       "spf": false
     },
-    "shade_families": ["Fair Warm", "Light Warm", "Medium Warm", "Tan Warm", "Deep Warm"],
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "shade_families": [
+      "Fair Warm",
+      "Light Warm",
+      "Medium Warm",
+      "Tan Warm",
+      "Deep Warm"
+    ],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "Buildable matte velvet powder blush."
+    "notes": "Buildable matte velvet powder blush.",
+    "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80"
   },
   {
     "id": "prod_maybelline_hypercurl_mascara",
@@ -339,8 +617,15 @@
     "price_max_inr": 449,
     "price_checked_at": "2026-10-01",
     "size": "9.2 ml",
-    "key_ingredients": ["Curl-lock polymer"],
-    "suitable_skin_types": ["Oily", "Dry", "Combination", "Normal"],
+    "key_ingredients": [
+      "Curl-lock polymer"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Dry",
+      "Combination",
+      "Normal"
+    ],
     "concerns": [],
     "avoid_if": [],
     "flags": {
@@ -348,8 +633,333 @@
       "non_comedogenic": true,
       "spf": false
     },
-    "retailers": ["Nykaa", "Amazon", "Flipkart", "Purplle"],
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
     "verified": true,
-    "notes": "18-hour waterproof curl mascara."
+    "notes": "18-hour waterproof curl mascara.",
+    "image": "https://images.unsplash.com/photo-1631730486572-226d1f595b68?w=600&q=80"
+  },
+  {
+    "id": "prod_plum_aha_bha_toner",
+    "name": "Green Tea Pore Cleansing Toner",
+    "brand": "Plum",
+    "category": "Toner",
+    "tier": "Budget",
+    "price_min_inr": 275,
+    "price_max_inr": 325,
+    "price_checked_at": "2026-10-01",
+    "size": "200 ml",
+    "key_ingredients": [
+      "Green Tea",
+      "Willow Bark",
+      "Lemon"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination"
+    ],
+    "concerns": [
+      "Oiliness",
+      "Acne",
+      "Pores"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": false,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
+    "verified": true,
+    "notes": "Light gel toner for oily and acne-prone skin.",
+    "image": "https://images.unsplash.com/photo-1617897903246-719242758050?w=600&q=80"
+  },
+  {
+    "id": "prod_klairs_toner",
+    "name": "Supple Preparation Unscented Toner",
+    "brand": "Klairs'",
+    "category": "Toner",
+    "tier": "Mid",
+    "price_min_inr": 1290,
+    "price_max_inr": 1490,
+    "price_checked_at": "2026-10-01",
+    "size": "180 ml",
+    "key_ingredients": [
+      "Aloe Vera",
+      "Hyaluronic Acid",
+      "Ceramides"
+    ],
+    "suitable_skin_types": [
+      "Sensitive",
+      "Dry",
+      "Normal",
+      "Combination"
+    ],
+    "concerns": [
+      "Sensitivity",
+      "Dryness",
+      "Irritation"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": true,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon"
+    ],
+    "verified": true,
+    "notes": "Gentle unscented toner ideal for sensitive skin.",
+    "image": "https://images.unsplash.com/photo-1617897903246-719242758050?w=600&q=80"
+  },
+  {
+    "id": "prod_cerave_foaming_cleanser",
+    "name": "Foaming Facial Cleanser",
+    "brand": "CeraVe",
+    "category": "Cleanser",
+    "tier": "Mid",
+    "price_min_inr": 450,
+    "price_max_inr": 550,
+    "price_checked_at": "2026-10-01",
+    "size": "236 ml",
+    "key_ingredients": [
+      "Ceramides",
+      "Niacinamide",
+      "Salicylic Acid"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal"
+    ],
+    "concerns": [
+      "Oiliness",
+      "Acne"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": true,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
+    "verified": true,
+    "notes": "Gel-to-foam wash for oily and combo skin.",
+    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80"
+  },
+  {
+    "id": "prod_cetaphil_gentle_moisturizer",
+    "name": "Moisturizing Lotion",
+    "brand": "Cetaphil",
+    "category": "Moisturizer",
+    "tier": "Mid",
+    "price_min_inr": 550,
+    "price_max_inr": 650,
+    "price_checked_at": "2026-10-01",
+    "size": "295 ml",
+    "key_ingredients": [
+      "Ceramides",
+      "Glycerin",
+      "Niacinamide"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Sensitive",
+      "Normal"
+    ],
+    "concerns": [
+      "Dryness",
+      "Sensitivity"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": true,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Purplle"
+    ],
+    "verified": true,
+    "notes": "Lightweight hydration for sensitive faces.",
+    "image": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80"
+  },
+  {
+    "id": "prod_dot_key_vitamin_c_serum",
+    "name": "Cica + Vitamin C Serum",
+    "brand": "Dr. Sheth's",
+    "category": "Serum",
+    "tier": "Mid",
+    "price_min_inr": 599,
+    "price_max_inr": 699,
+    "price_checked_at": "2026-10-01",
+    "size": "30 ml",
+    "key_ingredients": [
+      "Vitamin C",
+      "Cica",
+      "Ferulic Acid"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Normal",
+      "Dry"
+    ],
+    "concerns": [
+      "Dullness",
+      "Dark Spots",
+      "Uneven Tone"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": false,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
+    "verified": true,
+    "notes": "Brightening vitamin C serum for daily glow.",
+    "image": "https://images.unsplash.com/photo-1620916566398-405bb9b5beb7?w=600&q=80"
+  },
+  {
+    "id": "prod_re_eq_gel_spf",
+    "name": "Extremely Light Gel SPF 50",
+    "brand": "Re'equil",
+    "category": "Sunscreen",
+    "tier": "Mid",
+    "price_min_inr": 399,
+    "price_max_inr": 499,
+    "price_checked_at": "2026-10-01",
+    "size": "50 ml",
+    "key_ingredients": [
+      "Uvinul",
+      "Tinosorb",
+      "Vitamin E"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination",
+      "Sensitive"
+    ],
+    "concerns": [
+      "UV Protection",
+      "Acne",
+      "White Cast"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": true,
+      "non_comedogenic": true,
+      "spf": true
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Purplle"
+    ],
+    "verified": true,
+    "notes": "No-white-cast gel sunscreen for oily and sensitive skin.",
+    "image": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=600&q=80"
+  },
+  {
+    "id": "prod_moisturizing_mask",
+    "name": "Hydrating Sheet Mask with Hyaluronic Acid",
+    "brand": "Plum",
+    "category": "Face Mask",
+    "tier": "Budget",
+    "price_min_inr": 79,
+    "price_max_inr": 99,
+    "price_checked_at": "2026-10-01",
+    "size": "1 unit",
+    "key_ingredients": [
+      "Hyaluronic Acid",
+      "Aloe Vera",
+      "Vitamin E"
+    ],
+    "suitable_skin_types": [
+      "Dry",
+      "Normal",
+      "Sensitive",
+      "Dehydrated"
+    ],
+    "concerns": [
+      "Dryness",
+      "Dullness"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": false,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart"
+    ],
+    "verified": true,
+    "notes": "Deep hydration mask for stretched, dull skin.",
+    "image": "https://images.unsplash.com/photo-1596015384836-4b6b4c1b08f1?w=600&q=80"
+  },
+  {
+    "id": "prod_clay_mask_oily",
+    "name": "Oily Skin Purifying Clay Mask",
+    "brand": "Plum",
+    "category": "Face Mask",
+    "tier": "Budget",
+    "price_min_inr": 249,
+    "price_max_inr": 299,
+    "price_checked_at": "2026-10-01",
+    "size": "100 g",
+    "key_ingredients": [
+      "Kaolin Clay",
+      "Bentonite",
+      "Salicylic Acid"
+    ],
+    "suitable_skin_types": [
+      "Oily",
+      "Combination"
+    ],
+    "concerns": [
+      "Excess Oil",
+      "Enlarged Pores",
+      "Acne"
+    ],
+    "avoid_if": [],
+    "flags": {
+      "fragrance_free": false,
+      "non_comedogenic": true,
+      "spf": false
+    },
+    "retailers": [
+      "Nykaa",
+      "Amazon",
+      "Flipkart",
+      "Purplle"
+    ],
+    "verified": true,
+    "notes": "Oil-absorbing clay mask for congested skin.",
+    "image": "https://images.unsplash.com/photo-1596015384836-4b6b4c1b08f1?w=600&q=80"
   }
 ]

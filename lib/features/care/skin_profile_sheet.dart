@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/repositories/care_repositories.dart';
-import '../../core/theme/app_colors.dart';
 import '../../shared/widgets/glow_button.dart';
 
 class SkinProfileSheet extends ConsumerStatefulWidget {
@@ -16,6 +15,7 @@ class SkinProfileSheet extends ConsumerStatefulWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => const SkinProfileSheet(),
     );
@@ -32,6 +32,7 @@ class _SkinProfileSheetState extends ConsumerState<SkinProfileSheet> {
   late String budgetPreference;
   late bool fragranceFree;
   late String? manualSkinType;
+  bool _saving = false;
 
   @override
   void initState() {
@@ -45,135 +46,260 @@ class _SkinProfileSheetState extends ConsumerState<SkinProfileSheet> {
     manualSkinType = profile.manualSkinType;
   }
 
+  Future<void> _save() async {
+    setState(() => _saving = true);
+    await Future.delayed(const Duration(milliseconds: 500));
+    final updated = ref.read(userProfileProvider).copyWith(
+          isSensitive: isSensitive,
+          isPregnantOrBreastfeeding: isPregnantOrBreastfeeding,
+          budgetPreference: budgetPreference,
+          fragranceFreePreference: fragranceFree,
+          manualSkinType: manualSkinType,
+        );
+    ref.read(userProfileProvider.notifier).updateProfile(updated);
+    if (mounted) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preferences saved')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-        ),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: AppColors.background,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    final theme = Theme.of(context);
+    final sheetBg = theme.colorScheme.surface;
+    return Container(
+      decoration: BoxDecoration(
+        color: sheetBg,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        24, 12, 24,
+        MediaQuery.of(context).viewInsets.bottom + MediaQuery.of(context).padding.bottom + 24,
+      ),
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Drag handle
+          Container(
+            width: 40, height: 4,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.outlineVariant,
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          const SizedBox(height: 16),
+
+          // Scrollable content
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Your Skin & Safety Profile',
-                    style: TextStyle(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Your Skin & Safety Profile',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(CupertinoIcons.xmark_circle_fill,
+                            color: theme.colorScheme.onSurfaceVariant, size: 26),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Safety preferences filter out unsuitable ingredients and tailor product recommendations.',
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontFamily: 'Poppins',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(CupertinoIcons.xmark_circle_fill, color: AppColors.textHint),
-                    onPressed: () => Navigator.pop(context),
+                  const SizedBox(height: 24),
+
+                  _PrefsCard(
+                    title: 'Pregnancy or Breastfeeding',
+                    subtitle: 'Filters out retinoids and high-strength salicylic acid',
+                    value: isPregnantOrBreastfeeding,
+                    onChanged: (v) => setState(() => isPregnantOrBreastfeeding = v),
                   ),
+                  const SizedBox(height: 12),
+                  _PrefsCard(
+                    title: 'Sensitive Skin',
+                    subtitle: 'Prefers fragrance-free, mineral sunscreens & soothing barrier creams',
+                    value: isSensitive,
+                    onChanged: (v) => setState(() => isSensitive = v),
+                  ),
+                  const SizedBox(height: 12),
+                  _PrefsCard(
+                    title: 'Fragrance-Free Preference',
+                    subtitle: 'Avoid products containing artificial fragrances',
+                    value: fragranceFree,
+                    onChanged: (v) => setState(() => fragranceFree = v),
+                  ),
+                  const SizedBox(height: 24),
+
+                  Text('Budget Tier Preference',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface,
+                      )),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: ['Any', 'Budget', 'Mid', 'Premium'].map((tier) => _OutlinedChip(
+                          label: tier,
+                          selected: budgetPreference == tier,
+                          onTap: () => setState(() => budgetPreference = tier),
+                        )).toList(),
+                  ),
+                  const SizedBox(height: 24),
+
+                  Text('Manual Skin Type Override',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface,
+                      )),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: ['Auto (From Scan)', 'Oily', 'Dry', 'Combination', 'Normal'].map((type) {
+                      final isAuto = type.startsWith('Auto');
+                      final val = isAuto ? null : type;
+                      return _OutlinedChip(
+                        label: type,
+                        selected: manualSkinType == val,
+                        onTap: () => setState(() => manualSkinType = val),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 24),
                 ],
               ),
-              const SizedBox(height: 12),
-              const Text(
-                'Safety preferences filter out unsuitable ingredients and tailor product recommendations.',
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary),
-              ),
-              const SizedBox(height: 16),
-
-              // Pregnancy / Breastfeeding toggle
-              SwitchListTile(
-                activeThumbColor: AppColors.primary,
-                title: const Text('Pregnancy or Breastfeeding', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600)),
-                subtitle: const Text('Filters out retinoids and high-strength salicylic acid', style: TextStyle(fontFamily: 'Poppins', fontSize: 11)),
-                value: isPregnantOrBreastfeeding,
-                onChanged: (v) => setState(() => isPregnantOrBreastfeeding = v),
-              ),
-
-              // Sensitive Skin toggle
-              SwitchListTile(
-                activeThumbColor: AppColors.primary,
-                title: const Text('Sensitive Skin', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600)),
-                subtitle: const Text('Prefers fragrance-free, mineral sunscreens & soothing barrier creams', style: TextStyle(fontFamily: 'Poppins', fontSize: 11)),
-                value: isSensitive,
-                onChanged: (v) => setState(() => isSensitive = v),
-              ),
-
-              // Fragrance-Free Preference
-              SwitchListTile(
-                activeThumbColor: AppColors.primary,
-                title: const Text('Fragrance-Free Preference', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600)),
-                subtitle: const Text('Avoid products containing artificial fragrances', style: TextStyle(fontFamily: 'Poppins', fontSize: 11)),
-                value: fragranceFree,
-                onChanged: (v) => setState(() => fragranceFree = v),
-              ),
-
-              const SizedBox(height: 12),
-              const Text('Budget Tier Preference', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: ['Any', 'Budget', 'Mid', 'Premium'].map((tier) {
-                  final isSel = budgetPreference == tier;
-                  return ChoiceChip(
-                    label: Text(tier, style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: isSel ? Colors.white : AppColors.textPrimary)),
-                    selected: isSel,
-                    selectedColor: AppColors.primary,
-                    onSelected: (_) => setState(() => budgetPreference = tier),
-                  );
-                }).toList(),
-              ),
-
-              const SizedBox(height: 16),
-              const Text('Manual Skin Type Override', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                children: ['Auto (From Scan)', 'Oily', 'Dry', 'Combination', 'Normal'].map((type) {
-                  final isAuto = type.startsWith('Auto');
-                  final val = isAuto ? null : type;
-                  final isSel = manualSkinType == val;
-                  return ChoiceChip(
-                    label: Text(type, style: TextStyle(fontFamily: 'Poppins', fontSize: 11, color: isSel ? Colors.white : AppColors.textPrimary)),
-                    selected: isSel,
-                    selectedColor: AppColors.primary,
-                    onSelected: (_) => setState(() => manualSkinType = val),
-                  );
-                }).toList(),
-              ),
-
-              const SizedBox(height: 24),
-              GlowButton(
-                label: 'Save Preferences',
-                onPressed: () {
-                  final updated = ref.read(userProfileProvider).copyWith(
-                        isSensitive: isSensitive,
-                        isPregnantOrBreastfeeding: isPregnantOrBreastfeeding,
-                        budgetPreference: budgetPreference,
-                        fragranceFreePreference: fragranceFree,
-                        manualSkinType: manualSkinType,
-                      );
-                  ref.read(userProfileProvider.notifier).updateProfile(updated);
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Skin profile updated successfully.')),
-                  );
-                },
-              ),
-            ],
+            ),
           ),
+
+          const Divider(height: 1),
+          const SizedBox(height: 16),
+          GlowButton(
+            label: _saving ? 'Saving…' : 'Save Preferences',
+            width: double.infinity,
+            style: GlowButtonStyle.primary,
+            onPressed: _saving ? null : _save,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PrefsCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  const _PrefsCard({
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.colorScheme.outlineVariant, width: 1),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontFamily: 'Poppins', fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface,
+                      )),
+                  const SizedBox(height: 2),
+                  Text(subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontFamily: 'Poppins', color: theme.colorScheme.onSurfaceVariant,
+                      )),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Switch(
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: Colors.white,
+              activeTrackColor: theme.colorScheme.primary,
+              inactiveThumbColor: Colors.white,
+              inactiveTrackColor: theme.colorScheme.outlineVariant,
+            ),
+          ],
         ),
       ),
+    );
+  }
+}
+
+class _OutlinedChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _OutlinedChip({required this.label, required this.selected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ChoiceChip(
+      label: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (selected) ...[
+            const Icon(Icons.check, size: 14, color: Colors.white),
+            const SizedBox(width: 4),
+          ],
+          Text(label,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontFamily: 'Poppins',
+                color: selected ? Colors.white : theme.colorScheme.onSurface,
+              )),
+        ],
+      ),
+      selected: selected,
+      onSelected: (_) => onTap(),
+      selectedColor: theme.colorScheme.primary,
+      backgroundColor: theme.colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: theme.colorScheme.outlineVariant),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      labelPadding: EdgeInsets.zero,
     );
   }
 }

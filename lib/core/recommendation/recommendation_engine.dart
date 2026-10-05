@@ -35,6 +35,159 @@ class RecommendationEngine {
   static Map<String, dynamic>? _routineRules;
   static Map<String, dynamic>? _makeupRules;
 
+  static final Map<String, dynamic> _fallbackRoutineRules = {
+    'base_steps': {
+      'Combination': {
+        'AM': [
+          {
+            'id': 'step_cleanser_am',
+            'title': 'Salicylic Acid / Gentle Gel Cleanser',
+            'category': 'Cleanser',
+            'stepNumber': 1,
+            'session': 'AM',
+            'texture': 'Lightweight foaming gel',
+            'keyIngredients': ['Salicylic Acid 0.5-2%', 'Niacinamide', 'Tea Tree Water'],
+            'howToApply': [
+              'Dispense a coin-size amount into wet palms',
+              'Lather and gently massage over face for 30-60 seconds',
+              'Rinse thoroughly with lukewarm water and pat dry'
+            ],
+            'whyItHelps': 'Unclogs pores, removes excess sebum accumulated overnight, and prevents morning shine.',
+            'avoidNotes': 'Avoid harsh scrubbing or hot water.',
+            'waitTimeMinutes': 1,
+            'productCategory': 'cleanser'
+          },
+          {
+            'id': 'step_toner_am',
+            'title': 'Pore-Refining Balancing Toner',
+            'category': 'Toner',
+            'stepNumber': 2,
+            'session': 'AM',
+            'texture': 'Watery essence',
+            'keyIngredients': ['Niacinamide 2%', 'Witch Hazel (Alcohol-Free)', 'Zinc PCA'],
+            'howToApply': [
+              'Pour 3-4 drops directly onto clean palms',
+              'Gently press into face and neck until absorbed'
+            ],
+            'whyItHelps': 'Balances skin pH after cleansing and regulates sebum production.',
+            'avoidNotes': 'Avoid alcohol-based toners.',
+            'waitTimeMinutes': 1,
+            'productCategory': 'toner'
+          },
+          {
+            'id': 'step_serum_am',
+            'title': 'Niacinamide & Zinc Serum',
+            'category': 'Serum',
+            'stepNumber': 3,
+            'session': 'AM',
+            'texture': 'Lightweight water gel',
+            'keyIngredients': ['Niacinamide 5-10%', 'Zinc PCA 1%', 'Hyaluronic Acid'],
+            'howToApply': [
+              'Apply 2-3 drops to slightly damp skin',
+              'Spread evenly across T-zone and cheeks'
+            ],
+            'whyItHelps': 'Minimizes pore appearance, reduces excess oil, and strengthens barrier.',
+            'avoidNotes': 'If using Vitamin C, separate to alternating mornings.',
+            'waitTimeMinutes': 1,
+            'productCategory': 'serum'
+          },
+          {
+            'id': 'step_moisturizer_am',
+            'title': 'Oil-Free Hydrating Gel Moisturizer',
+            'category': 'Moisturizer',
+            'stepNumber': 4,
+            'session': 'AM',
+            'texture': 'Cooling gel cream',
+            'keyIngredients': ['Hyaluronic Acid', 'Ceramides', 'Aloe Vera Extract'],
+            'howToApply': [
+              'Dot a pea-sized amount on forehead, cheeks, nose, and chin',
+              'Smooth outward in upward circular motions'
+            ],
+            'whyItHelps': 'Provides non-greasy hydration so skin does not overproduce oil.',
+            'avoidNotes': 'Avoid heavy comedogenic oils.',
+            'waitTimeMinutes': 2,
+            'productCategory': 'moisturizer'
+          },
+          {
+            'id': 'step_sunscreen_am',
+            'title': 'Matte Finish Fluid Sunscreen SPF 50',
+            'category': 'Sunscreen',
+            'stepNumber': 5,
+            'session': 'AM',
+            'texture': 'Non-greasy fluid or gel',
+            'keyIngredients': ['Broad Spectrum SPF 50', 'PA++++', 'Silica'],
+            'howToApply': [
+              'Apply 2 full finger-lengths to face and neck',
+              'Apply 15 minutes before sun exposure'
+            ],
+            'whyItHelps': 'Protects against UV damage, dark spot darkening, and premature aging.',
+            'avoidNotes': 'Do not skip sunscreen.',
+            'waitTimeMinutes': 0,
+            'productCategory': 'sunscreen'
+          }
+        ],
+        'PM': [
+          {
+            'id': 'step_cleanser_pm',
+            'title': 'Double Cleanse: Clarifying Cleanser',
+            'category': 'Cleanser',
+            'stepNumber': 1,
+            'session': 'PM',
+            'texture': 'Gel or micellar water followed by gel cleanser',
+            'keyIngredients': ['Salicylic Acid', 'Green Tea Extract'],
+            'howToApply': [
+              'Use micellar water or oil cleanser first if wearing sunscreen or makeup',
+              'Follow with gel cleanser for 60 seconds with lukewarm water'
+            ],
+            'whyItHelps': 'Removes SPF, pollution, sunscreen residue, and deep-seated grime.',
+            'avoidNotes': 'Don\'t wash with hot water.',
+            'waitTimeMinutes': 1,
+            'productCategory': 'cleanser'
+          },
+          {
+            'id': 'step_serum_pm',
+            'title': 'Retinol 0.2% / Bakuchiol Serum',
+            'category': 'Serum',
+            'stepNumber': 2,
+            'session': 'PM',
+            'texture': 'Lightweight serum',
+            'keyIngredients': ['Retinol 0.2%', 'Bakuchiol', 'Squalane'],
+            'howToApply': [
+              'Apply pea-sized amount to clean, dry skin 2-3 nights a week',
+              'Follow with moisturizer after 3 minutes'
+            ],
+            'whyItHelps': 'Stimulates cell turnover, reduces fine lines, and evens skin texture.',
+            'avoidNotes': 'Do not combine with AHA/BHA exfoliants on the same night.',
+            'waitTimeMinutes': 3,
+            'productCategory': 'serum'
+          },
+          {
+            'id': 'step_moisturizer_pm',
+            'title': 'Barrier Recovery Night Cream',
+            'category': 'Moisturizer',
+            'stepNumber': 3,
+            'session': 'PM',
+            'texture': 'Nourishing cream',
+            'keyIngredients': ['Ceramide NP', 'Peptides', 'Centella Asiatica'],
+            'howToApply': [
+              'Warm between palms and gently press onto face and neck'
+            ],
+            'whyItHelps': 'Repairs skin barrier overnight during sleep.',
+            'avoidNotes': 'Avoid aggressive tugging.',
+            'waitTimeMinutes': 0,
+            'productCategory': 'moisturizer'
+          }
+        ]
+      }
+    },
+    'weekly_extras': {
+      'Combination': [
+        'Exfoliating AHA/BHA Mask 1x per week at night',
+        'Soothing Hydrating Sheet Mask on weekends'
+      ]
+    }
+  };
+
   static Future<void> loadRules() async {
     if (_routineRules == null) {
       final routineStr = await rootBundle.loadString('assets/data/routine_rules.json');
@@ -76,11 +229,17 @@ class RecommendationEngine {
       }
     }
 
-    // 2. Fetch base routine from rules
-    final baseSteps = _routineRules?['base_steps']?[skinType] ?? _routineRules?['base_steps']?['Combination'];
+    // 2. Fetch base routine from rules (fallback to bundled default rules if null)
+    final rules = _routineRules ?? _fallbackRoutineRules;
+    final baseSteps = rules['base_steps']?[skinType] ??
+        rules['base_steps']?['Combination'] ??
+        _fallbackRoutineRules['base_steps']!['Combination'];
     final amRawList = (baseSteps?['AM'] as List?) ?? [];
     final pmRawList = (baseSteps?['PM'] as List?) ?? [];
-    final extrasList = ( ( _routineRules?['weekly_extras']?[skinType] as List? ) ?? [] ).cast<String>();
+    final extrasList = ((rules['weekly_extras']?[skinType] as List?) ??
+            rules['weekly_extras']?['Combination'] as List? ??
+            _fallbackRoutineRules['weekly_extras']!['Combination'] as List)
+        .cast<String>();
 
     var amSteps = amRawList.map((e) => RoutineStep.fromJson(Map<String, dynamic>.from(e as Map))).toList();
     var pmSteps = pmRawList.map((e) => RoutineStep.fromJson(Map<String, dynamic>.from(e as Map))).toList();

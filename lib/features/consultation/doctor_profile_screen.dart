@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/mock/mock_data.dart';
 import '../../core/theme/app_colors.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
+import 'doctors_provider.dart';
+import '../../models/doctor_model.dart';
 
-class DoctorProfileScreen extends StatelessWidget {
+class DoctorProfileScreen extends ConsumerWidget {
   final String doctorId;
 
   const DoctorProfileScreen({super.key, required this.doctorId});
 
   @override
-  Widget build(BuildContext context) {
-    final doctor = MockData.doctors.firstWhere(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final doctors = ref.watch(doctorsProvider).valueOrNull ?? const <DoctorModel>[];
+    if (ref.watch(doctorsProvider).isLoading && doctors.isEmpty) {
+      return const AppScaffold(title: 'Doctor', body: Center(child: CircularProgressIndicator(color: AppColors.primary)));
+    }
+    final list = doctors;
+    if (list.isEmpty) {
+      return AppScaffold(
+        title: 'Doctor',
+        body: Center(
+          child: Text(
+            'Doctor not found.',
+            style: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary),
+          ),
+        ),
+      );
+    }
+    final doctor = list.firstWhere(
       (d) => d.id == doctorId,
-      orElse: () => MockData.doctors.first,
+      orElse: () => list.first,
     );
 
     return AppScaffold(

@@ -55,6 +55,12 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
   // Captured photo for review
   String? _capturedPath;
 
+  // Current lens (front by default)
+  CameraLensDirection _lensDirection = CameraLensDirection.front;
+
+  // Debounce for false-positive "multiple faces" from ML Kit
+  int _multiFaceStreak = 0;
+
   // Guidance state (all via ValueNotifier to avoid full rebuilds)
   final _faceDetectedNotifier = ValueNotifier<bool>(false);
   final _centeredNotifier = ValueNotifier<bool>(false);
@@ -112,15 +118,16 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
     _cameras ??= await availableCameras();
     if (_cameras == null || _cameras!.isEmpty) return;
 
-    // Prefer front camera
-    CameraDescription? front;
+    // Use the currently selected lens, fallback to front
+    CameraDescription? preferred;
     for (final c in _cameras!) {
-      if (c.lensDirection == CameraLensDirection.front) {
-        front = c;
+      if (c.lensDirection == _lensDirection) {
+        preferred = c;
         break;
       }
     }
-    final cam = front ?? _cameras!.first;
+    preferred ??= _cameras!.first;
+    final cam = preferred;
 
     await _controller?.dispose();
     _controller = CameraController(
@@ -146,6 +153,18 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
     try {
       _controller?.stopImageStream();
     } catch (_) {}
+  }
+
+  Future<void> _switchCamera() async {
+    if (_cameras == null || _cameras!.length < 2) return;
+    _stopStream();
+    _lensDirection = _lensDirection == CameraLensDirection.front
+        ? CameraLensDirection.back
+        : CameraLensDirection.front;
+    if (mounted) setState(() => _cameraReady = false);
+    await _controller?.dispose();
+    _controller = null;
+    await _initCamera();
   }
 
   // ── Frame processing ─────────────────────────────────────────────────────
@@ -183,7 +202,31 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
         return;
       }
 
-      if (faces.length > 1) {
+      final previewH0 = _controller!.value.previewSize!.width; // rotated
+      // Ignore tiny false-positive detections (posters, photos, TVs in background)
+      final realFaces = faces
+          .where((f) => f.boundingBox.height / previewH0 >= 0.12)
+          .toList();
+
+      if (realFaces.length > 1) {
+        _multiFaceStreak++;
+        if (_multiFaceStreak >= 2) {
+          _updateGuidance(
+            faceDetected: false,
+            centered: false,
+            distanceOk: false,
+            straight: false,
+            lightingOk: _estimateLighting(image),
+            holdStill: false,
+            hint: 'Multiple faces detected — only one person please',
+          );
+        }
+        _stableFrameCount = 0;
+        return;
+      }
+      _multiFaceStreak = 0;
+
+      if (realFaces.isEmpty) {
         _updateGuidance(
           faceDetected: false,
           centered: false,
@@ -191,13 +234,13 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
           straight: false,
           lightingOk: _estimateLighting(image),
           holdStill: false,
-          hint: 'Multiple faces detected — only one person please',
+          hint: 'No face detected — look at the camera',
         );
         _stableFrameCount = 0;
         return;
       }
 
-      final face = faces.first;
+      final face = realFaces.first;
       final box = face.boundingBox;
       final previewH = _controller!.value.previewSize!.width; // rotated
       final previewW = _controller!.value.previewSize!.height;
@@ -497,6 +540,17 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
             ),
           ),
 
+          // Camera flip button
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 60,
+            right: 20,
+            child: _CircleButton(
+              icon: CupertinoIcons.switch_camera,
+              onTap: _switchCamera,
+              small: true,
+            ),
+          ),
+
           // Countdown overlay
           if (_countingDown)
             Center(
@@ -649,8 +703,12 @@ class _HintBanner extends StatelessWidget {
         key: ValueKey(text),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.65),
-          borderRadius: BorderRadius.circular(20),
+          color: Colors.black.withValues(alpha: 0.75),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.12), width: 1),
+          boxShadow: const [
+            BoxShadow(color: Color(0x33000000), blurRadius: 12, offset: Offset(0, 4)),
+          ],
         ),
         child: Text(
           text,
@@ -765,6 +823,10 @@ class _CircleButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.25),
           shape: BoxShape.circle,
+          border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1),
+          boxShadow: const [
+            BoxShadow(color: Color(0x33000000), blurRadius: 8, offset: Offset(0, 3)),
+          ],
         ),
         child: Icon(icon, color: Colors.white, size: small ? 24 : 28),
       ),

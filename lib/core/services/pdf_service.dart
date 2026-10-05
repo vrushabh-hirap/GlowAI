@@ -8,33 +8,66 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../models/care_models.dart';
 
 abstract class PdfService {
-  Future<String> generateScanReportPdf(String scanId);
+  Future<String> generateScanReportPdf(dynamic scan);
   Future<String> generatePrescriptionPdf(PatientPrescription rx, UserProfile profile);
 }
 
 class RealPdfService implements PdfService {
   @override
-  Future<String> generateScanReportPdf(String scanId) async {
+  Future<String> generateScanReportPdf(dynamic scan) async {
+    // Support both ScanResult object and plain scanId string
+    final isModel = scan is! String;
+    final scanId = isModel ? (scan.id as String) : scan as String;
+
     final pdf = pw.Document();
 
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         build: (pw.Context context) {
-          return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Header(
-                level: 0,
-                child: pw.Text('GlowAI - Skin Analysis Summary Report', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
-              ),
-              pw.SizedBox(height: 10),
-              pw.Text('Report ID: $scanId'),
-              pw.Text('Date: ${DateTime.now().toIso8601String().substring(0, 10)}'),
-              pw.SizedBox(height: 20),
-              pw.Text('General guidance only. Not a medical diagnosis. Consult a qualified dermatologist for clinical evaluation.'),
-            ],
-          );
+          final widgets = <pw.Widget>[
+            pw.Header(
+              level: 0,
+              child: pw.Text('GlowAI - Skin Analysis Summary Report', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+            ),
+            pw.SizedBox(height: 10),
+            pw.Text('Report ID: $scanId'),
+            pw.Text('Date: ${DateTime.now().toIso8601String().substring(0, 10)}'),
+            pw.SizedBox(height: 20),
+          ];
+
+          if (isModel) {
+            widgets.addAll([
+              pw.Text('Skin Type: ${scan.skinType?.label ?? 'N/A'}'),
+              pw.Text('Severity: ${scan.severity}'),
+              pw.Text('Overall Score: ${scan.overallScore}/100'),
+              if (scan.skinTone != null)
+                pw.Text('Tone: ${scan.skinTone!.label} (${scan.skinTone!.undertone})'),
+              pw.SizedBox(height: 16),
+              pw.Text('Conditions', style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+              pw.SizedBox(height: 6),
+              if (scan.conditions != null) ...[
+                pw.Text('  Acne Index: ${scan.conditions!.acne.score}% (${scan.conditions!.acne.severity})'),
+                pw.Text('  Dark Spots: ${scan.conditions!.darkSpots.score}% (${scan.conditions!.darkSpots.severity})'),
+                pw.Text('  Redness: ${scan.conditions!.redness.score}% (${scan.conditions!.redness.severity})'),
+                pw.Text('  Texture: ${scan.conditions!.texture.score}% (${scan.conditions!.texture.severity})'),
+              ],
+              pw.SizedBox(height: 16),
+              if (scan.recommendedSpecialty.isNotEmpty)
+                pw.Text('Recommended: ${scan.recommendedSpecialty}'),
+              pw.SizedBox(height: 16),
+              pw.Text('Insights', style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+              pw.SizedBox(height: 6),
+              for (final insight in scan.insights) pw.Bullet(text: insight.toString()),
+            ]);
+          }
+
+          widgets.addAll([
+            pw.SizedBox(height: 20),
+            pw.Text('General guidance only. Not a medical diagnosis. Consult a qualified dermatologist for clinical evaluation.'),
+          ]);
+
+          return widgets;
         },
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import '../../core/theme/app_shadows.dart';
 import 'tappable.dart';
 
@@ -8,7 +8,7 @@ class GlowCard extends StatelessWidget {
   final VoidCallback? onTap;
   final EdgeInsetsGeometry padding;
   final bool hasGlow;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Border? border;
   final double borderRadius;
 
@@ -18,20 +18,21 @@ class GlowCard extends StatelessWidget {
     this.onTap,
     this.padding = const EdgeInsets.all(20),
     this.hasGlow = false,
-    this.backgroundColor = AppColors.surface,
+    this.backgroundColor,
     this.border,
     this.borderRadius = 20,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final container = AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: backgroundColor ?? colors.surface,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: border ?? Border.all(color: AppColors.border, width: 1),
+        border: border ?? Border.all(color: colors.border, width: 1),
         boxShadow: hasGlow ? AppShadows.glow : AppShadows.card,
       ),
       child: child,

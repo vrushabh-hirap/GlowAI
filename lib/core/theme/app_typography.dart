@@ -5,7 +5,7 @@ import 'app_colors.dart';
 class AppTypography {
   AppTypography._();
 
-  static TextTheme textTheme(BuildContext context) {
+  static TextTheme lightTextTheme() {
     final base = GoogleFonts.poppinsTextTheme();
     return base.copyWith(
       displayLarge: base.displayLarge?.copyWith(
@@ -51,5 +51,59 @@ class AppTypography {
         fontSize: 14,
       ),
     );
+  }
+
+  static TextTheme darkTextTheme() {
+    final base = GoogleFonts.poppinsTextTheme();
+    return base.copyWith(
+      displayLarge: base.displayLarge?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.bold,
+        fontSize: 32,
+      ),
+      headlineLarge: base.headlineLarge?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.bold,
+        fontSize: 26,
+      ),
+      headlineMedium: base.headlineMedium?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+      ),
+      titleLarge: base.titleLarge?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      ),
+      titleMedium: base.titleMedium?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      ),
+      bodyLarge: base.bodyLarge?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontSize: 16,
+      ),
+      bodyMedium: base.bodyMedium?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontSize: 14,
+      ),
+      bodySmall: base.bodySmall?.copyWith(
+        color: AppColors.darkTextSecondary,
+        fontSize: 12,
+      ),
+      labelLarge: base.labelLarge?.copyWith(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      ),
+    );
+  }
+
+  /// Returns the appropriate text theme based on the current brightness
+  static TextTheme textTheme(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark ? darkTextTheme() : lightTextTheme();
   }
 }

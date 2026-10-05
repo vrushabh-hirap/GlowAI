@@ -331,7 +331,7 @@ class _ScanResultScreenState extends State<ScanResultScreen> {
                 icon: Icons.health_and_safety_rounded,
                 width: double.infinity,
                 style: GlowButtonStyle.primary,
-                onPressed: () => context.push('/patient/consult'),
+                onPressed: () => context.go('/patient/consult'),
               ),
             ],
             const SizedBox(height: 12),

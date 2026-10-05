@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import 'package:flutter/services.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 class AppTextField extends StatefulWidget {
   final String hintText;
@@ -12,6 +13,8 @@ class AppTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final int maxLines;
+  final int? maxLength;
+  final bool digitsOnly;
 
   const AppTextField({
     super.key,
@@ -24,6 +27,8 @@ class AppTextField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.maxLines = 1,
+    this.maxLength,
+    this.digitsOnly = false,
   });
 
   @override
@@ -41,13 +46,14 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     Widget? suffix = widget.suffixIcon;
 
     if (widget.obscureText && suffix == null) {
       suffix = IconButton(
         icon: Icon(
           _obscured ? CupertinoIcons.eye_fill : CupertinoIcons.eye_slash_fill,
-          color: AppColors.textSecondary,
+          color: colors.textSecondary,
           size: 18,
         ),
         onPressed: () {
@@ -64,11 +70,11 @@ class _AppTextFieldState extends State<AppTextField> {
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: colors.textPrimary,
             ),
           ),
           const SizedBox(height: 6),
@@ -79,33 +85,38 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: _obscured,
           keyboardType: widget.keyboardType,
           maxLines: widget.maxLines,
-          style: const TextStyle(
+          maxLength: widget.maxLength,
+          inputFormatters: widget.digitsOnly
+              ? [FilteringTextInputFormatter.digitsOnly]
+              : null,
+          style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 14,
-            color: AppColors.textPrimary,
+            color: colors.textPrimary,
           ),
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: const TextStyle(
+            hintStyle: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 14,
-              color: AppColors.textHint,
+              color: colors.textHint,
             ),
             filled: true,
-            fillColor: AppColors.bgAlt,
+            fillColor: colors.bgAlt,
             prefixIcon: widget.prefixIcon,
             suffixIcon: suffix,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 14,
             ),
+            counterText: '',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppColors.border, width: 1),
+              borderSide: BorderSide(color: colors.border, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderSide: BorderSide(color: colors.primary, width: 1.5),
             ),
           ),
         ),

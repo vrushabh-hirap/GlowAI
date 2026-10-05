@@ -115,15 +115,26 @@ class _ProductDetailSheetState extends ConsumerState<ProductDetailSheet> {
                       Container(
                         width: 70,
                         height: 70,
+                        clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                           color: AppColors.primarySoft.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Icon(
-                          _getCategoryIcon(p.category),
-                          size: 36,
-                          color: AppColors.primary,
-                        ),
+                        child: p.image != null && p.image!.isNotEmpty
+                            ? Image.network(
+                                p.image!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Icon(
+                                  _getCategoryIcon(p.category),
+                                  size: 36,
+                                  color: AppColors.primary,
+                                ),
+                              )
+                            : Icon(
+                                _getCategoryIcon(p.category),
+                                size: 36,
+                                color: AppColors.primary,
+                              ),
                       ),
                       const SizedBox(width: 14),
                       Expanded(

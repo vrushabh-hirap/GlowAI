@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/services/auth_service.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:share_plus/share_plus.dart';
+
 import '../../core/services/pdf_service.dart';
 import '../../core/services/scan_repository.dart';
 import '../../core/theme/app_colors.dart';
@@ -261,14 +264,14 @@ class _ReportBody extends ConsumerWidget {
             icon: Icons.picture_as_pdf_rounded,
             width: double.infinity,
             onPressed: () async {
-              final pdfPath = await pdfService.generateScanReportPdf(scan.id);
+              final pdfPath = await pdfService.generateScanReportPdf(scan);
               if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Report PDF generated: $pdfPath'),
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
+                final result = await OpenFilex.open(pdfPath);
+                if (result.type != ResultType.done) {
+                  await SharePlus.instance.share(
+                    ShareParams(files: [XFile(pdfPath)], text: 'GlowAI Skin Health Report'),
+                  );
+                }
               }
             },
           ),
@@ -278,7 +281,7 @@ class _ReportBody extends ConsumerWidget {
             icon: Icons.calendar_month_rounded,
             width: double.infinity,
             onPressed: () {
-              context.push('/patient/consult');
+              context.go('/patient/consult');
             },
           ),
           const SizedBox(height: 20),

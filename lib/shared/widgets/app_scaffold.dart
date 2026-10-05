@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import 'tappable.dart';
 
 class AppScaffold extends StatelessWidget {
@@ -27,26 +27,26 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final canPop = ModalRoute.of(context)?.canPop ?? false;
-    final shouldShowBack = showBackButton && canPop;
+    final colors = context.appColors;
+    final showBackButtonEffective = showBackButton && ModalRoute.of(context)?.canPop == true;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: (title != null || titleWidget != null || shouldShowBack)
+      backgroundColor: colors.background,
+      appBar: (title != null || titleWidget != null || showBackButtonEffective)
           ? AppBar(
-              backgroundColor: AppColors.background,
+              backgroundColor: colors.background,
               surfaceTintColor: Colors.transparent,
               elevation: 0,
               scrolledUnderElevation: 0,
               centerTitle: false,
-              leading: shouldShowBack
+              leading: showBackButtonEffective
                   ? Tappable(
                       onTap: onBack ?? () => Navigator.of(context).maybePop(),
-                      child: const Center(
+                      child: Center(
                         child: Icon(
                           CupertinoIcons.arrow_left,
                           size: 20,
-                          color: AppColors.textPrimary,
+                          color: colors.textPrimary,
                         ),
                       ),
                     )
@@ -55,9 +55,9 @@ class AppScaffold extends StatelessWidget {
                   (title != null
                       ? Text(
                           title!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Poppins',
-                            color: AppColors.textPrimary,
+                            color: colors.textPrimary,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),

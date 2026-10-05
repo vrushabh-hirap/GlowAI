@@ -38,8 +38,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       if (mounted) {
         final prefs = await SharedPreferences.getInstance();
         final seenOnboarding = prefs.getBool('has_seen_onboarding') ?? false;
+        final savedEmail = prefs.getString('session_email');
+        final savedRole = prefs.getString('session_role');
         if (!mounted) return;
-        if (seenOnboarding) {
+        if (savedEmail != null && savedRole != null) {
+          context.go(savedRole == 'doctor' ? '/doctor/dashboard' : '/patient/home');
+        } else if (seenOnboarding) {
           context.go('/login');
         } else {
           context.go('/onboarding');

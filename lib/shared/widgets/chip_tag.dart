@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import 'tappable.dart';
 
 class ChipTag extends StatelessWidget {
@@ -18,14 +18,15 @@ class ChipTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final child = AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.primarySoft : AppColors.surface,
+        color: isSelected ? colors.primarySoft : colors.surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.border,
+          color: isSelected ? colors.primary : colors.border,
           width: 1.0,
         ),
       ),
@@ -36,7 +37,7 @@ class ChipTag extends StatelessWidget {
             Icon(
               icon,
               size: 15,
-              color: isSelected ? AppColors.primary : AppColors.textSecondary,
+              color: isSelected ? colors.primary : colors.textSecondary,
             ),
             const SizedBox(width: 6),
           ],
@@ -46,7 +47,7 @@ class ChipTag extends StatelessWidget {
               fontFamily: 'Poppins',
               fontSize: 13,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? AppColors.primary : AppColors.textPrimary,
+              color: isSelected ? colors.primary : colors.textPrimary,
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/mock/mock_data.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/doctor_model.dart';
 import '../../shared/widgets/app_header.dart';
@@ -9,15 +9,16 @@ import '../../shared/widgets/chip_tag.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
 import '../../shared/widgets/tappable.dart';
+import 'doctors_provider.dart';
 
-class DoctorListScreen extends StatefulWidget {
+class DoctorListScreen extends ConsumerStatefulWidget {
   const DoctorListScreen({super.key});
 
   @override
-  State<DoctorListScreen> createState() => _DoctorListScreenState();
+  ConsumerState<DoctorListScreen> createState() => _DoctorListScreenState();
 }
 
-class _DoctorListScreenState extends State<DoctorListScreen> {
+class _DoctorListScreenState extends ConsumerState<DoctorListScreen> {
   String _selectedSpecialty = 'All';
 
   final List<String> _specialties = const [
@@ -30,9 +31,11 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final doctorsAsync = ref.watch(doctorsProvider);
+    final doctors = doctorsAsync.valueOrNull ?? const <DoctorModel>[];
     final filteredDoctors = _selectedSpecialty == 'All'
-        ? MockData.doctors
-        : MockData.doctors
+        ? doctors
+        : doctors
             .where((d) => d.specialty.toLowerCase().contains(_selectedSpecialty.toLowerCase()))
             .toList();
 
@@ -82,14 +85,34 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
 
           // Doctor List
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 4, bottom: 32),
-              itemCount: filteredDoctors.length,
-              itemBuilder: (context, index) {
-                final doc = filteredDoctors[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: _DoctorCard(doctor: doc),
+            child: doctorsAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              error: (_, __) => const Center(child: Text('Could not load doctors')),
+              data: (_) {
+                Widget child = filteredDoctors.isEmpty
+                    ? ListView(
+                        children: const [
+                          SizedBox(height: 240),
+                          Center(child: Text('No doctors available yet — pull down to refresh')),
+                        ],
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 4, bottom: 32),
+                        itemCount: filteredDoctors.length,
+                        itemBuilder: (context, index) {
+                          final doc = filteredDoctors[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 14),
+                            child: _DoctorCard(doctor: doc),
+                          );
+                        },
+                      );
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    ref.invalidate(doctorsProvider);
+                    await ref.read(doctorsProvider.future);
+                  },
+                  child: child,
                 );
               },
             ),
@@ -223,20 +246,28 @@ class _DoctorCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '₹${doctor.fee.toInt()} / session',
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary, // NOT pink!
+                    Expanded(
+                      child: Text(
+                        '₹${doctor.fee.toInt()} / session',
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary, // NOT pink!
+                        ),
                       ),
                     ),
-                    GlowButton(
-                      label: 'Book Slot',
-                      height: 36,
-                      style: GlowButtonStyle.primary,
-                      onPressed: () => context.push('/book-appointment/${doctor.id}'),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: GlowButton(
+                        label: 'Book Slot',
+                        height: 36,
+                        style: GlowButtonStyle.primary,
+                        onPressed: () => context.push('/book-appointment/${doctor.id}'),
+                      ),
                     ),
                   ],
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 
 class ScoreRing extends StatelessWidget {
   final int score; // 0 - 100
@@ -18,6 +18,7 @@ class ScoreRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final percent = (score.clamp(0, 100)) / 100.0;
 
     return CircularPercentIndicator(
@@ -28,30 +29,30 @@ class ScoreRing extends StatelessWidget {
       animationDuration: 1000,
       curve: Curves.easeOutCubic,
       circularStrokeCap: CircularStrokeCap.round,
-      progressColor: AppColors.primary,
-      backgroundColor: AppColors.surfaceMuted,
+      progressColor: colors.primary,
+      backgroundColor: colors.surfaceMuted,
       center: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             '$score',
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+              color: colors.textPrimary,
               height: 1.0,
             ),
           ),
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 9,
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: colors.textSecondary,
             ),
           ),
         ],

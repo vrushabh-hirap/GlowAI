@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/recommendation/recommendation_engine.dart';
+import '../../core/repositories/care_repositories.dart';
 import '../../core/services/appointment_service.dart';
 import '../../core/services/scan_repository.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import '../../models/appointment_model.dart';
+import '../../models/care_models.dart';
 import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/glow_button.dart';
 import '../../shared/widgets/glow_card.dart';
@@ -13,11 +16,55 @@ import '../../shared/widgets/score_ring.dart';
 import '../../shared/widgets/section_header.dart';
 import '../../shared/widgets/status_badge.dart';
 
-class PatientHomeScreen extends ConsumerWidget {
+class PatientHomeScreen extends ConsumerStatefulWidget {
   const PatientHomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PatientHomeScreen> createState() => _PatientHomeScreenState();
+}
+
+class _PatientHomeScreenState extends ConsumerState<PatientHomeScreen> {
+  final Set<String> _completedStepIds = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTodayLog();
+  }
+
+  Future<void> _loadTodayLog() async {
+    final todayStr = DateTime.now().toIso8601String().substring(0, 10);
+    await RecommendationEngine.loadRules();
+    final logs = await ref.read(routineRepositoryProvider).getLogsForDate(todayStr);
+    final currentLog = logs.firstWhere(
+      (l) => l.session == 'AM',
+      orElse: () => RoutineLog(dateStr: todayStr, session: 'AM', completedStepIds: const []),
+    );
+    if (mounted) {
+      setState(() {
+        _completedStepIds
+          ..clear()
+          ..addAll(currentLog.completedStepIds);
+      });
+    }
+  }
+
+  Future<void> _toggleStep(String stepId) async {
+    final todayStr = DateTime.now().toIso8601String().substring(0, 10);
+    setState(() {
+      if (_completedStepIds.contains(stepId)) {
+        _completedStepIds.remove(stepId);
+      } else {
+        _completedStepIds.add(stepId);
+      }
+    });
+    await ref.read(routineRepositoryProvider).saveLog(
+          RoutineLog(dateStr: todayStr, session: 'AM', completedStepIds: _completedStepIds.toList()),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final scanAsync = ref.watch(latestScanProvider);
     final appointments = ref.watch(appointmentProvider);
 
@@ -26,7 +73,7 @@ class PatientHomeScreen extends ConsumerWidget {
         .toList();
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.appColors.background,
       appBar: AppHeader(
         title: 'GlowAI',
         isHomeHeader: true,
@@ -36,7 +83,7 @@ class PatientHomeScreen extends ConsumerWidget {
         onRefresh: () async {
           await Future.delayed(const Duration(milliseconds: 600));
         },
-        color: AppColors.primary,
+        color: context.appColors.primary,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 32),
@@ -45,11 +92,11 @@ class PatientHomeScreen extends ConsumerWidget {
             children: [
               // Skin Score Overview Card (real data, empty state if no scan)
               scanAsync.when(
-                loading: () => const GlowCard(
+                loading: () => GlowCard(
                   child: Center(
                     child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: CircularProgressIndicator(color: AppColors.primary),
+                      padding: const EdgeInsets.all(20),
+                      child: CircularProgressIndicator(color: context.appColors.primary),
                     ),
                   ),
                 ),
@@ -69,13 +116,17 @@ class PatientHomeScreen extends ConsumerWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        scan.skinType?.label ?? scan.severity,
-                                        style: const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.textPrimary,
+                                      Expanded(
+                                        child: Text(
+                                          scan.skinType?.label ?? scan.severity,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: context.appColors.textPrimary,
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(width: 8),
@@ -86,10 +137,10 @@ class PatientHomeScreen extends ConsumerWidget {
                                   if (scan.skinTone != null)
                                     Text(
                                       'Tone: ${scan.skinTone!.label.isNotEmpty ? scan.skinTone!.label : "Level ${scan.skinTone!.level}"} (${scan.skinTone!.undertone})',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 12,
-                                        color: AppColors.textSecondary,
+                                        color: context.appColors.textSecondary,
                                       ),
                                     ),
                                   const SizedBox(height: 12),
@@ -125,7 +176,7 @@ class PatientHomeScreen extends ConsumerWidget {
                     child: _QuickActionCard(
                       icon: CupertinoIcons.heart_fill,
                       label: 'Consult',
-                      onTap: () => context.push('/patient/consult'),
+                      onTap: () => context.go('/patient/consult'),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -148,104 +199,65 @@ class PatientHomeScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
 
-              // Upcoming Appointment
-              SectionHeader(
-                title: 'Upcoming Consultation',
-                actionLabel: 'See All',
-                onAction: () => context.push('/my-appointments'),
-              ),
-              const SizedBox(height: 12),
-              if (upcomingApps.isNotEmpty) ...[
+              // Upcoming Appointment (only after a face scan AND a booked appointment)
+              if (scanAsync.valueOrNull != null && upcomingApps.isNotEmpty) ...[
+                SectionHeader(
+                  title: 'Upcoming Consultation',
+                  actionLabel: 'See All',
+                  onAction: () => context.push('/my-appointments'),
+                ),
+                const SizedBox(height: 12),
                 _UpcomingAppointmentCard(appointment: upcomingApps.first),
-              ] else ...[
-                GlowCard(
-                  child: Row(
-                    children: [
-                      const Icon(CupertinoIcons.calendar, color: AppColors.primary),
-                      const SizedBox(width: 14),
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'No Consultation Booked',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                            Text(
-                              'Connect with a dermatologist today.',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GlowButton(
-                        label: 'Book Now',
-                        height: 36,
-                        style: GlowButtonStyle.primary,
-                        onPressed: () => context.push('/patient/consult'),
-                      ),
-                    ],
-                  ),
-                ),
+                const SizedBox(height: 24),
               ],
-              const SizedBox(height: 24),
 
-              // Today's Routine Preview
-              SectionHeader(
-                title: "Today's Routine (AM)",
-                actionLabel: 'Full Routine',
-                onAction: () => context.push('/routine'),
-              ),
-              const SizedBox(height: 12),
-              GlowCard(
-                child: Column(
-                  children: const [
-                    _RoutineCheckItem(
-                      step: 'Step 1',
-                      title: 'Gentle Cleansing Wash',
-                      subtitle: 'Ceramides & Glycerin',
-                      isChecked: true,
-                    ),
-                    Divider(height: 16),
-                    _RoutineCheckItem(
-                      step: 'Step 2',
-                      title: 'Targeted Niacinamide Serum',
-                      subtitle: 'Apply 3-4 drops',
-                      isChecked: false,
-                    ),
-                    Divider(height: 16),
-                    _RoutineCheckItem(
-                      step: 'Step 3',
-                      title: 'Sunscreen SPF 50+',
-                      subtitle: 'Broad Spectrum UV shield',
-                      isChecked: false,
-                    ),
-                  ],
+              // Today's Routine Preview (only after a face scan)
+              if (scanAsync.valueOrNull != null) ...[
+                SectionHeader(
+                  title: "Today's Routine (AM)",
+                  actionLabel: 'Full Routine',
+                  onAction: () => context.push('/routine'),
                 ),
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 12),
+                Builder(builder: (context) {
+                  final profile = ref.watch(userProfileProvider);
+                  final plan = RecommendationEngine.generateRoutine(
+                    scan: scanAsync.valueOrNull,
+                    profile: profile,
+                  );
+                  final steps = plan.amSteps.take(3).toList();
+                  return GlowCard(
+                    child: Column(
+                      children: [
+                        for (var i = 0; i < steps.length; i++) ...[
+                          if (i > 0) const Divider(height: 16),
+                          _RoutineCheckItem(
+                            step: 'Step ${steps[i].stepNumber}',
+                            title: steps[i].title,
+                            subtitle: steps[i].keyIngredients.take(3).join(', '),
+                            isChecked: _completedStepIds.contains(steps[i].id),
+                            onToggle: () => _toggleStep(steps[i].id),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(height: 24),
+              ],
 
               // Legal Disclaimer Banner (Clean subtle tint)
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.bgAlt,
+                  color: context.appColors.bgAlt,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.border),
+                  border: Border.all(color: context.appColors.border),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(CupertinoIcons.info_circle, size: 18, color: AppColors.textSecondary),
-                    SizedBox(width: 10),
+                    Icon(CupertinoIcons.info_circle, size: 18, color: context.appColors.textSecondary),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         'Informational screening only. Not a medical diagnosis.',
@@ -253,7 +265,7 @@ class PatientHomeScreen extends ConsumerWidget {
                           fontFamily: 'Poppins',
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
+                          color: context.appColors.textSecondary,
                         ),
                       ),
                     ),
@@ -293,10 +305,10 @@ class _QuickActionCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.surfaceMuted,
+                color: context.appColors.surfaceMuted,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: AppColors.primary, size: 20),
+              child: Icon(icon, color: context.appColors.primary, size: 20),
             ),
             const SizedBox(height: 6),
             Text(
@@ -304,11 +316,11 @@ class _QuickActionCard extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: context.appColors.textPrimary,
               ),
             ),
           ],
@@ -334,26 +346,26 @@ class _UpcomingAppointmentCard extends StatelessWidget {
             children: [
               Text(
                 appointment.doctorName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: context.appColors.textPrimary,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppColors.primarySoft,
+                  color: context.appColors.primarySoft,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   appointment.mode.name.toUpperCase(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                   ),
                 ),
               ),
@@ -362,32 +374,35 @@ class _UpcomingAppointmentCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             appointment.doctorSpecialty,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 12,
-              color: AppColors.textSecondary,
+              color: context.appColors.textSecondary,
             ),
           ),
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(CupertinoIcons.clock, size: 15, color: AppColors.primary),
+              Icon(CupertinoIcons.clock, size: 15, color: context.appColors.primary),
               const SizedBox(width: 6),
               Text(
                 'Tomorrow at ${appointment.timeSlot}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: context.appColors.textPrimary,
                 ),
               ),
               const Spacer(),
-              GlowButton(
-                label: 'Join Consultation',
-                height: 36,
-                style: GlowButtonStyle.primary,
-                onPressed: () => context.push('/call/${appointment.id}'),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: GlowButton(
+                  label: 'Join Consultation',
+                  height: 36,
+                  style: GlowButtonStyle.primary,
+                  onPressed: () => context.push('/call/${appointment.id}'),
+                ),
               ),
             ],
           ),
@@ -397,31 +412,20 @@ class _UpcomingAppointmentCard extends StatelessWidget {
   }
 }
 
-class _RoutineCheckItem extends StatefulWidget {
+class _RoutineCheckItem extends StatelessWidget {
   final String step;
   final String title;
   final String subtitle;
   final bool isChecked;
+  final VoidCallback? onToggle;
 
   const _RoutineCheckItem({
     required this.step,
     required this.title,
     required this.subtitle,
     required this.isChecked,
+    this.onToggle,
   });
-
-  @override
-  State<_RoutineCheckItem> createState() => _RoutineCheckItemState();
-}
-
-class _RoutineCheckItemState extends State<_RoutineCheckItem> {
-  late bool _val;
-
-  @override
-  void initState() {
-    super.initState();
-    _val = widget.isChecked;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -430,10 +434,10 @@ class _RoutineCheckItemState extends State<_RoutineCheckItem> {
         Transform.scale(
           scale: 1.0,
           child: Checkbox(
-            value: _val,
-            activeColor: AppColors.primary,
+            value: isChecked,
+            activeColor: context.appColors.primary,
             shape: const CircleBorder(),
-            onChanged: (v) => setState(() => _val = v ?? false),
+            onChanged: (_) => onToggle?.call(),
           ),
         ),
         const SizedBox(width: 4),
@@ -442,21 +446,21 @@ class _RoutineCheckItemState extends State<_RoutineCheckItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${widget.step} · ${widget.title}',
+                '$step · $title',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  decoration: _val ? TextDecoration.lineThrough : null,
-                  color: _val ? AppColors.textHint : AppColors.textPrimary,
+                  decoration: isChecked ? TextDecoration.lineThrough : null,
+                  color: isChecked ? context.appColors.textHint : context.appColors.textPrimary,
                 ),
               ),
               Text(
-                widget.subtitle,
-                style: const TextStyle(
+                subtitle,
+                style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 11,
-                  color: AppColors.textSecondary,
+                  color: context.appColors.textSecondary,
                 ),
               ),
             ],
@@ -478,17 +482,17 @@ class _NoScanCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       child: Column(
         children: [
-          const Icon(CupertinoIcons.camera_circle_fill, size: 48, color: AppColors.primarySoft),
+          Icon(CupertinoIcons.camera_circle_fill, size: 48, color: context.appColors.primarySoft),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             'No scan yet',
-            style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.bold, color: context.appColors.textPrimary),
           ),
           const SizedBox(height: 4),
-          const Text(
+          Text(
             'Start your first GlowAI scan to see your skin health score here.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textSecondary, height: 1.4),
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: context.appColors.textSecondary, height: 1.4),
           ),
           const SizedBox(height: 16),
           GlowButton(

@@ -20,6 +20,10 @@ from app.detectors.texture import detect_texture
 from app.scoring import compute_overall_scoring
 from app.insights import generate_insights
 from app.overlay import generate_overlays
+from app.routers_appointments import router as appointments_router
+from app.routers_auth import router as auth_router
+from app.routers_doctors import router as doctors_router
+from app.routers_prescriptions import router as prescriptions_router
 from app.schemas import (
     HealthResponse,
     AnalyzeResponse,
@@ -40,6 +44,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(auth_router)
+app.include_router(doctors_router)
+app.include_router(appointments_router)
+app.include_router(prescriptions_router)
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():

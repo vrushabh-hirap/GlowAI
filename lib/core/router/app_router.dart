@@ -12,6 +12,7 @@ import '../../features/consultation/doctor_list_screen.dart';
 import '../../features/consultation/doctor_profile_screen.dart';
 import '../../features/consultation/my_appointments_screen.dart';
 import '../../features/doctor_mode/doctor_appointment_detail_screen.dart';
+import '../../features/doctor_mode/edit_doctor_profile_screen.dart';
 import '../../features/doctor_mode/doctor_dashboard_screen.dart';
 import '../../features/doctor_mode/doctor_patient_report_screen.dart';
 import '../../features/doctor_mode/doctor_prescription_form_screen.dart';
@@ -286,6 +287,12 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => buildFadeSlideTransition(
         context: context, state: state,
         child: DoctorPrescriptionFormScreen(appointmentId: state.pathParameters['id'] ?? 'app_1'),
+      ),
+    ),
+    GoRoute(
+      path: '/doctor/edit-profile',
+      pageBuilder: (context, state) => buildFadeSlideTransition(
+        context: context, state: state, child: const EditDoctorProfileScreen(),
       ),
     ),
     GoRoute(

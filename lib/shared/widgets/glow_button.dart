@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
+import '../../core/theme/app_shadows.dart';
 import '../../core/utils/haptics.dart';
 import 'tappable.dart';
 
@@ -37,29 +38,22 @@ class GlowButton extends StatelessWidget {
 
     if (effectiveDisabled) {
       decoration = BoxDecoration(
-        color: AppColors.surfaceMuted,
+        color: context.appColors.surfaceMuted,
         borderRadius: BorderRadius.circular(16),
       );
-      textColor = AppColors.textHint;
-      iconColor = AppColors.textHint;
+      textColor = context.appColors.textHint;
+      iconColor = context.appColors.textHint;
     } else {
       switch (style) {
         case GlowButtonStyle.primary:
           decoration = BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.primary, AppColors.primaryGradientEnd],
+            gradient: LinearGradient(
+              colors: [context.appColors.primary, context.appColors.primaryGradientEnd],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.glow,
-                blurRadius: 18,
-                spreadRadius: 0,
-                offset: const Offset(0, 6),
-              ),
-            ],
+            boxShadow: AppShadows.glow,
           );
           textColor = Colors.white;
           iconColor = Colors.white;
@@ -67,20 +61,20 @@ class GlowButton extends StatelessWidget {
 
         case GlowButtonStyle.secondary:
           decoration = BoxDecoration(
-            color: AppColors.surface,
+            color: context.appColors.surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.border, width: 1),
+            border: Border.all(color: context.appColors.border, width: 1),
           );
-          textColor = AppColors.textPrimary;
-          iconColor = AppColors.textPrimary;
+          textColor = context.appColors.textPrimary;
+          iconColor = context.appColors.textPrimary;
           break;
 
         case GlowButtonStyle.tertiary:
           decoration = const BoxDecoration(
             color: Colors.transparent,
           );
-          textColor = AppColors.primary;
-          iconColor = AppColors.primary;
+          textColor = context.appColors.primary;
+          iconColor = context.appColors.primary;
           break;
       }
     }
@@ -108,7 +102,7 @@ class GlowButton extends StatelessWidget {
                   valueColor: AlwaysStoppedAnimation<Color>(
                     style == GlowButtonStyle.primary && !effectiveDisabled
                         ? Colors.white
-                        : AppColors.primary,
+                        : context.appColors.primary,
                   ),
                 ),
               )

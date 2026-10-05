@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,8 +23,17 @@ class ProgressTrackerScreen extends ConsumerStatefulWidget {
 
 class _ProgressTrackerScreenState extends ConsumerState<ProgressTrackerScreen> {
   double _sliderVal = 0.5;
-  String _selectedRange = '30 Days'; // '7 Days', '30 Days', '90 Days', 'All'
+  String _selectedRange = 'All'; // '7 Days', '30 Days', '90 Days', 'All'
   bool _hidePhotos = false;
+  String? _docsPath;
+
+  @override
+  void initState() {
+    super.initState();
+    getApplicationDocumentsDirectory().then((d) {
+      if (mounted) setState(() => _docsPath = d.path);
+    });
+  }
 
   int _beforeScanIndex = 0;
   int _afterScanIndex = 0;
@@ -87,8 +97,8 @@ class _ProgressTrackerScreenState extends ConsumerState<ProgressTrackerScreen> {
     final int scoreDelta = latestScan.overallScore - firstScan.overallScore;
 
     if (_afterScanIndex >= historyScans.length) _afterScanIndex = 0;
-    if (_beforeScanIndex >= historyScans.length) {
-      _beforeScanIndex = historyScans.length > 1 ? 1 : 0;
+    if (_beforeScanIndex >= historyScans.length || _beforeScanIndex == 0) {
+      _beforeScanIndex = historyScans.length > 1 ? historyScans.length - 1 : 0;
     }
 
     final beforeScan = historyScans[_beforeScanIndex];
@@ -396,6 +406,9 @@ class _ProgressTrackerScreenState extends ConsumerState<ProgressTrackerScreen> {
   }
 
   Widget _buildImageWidget(String path) {
+    if (path.isNotEmpty && !path.startsWith('/') && _docsPath != null) {
+      path = '$_docsPath/$path';
+    }
     if (path.isEmpty || !File(path).existsSync()) {
       return Container(
         color: AppColors.primarySoft.withValues(alpha: 0.3),

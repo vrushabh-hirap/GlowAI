@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_colors_extension.dart';
 import '../../core/utils/haptics.dart';
 import 'tappable.dart';
 
@@ -9,8 +9,8 @@ class OutlineButton extends StatelessWidget {
   final IconData? icon;
   final double? width;
   final double height;
-  final Color borderColor;
-  final Color textColor;
+  final Color? borderColor;
+  final Color? textColor;
 
   const OutlineButton({
     super.key,
@@ -19,12 +19,13 @@ class OutlineButton extends StatelessWidget {
     this.icon,
     this.width,
     this.height = 48,
-    this.borderColor = AppColors.border,
-    this.textColor = AppColors.textPrimary,
+    this.borderColor,
+    this.textColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Tappable(
       onTap: () {
         AppHaptics.selection();
@@ -36,7 +37,10 @@ class OutlineButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: borderColor, width: 1.5),
+          border: Border.all(
+            color: borderColor ?? colors.border,
+            width: 1.5,
+          ),
         ),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,13 +49,13 @@ class OutlineButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon, color: textColor, size: 18),
+              Icon(icon, color: textColor ?? colors.textPrimary, size: 18),
               const SizedBox(width: 8),
             ],
             Text(
               label,
               style: TextStyle(
-                color: textColor,
+                color: textColor ?? colors.textPrimary,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),

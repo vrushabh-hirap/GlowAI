@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../models/care_models.dart';
 import '../services/hive_storage_service.dart';
@@ -18,6 +19,9 @@ class ProfileRepository implements IProfileRepository {
 
   @override
   Future<UserProfile> getProfile() async {
+    if (!Hive.isBoxOpen(HiveStorageService.boxProfile)) {
+      await Hive.openBox<String>(HiveStorageService.boxProfile);
+    }
     final raw = HiveStorageService.profileBox.get(_key);
     if (raw == null) return const UserProfile();
     try {
@@ -68,6 +72,9 @@ abstract class IRoutineRepository {
 class RoutineRepository implements IRoutineRepository {
   @override
   Future<List<RoutineLog>> getLogsForDate(String dateStr) async {
+    if (!Hive.isBoxOpen(HiveStorageService.boxRoutineLogs)) {
+      await Hive.openBox<String>(HiveStorageService.boxRoutineLogs);
+    }
     final box = HiveStorageService.routineLogsBox;
     final logs = <RoutineLog>[];
     for (final key in box.keys) {

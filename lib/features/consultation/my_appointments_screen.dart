@@ -71,7 +71,7 @@ class _AppointmentList extends ConsumerWidget {
             ? 'You have no scheduled doctor consultations at this time.'
             : 'Completed consultation notes and records will appear here.',
         actionLabel: isUpcoming ? 'Find Dermatologist' : null,
-        onAction: isUpcoming ? () => context.push('/patient/consult') : null,
+        onAction: isUpcoming ? () => context.go('/patient/consult') : null,
       );
     }
 
@@ -126,12 +126,15 @@ class _AppointmentList extends ConsumerWidget {
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: GlowButton(
-                          label: app.mode == ConsultationMode.video ? 'Join Video' : 'Join Call',
-                          icon: app.mode == ConsultationMode.video ? Icons.videocam_rounded : Icons.call_rounded,
-                          height: 38,
-                          style: GlowButtonStyle.primary,
-                          onPressed: () => context.push('/call/${app.id}'),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: GlowButton(
+                            label: app.mode == ConsultationMode.video ? 'Join Video' : 'Join Call',
+                            icon: app.mode == ConsultationMode.video ? Icons.videocam_rounded : Icons.call_rounded,
+                            height: 38,
+                            style: GlowButtonStyle.primary,
+                            onPressed: () => context.push('/call/${app.id}'),
+                          ),
                         ),
                       ),
                     ] else ...[

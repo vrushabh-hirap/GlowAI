@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/app_colors.dart';
 import '../../shared/widgets/apple_tab_bar.dart';
 
 class PatientShellScreen extends StatelessWidget {
@@ -49,25 +49,27 @@ class PatientShellScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      // No bottomNavigationBar — the tab bar floats via Stack
-      body: Stack(
-        children: [
-          // Full-screen content — extended behind the floating bar
-          Positioned.fill(child: navigationShell),
-          // Floating tab bar pinned to the bottom
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: AppleTabBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (navigationShell.currentIndex != 0) {
+          navigationShell.goBranch(0, initialLocation: true);
+        } else {
+          SystemNavigator.pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: Column(
+          children: [
+            Expanded(child: navigationShell),
+            AppleTabBar(
               currentIndex: navigationShell.currentIndex,
               onTap: _onTap,
               items: _patientNavItems,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -81,6 +81,13 @@ class DoctorDashboardScreen extends ConsumerWidget {
             // Scheduled Consultations List
             const SectionHeader(title: 'Scheduled Patient Appointments'),
             const SizedBox(height: 12),
+            GlowButton(
+              label: 'Edit Profile',
+              width: double.infinity,
+              style: GlowButtonStyle.secondary,
+              onPressed: () => context.push('/doctor/edit-profile'),
+            ),
+            const SizedBox(height: 16),
             ...appointments.map((app) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
